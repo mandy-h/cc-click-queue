@@ -1,0 +1,52 @@
+{
+  "manifest_version": 2,
+  "name": "CC Click Queue",
+  "version": "1.0",
+  "author": "mandy-h",
+  "description": "Chrome extension to simulate a queue for the Click Exchange",
+  "permissions": [
+    "storage",
+    "https://clickcritters.com/clickexchange.php*"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "chrome_url_overrides": {
+    "newtab": "queue.html"
+  },
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.clickcritters.com/clickexchange.php"
+      ],
+      "js": [
+        "scripts/ce-home.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.clickcritters.com/clickexchange.php?act=doCE*"
+      ],
+      "js": [
+        "scripts/ce-do.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.clickcritters.com/clickexchange.php?act=choose*"
+      ],
+      "js": [
+        "scripts/ce-choose-adopt.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}
