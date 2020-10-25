@@ -16,3 +16,5 @@ This is a Chrome extension to simulate an adoptable queue for the Click Exchange
 ![Selecting multiple images](./readme-img1.png)
 4. On the queue page, enter the target level for these adoptables, and then click **Add to Queue**.
 5. Click on **Start Queue**.
+
+Note: **This extension will not check that the adoptable you have selected in the Click Exchange is actually in the queue.** Disable this extension if you want to click another adoptable that is not in your queue.
