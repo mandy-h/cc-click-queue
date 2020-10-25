@@ -13,5 +13,6 @@ This is a Chrome extension to simulate an adoptable queue for the Click Exchange
 1. Click on the extension icon to open the pop-up menu.
 2. Click on **Edit Queue**.
 3. From a separate window, drag and drop the images of the adoptables you want to add to the queue. Images can be dragged one at a time, or multiple images can be selected at once by highlighting them.
+![Selecting multiple images](./readme-img1.png)
 4. On the queue page, enter the target level for these adoptables, and then click **Add to Queue**.
 5. Click on **Start Queue**.
