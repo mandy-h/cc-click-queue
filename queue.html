@@ -1,4 +1,5 @@
 <html>
+
   <head>
     <title>Click Queue</title>
 
@@ -6,9 +7,11 @@
       * {
         box-sizing: border-box;
       }
+
       label {
         font-size: 1rem;
       }
+
       button {
         background-color: #efefef;
         border: 1px solid #767676;
@@ -16,9 +19,12 @@
         padding: .25rem .5rem;
         white-space: nowrap;
       }
-      button:hover, button:active {
+
+      button:hover,
+      button:active {
         filter: brightness(.93);
       }
+
       .hidden-input {
         float: left;
         height: 0;
@@ -27,23 +33,29 @@
         padding: 0;
         width: 0;
       }
+
       .btn--red {
         background-color: lightsalmon;
         border: 1px solid red;
       }
+
       .btn--green {
         background-color: lightgreen;
         border: 1px solid green;
       }
+
       .flex {
         display: flex;
       }
+
       .column {
         padding: 0 10px;
       }
+
       .column:first-child {
         border-right: 1px solid gray;
       }
+
       .image-drop-area {
         background-color: #eee;
         border: 1px solid gray;
@@ -53,23 +65,32 @@
         padding: 10px;
         width: calc(100px * 4);
       }
+
+      .image-drop-area--active {
+        border: 2px solid blue;
+      }
+
       .queue-wrapper {
         height: 90vh;
         overflow: auto;
         padding: 10px;
       }
+
       .queue {
         min-width: 320px;
         text-align: center;
       }
+
       .queue th {
         padding: 5px 0;
       }
+
       .queue td {
         border-top: 1px solid gray;
       }
     </style>
   </head>
+
   <body>
     <h1>Click Queue</h1>
     <div class="flex">
@@ -84,15 +105,11 @@
           <br />
           <label>Target level
             <br />
-            <input 
-              name="target-level" 
-              required="required"
-              type="number"
-            />
+            <input name="target-level" required="required" type="number" />
           </label>
           <br />
           <br />
-        	<button id="js-add-adopts__submit">Add to Queue</button>
+          <button id="js-add-adopts__submit">Add to Queue</button>
         </form>
       </div>
       <div class="column">
@@ -113,4 +130,5 @@
 
     <script src="scripts/queue.js"></script>
   </body>
+
 </html>

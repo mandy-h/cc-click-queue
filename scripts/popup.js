@@ -6,13 +6,15 @@ function startQueue() {
   });
 }
 
+function openQueuePage() {
+  window.open(
+    '../queue.html',
+    '_blank',
+    'scrollbars=yes,resizable=yes'
+  );
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.js-start-queue').addEventListener('click', startQueue);
-  document.querySelector('.js-edit-queue').addEventListener('click', () => {
-    window.open(
-      '../queue.html',
-      '_blank',
-      'scrollbars=yes,resizable=yes'
-    );
-  });
+  document.querySelector('.js-edit-queue').addEventListener('click', openQueuePage);
 });

@@ -1,8 +1,9 @@
 function renderQueue() {
-  chrome.storage.local.get({queue: []}, (result) => {
+  chrome.storage.local.get({ queue: [] }, (result) => {
     const queueTable = document.querySelector('#js-queue tbody');
 
-    queueTable.textContent = '';
+    // Clear table
+    queueTable.innerHTML = '';
     // Create rows
     result.queue.forEach((el, index) => {
       let item = document.createElement('tr');
@@ -26,7 +27,7 @@ function renderQueue() {
 }
 
 function addToQueue(adoptableIds, targetLevel) {
-  chrome.storage.local.get({queue: []}, (result) => {
+  chrome.storage.local.get({ queue: [] }, (result) => {
     const queue = result.queue;
 
     adoptableIds.forEach((id) => {
@@ -36,28 +37,27 @@ function addToQueue(adoptableIds, targetLevel) {
       });
     });
 
-    chrome.storage.local.set({queue: queue}, () => {
+    chrome.storage.local.set({ queue: queue }, () => {
       // Send message to update extension icon
-      chrome.runtime.sendMessage({queueLength: queue.length});
+      chrome.runtime.sendMessage({ queueLength: queue.length });
+      renderQueue();
     });
-
-    renderQueue();
   });
 }
 
 function removeFromQueue(itemIndex) {
   chrome.storage.local.get('queue', (result) => {
     const queue = result.queue.filter((el, index) => index != itemIndex);
-    chrome.storage.local.set({queue: queue}, () => {
-      chrome.runtime.sendMessage({queueLength: queue.length});
+    chrome.storage.local.set({ queue: queue }, () => {
+      chrome.runtime.sendMessage({ queueLength: queue.length });
+      renderQueue();
     });
-    renderQueue();
   });
 }
 
 function clearQueue() {
-  chrome.storage.local.set({queue: []}, () => {
-    chrome.runtime.sendMessage({queueLength: 0});
+  chrome.storage.local.set({ queue: [] }, () => {
+    chrome.runtime.sendMessage({ queueLength: 0 });
     renderQueue();
   });
 }
@@ -70,16 +70,28 @@ function startQueue() {
   });
 }
 
+function handleFormSubmit(event) {
+  event.preventDefault();
+  const addAdoptsForm = event.currentTarget;
+  const formData = new FormData(addAdoptsForm);
+
+  addToQueue(
+    formData.get('adopt-ids').split(','),
+    formData.get('target-level')
+  );
+  addAdoptsForm.reset();
+  document.querySelector('#js-image-drop-area').innerHTML = '';
+}
+
 // Drop area
 
 function handleDragover(event) {
   event.preventDefault();
-  document.querySelector('#js-image-drop-area').style.border = '2px solid blue';
+  document.querySelector('#js-image-drop-area').classList.add('image-drop-area--active');
 }
 
 function handleDrop(event) {
   event.preventDefault();
-
   const dropArea = document.querySelector('#js-image-drop-area');
   const dropData = event.dataTransfer.getData('text/html');
   const parser = new DOMParser();
@@ -87,7 +99,7 @@ function handleDrop(event) {
     .querySelectorAll('img[src*="/images/adoptables/"]');
   const adoptableIds = Array.from(droppedImages).map((el) => el.src.match(/\d+/));
 
-  dropArea.style.border = '1px solid gray';
+  dropArea.classList.remove('image-drop-area--active');
   droppedImages.forEach((el) => {
     dropArea.appendChild(el);
   });
@@ -102,21 +114,7 @@ function handleDrop(event) {
 
 window.addEventListener('DOMContentLoaded', () => {
   /* =============== Event listeners =============== */
-
-  document.querySelector('#js-add-adopts').addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const addAdoptsForm = event.currentTarget;
-    const formData = new FormData(addAdoptsForm);
-    addToQueue(
-      formData.get('adopt-ids').split(','),
-      formData.get('target-level')
-    );
-
-    addAdoptsForm.reset();
-    document.querySelector('#js-image-drop-area').textContent = '';
-  });
-
+  document.querySelector('#js-add-adopts').addEventListener('submit', handleFormSubmit);
   document.addEventListener('drop', handleDrop);
   document.addEventListener('dragover', handleDragover);
   document.querySelector('.js-clear-queue').addEventListener('click', clearQueue);
@@ -128,6 +126,5 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =============== Code to run =============== */
-
   renderQueue();
 });
