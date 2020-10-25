@@ -18,7 +18,8 @@ function renderQueue() {
           ${el.target}
         </td>
         <td>
-          <button class="js-remove-adopt remove-adopt-btn" data-index="${index}">Remove</button>
+          <button class="js-move-to-front" data-index="${index}"><img src="../icons/arrow-top.svg" /></button>
+          <button class="js-remove-adopt" data-index="${index}"><img src="../icons/delete.svg" /></button>
         </td>
       `;
       queueTable.appendChild(item);
@@ -46,6 +47,15 @@ function addToQueue(adoptableIds, targetLevel) {
 function removeFromQueue(itemIndex) {
   chrome.storage.local.get('queue', (result) => {
     const queue = result.queue.filter((el, index) => index != itemIndex);
+    chrome.storage.local.set({ queue: queue }, () => {
+      renderQueue();
+    });
+  });
+}
+
+function moveToFrontOfQueue(itemIndex) {
+  chrome.storage.local.get('queue', (result) => {
+    const queue = [result.queue[itemIndex], ...result.queue.filter((el, index) => index != itemIndex)];
     chrome.storage.local.set({ queue: queue }, () => {
       renderQueue();
     });
@@ -118,6 +128,8 @@ window.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#js-queue').addEventListener('click', (event) => {
     if (event.target.classList.contains('js-remove-adopt')) {
       removeFromQueue(event.target.dataset.index);
+    } else if (event.target.classList.contains('js-move-to-front')) {
+      moveToFrontOfQueue(event.target.dataset.index);
     }
   });
 

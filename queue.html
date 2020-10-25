@@ -25,6 +25,10 @@
         filter: brightness(.93);
       }
 
+      button>* {
+        pointer-events: none;
+      }
+
       .hidden-input {
         float: left;
         height: 0;
@@ -87,6 +91,7 @@
 
       .queue td {
         border-top: 1px solid gray;
+        text-align: center;
       }
     </style>
   </head>
@@ -103,7 +108,8 @@
           </label>
           <br />
           <br />
-          <label>Target level
+          <label>
+            Target level
             <br />
             <input name="target-level" required="required" type="number" />
           </label>
