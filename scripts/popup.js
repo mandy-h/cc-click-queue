@@ -7,11 +7,7 @@ function startQueue() {
 }
 
 function openQueuePage() {
-  window.open(
-    '../queue.html',
-    '_blank',
-    'scrollbars=yes,resizable=yes'
-  );
+  chrome.windows.create({ url: '../queue.html' });
 }
 
 window.addEventListener('DOMContentLoaded', () => {
