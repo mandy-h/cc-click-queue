@@ -38,8 +38,6 @@ function addToQueue(adoptableIds, targetLevel) {
     });
 
     chrome.storage.local.set({ queue: queue }, () => {
-      // Send message to update extension icon
-      chrome.runtime.sendMessage({ queueLength: queue.length });
       renderQueue();
     });
   });
@@ -49,7 +47,6 @@ function removeFromQueue(itemIndex) {
   chrome.storage.local.get('queue', (result) => {
     const queue = result.queue.filter((el, index) => index != itemIndex);
     chrome.storage.local.set({ queue: queue }, () => {
-      chrome.runtime.sendMessage({ queueLength: queue.length });
       renderQueue();
     });
   });
@@ -57,7 +54,6 @@ function removeFromQueue(itemIndex) {
 
 function clearQueue() {
   chrome.storage.local.set({ queue: [] }, () => {
-    chrome.runtime.sendMessage({ queueLength: 0 });
     renderQueue();
   });
 }

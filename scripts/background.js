@@ -4,8 +4,8 @@ chrome.runtime.onInstalled.addListener(function () {
   });
 });
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.queueLength !== undefined) {
-    chrome.browserAction.setBadgeText({ text: (request.queueLength).toString() });
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+  if (changes.queue) {
+    chrome.browserAction.setBadgeText({ text: (changes.queue.newValue.length).toString() });
   }
 });

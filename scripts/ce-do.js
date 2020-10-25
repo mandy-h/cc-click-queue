@@ -24,9 +24,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
       // Update storage
       chrome.storage.local.set({ queue: queue }, () => {
-        // Send message to update extension icon
-        chrome.runtime.sendMessage({ queueLength: queue.length });
-
         if (queue.length > 0) {
           // Choose next adopt in queue and then redirect back to main CE page (see ce-chose-adopt.js)
           window.location = `https://www.clickcritters.com/clickexchange.php?act=choose&adoptID=${queue[0].id}#next`;
