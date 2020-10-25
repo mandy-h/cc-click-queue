@@ -1,9 +1,4 @@
 window.addEventListener('DOMContentLoaded', () => {
-  if (window.location.hash === '#next') {
-    // Redirect back to main CE page after setting next adoptable
-    window.location = 'https://www.clickcritters.com/clickexchange.php#next';
-  }
-
   if (window.location.hash === '#done') {
     let el = document.createElement('div');
     el.style.cssText = `
