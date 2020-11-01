@@ -5,8 +5,9 @@ function renderQueue() {
     // Clear table
     queueTable.innerHTML = '';
     // Create rows
+    const fragment = document.createDocumentFragment();
     result.queue.forEach((el, index) => {
-      let item = document.createElement('tr');
+      const item = document.createElement('tr');
       item.innerHTML = `
         <td>
           ${el.id}
@@ -22,8 +23,9 @@ function renderQueue() {
           <button class="js-remove-adopt" data-index="${index}"><img src="../icons/delete.svg" /></button>
         </td>
       `;
-      queueTable.appendChild(item);
+      fragment.appendChild(item);
     });
+    queueTable.appendChild(fragment);
   });
 }
 
@@ -101,14 +103,18 @@ function handleDrop(event) {
   const dropArea = document.querySelector('#js-image-drop-area');
   const dropData = event.dataTransfer.getData('text/html');
   const parser = new DOMParser();
-  const droppedImages = parser.parseFromString(dropData, 'text/html').body
-    .querySelectorAll('img[src*="/images/adoptables/"]');
-  const adoptableIds = Array.from(droppedImages).map((el) => el.src.match(/\d+/));
+  const droppedImageUrls = Array.from(parser.parseFromString(dropData, 'text/html').body
+    .querySelectorAll('img[src*="/images/adoptables/"]')).map((image) => image.src);
+  const adoptableIds = droppedImageUrls.map((url) => url.match(/\d+/));
 
   dropArea.classList.remove('image-drop-area--active');
-  droppedImages.forEach((el) => {
-    dropArea.appendChild(el);
+  const fragment = document.createDocumentFragment();
+  droppedImageUrls.forEach((url) => {
+    const image = document.createElement('img');
+    image.src = url;
+    fragment.appendChild(image);
   });
+  dropArea.appendChild(fragment);
 
   const adoptIdsInput = document.querySelector('#js-add-adopts input[name="adopt-ids"]');
   if (adoptIdsInput.value === '') {
