@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
   if (window.location.hash === '#next') {
-    let el = document.createElement('div');
+    const el = document.createElement('div');
     el.style.cssText = `
       background-color: lightgreen;
       margin-bottom: 10px;

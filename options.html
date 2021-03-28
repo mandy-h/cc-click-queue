@@ -1,0 +1,30 @@
+<html>
+
+  <head>
+    <title>Options</title>
+    <style>
+      body {
+        font-size: 1rem;
+      }
+
+      label {
+        justify-content: space-between;
+        display: flex;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form>
+      <label>
+        Switch adopts without redirecting to CE home page
+        <input type="checkbox" id="switch-without-redirect">
+      </label>
+    </form>
+    <button class="js-save">Save</button>
+    <div class="js-status status"></div>
+
+    <script src="/scripts/options.js"></script>
+  </body>
+
+</html>
