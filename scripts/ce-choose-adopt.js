@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
       padding: 5px;
     `;
     el.innerText = 'Queue finished';
-    const mainContent = document.querySelector('center');
+    const mainContent = document.querySelector('#megaContent center');
     mainContent.insertBefore(el, mainContent.firstChild);
   }
 });
