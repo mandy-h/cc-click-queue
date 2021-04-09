@@ -1,7 +1,7 @@
 # cc-click-queue
-This is a Chrome extension to simulate an adoptable queue for the Click Exchange on clickcritters.com. **This extension only works on Google Chrome.**
+This is a Chrome extension to simulate an adoptable queue for the Click Exchange on clickcritters.com. This extension should work most on Chromium-based browsers, but Chrome 55 (released December 2016) is likely the oldest compatible version.
 # Installation
-1. Download all of these files by clicking **Clone or Download**, a green button near the top-right corner of the list of files. Choose "Download ZIP."
+1. Download all of these files by clicking **Clone or Download**, a green button near the top-right corner of the list of files. Choose **Download ZIP**.
 2. Unzip the folder into a new folder on your computer.
 3. In Chrome, go to the top right and click on the 3-dots menu. Go to **More tools > Extensions**.
 4. Enable **Developer Mode**, which is located in the top right corner.
@@ -16,5 +16,6 @@ This is a Chrome extension to simulate an adoptable queue for the Click Exchange
 ![Selecting multiple images](./readme-img1.png)
 4. On the queue page, enter the target level for these adoptables, and then click **Add to Queue**.
 5. Click on **Start Queue**.
+6. If you manually change the first adoptable afterwards, either by moving another adoptable to the front of the queue or removing the first adoptable in the queue, you need to click on **Start Queue** again.
 
 Note: **This extension will not check that the adoptable you have selected in the Click Exchange is actually in the queue.** Disable this extension if you want to click another adoptable that is not in your queue.
