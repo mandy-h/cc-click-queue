@@ -1,76 +1,3 @@
-// const View = (function () {
-//   const renderQueue = () => {
-//     chrome.storage.local.get({ queue: [] }, (result) => {
-//       const queueTable = document.querySelector('#js-queue tbody');
-
-//       // Clear table
-//       queueTable.innerHTML = '';
-//       // Create rows
-//       const fragment = document.createDocumentFragment();
-//       result.queue.forEach((el, index) => {
-//         const item = document.createElement('tr');
-//         item.innerHTML = `
-//           <td>
-//             ${el.id}
-//           </td>
-//           <td>
-//             <img src="https://www.clickcritters.com/images/adoptables/${el.id}.gif" />
-//           </td>
-//           <td>
-//             ${el.target}
-//           </td>
-//           <td>
-//             <button class="js-move-to-front" data-index="${index}"><img src="../icons/arrow-top.svg" /></button>
-//             <button class="js-remove-adopt" data-index="${index}"><img src="../icons/delete.svg" /></button>
-//           </td>
-//         `;
-//         fragment.appendChild(item);
-//       });
-//       queueTable.appendChild(fragment);
-
-//       document.querySelector('.js-queue-count').innerHTML
-//         = `You have <strong>${result.queue.length}</strong> adoptables left to click!`;
-//     });
-//   };
-
-//   return {
-//     renderQueue
-//   };
-// })();
-
-const ExtensionStorage = (function () {
-  /**
-   * Retrieves extension data.
-   * @param {Object|String[]} [data] - Keys to be retrieved, with optional default values
-   * @returns {Promise} - Promise with the extension data
-   */
-  const get = (data) => {
-    return new Promise((resolve) => {
-      chrome.storage.local.get(data || { queue: [], switchWithoutRedirect: true }, (result) => {
-        resolve(result);
-      });
-    });
-  };
-
-  /**
-   * Sets data in the browser storage.
-   * @param {Object} data - Object with key/value pairs to update storage with
-   * @returns {Promise}
-   */
-  const set = (data) => {
-    return new Promise((resolve) => {
-      chrome.storage.local.set(data, () => {
-        resolve();
-      });
-    });
-  };
-
-  return {
-    get,
-    set
-  };
-})();
-
 const Queue = (function () {
   const render = async () => {
     const result = await ExtensionStorage.get({ queue: [] });
@@ -83,15 +10,9 @@ const Queue = (function () {
     result.queue.forEach((el, index) => {
       const item = document.createElement('tr');
       item.innerHTML = `
-        <td>
-          ${el.id}
-        </td>
-        <td>
-          <img src="https://www.clickcritters.com/images/adoptables/${el.id}.gif" />
-        </td>
-        <td>
-          ${el.target}
-        </td>
+        <td>${el.id}</td>
+        <td><img src="https://www.clickcritters.com/images/adoptables/${el.id}.gif" /></td>
+        <td>${el.target}</td>
         <td>
           <button class="js-move-to-front" data-index="${index}"><img src="../icons/arrow-top.svg" /></button>
           <button class="js-remove-adopt" data-index="${index}"><img src="../icons/delete.svg" /></button>
@@ -99,6 +20,7 @@ const Queue = (function () {
       `;
       fragment.appendChild(item);
     });
+    // Append rows
     queueTable.appendChild(fragment);
 
     document.querySelector('.js-queue-count').innerHTML
@@ -116,27 +38,23 @@ const Queue = (function () {
       });
     });
 
-    await ExtensionStorage.set({ queue });
-    Queue.render();
+    ExtensionStorage.set({ queue });
   };
 
   const remove = async (itemIndex) => {
     const result = await ExtensionStorage.get(['queue']);
     const queue = result.queue.filter((el, index) => index !== itemIndex);
-    await ExtensionStorage.set({ queue });
-    Queue.render();
+    ExtensionStorage.set({ queue });
   };
 
   const moveToFront = async (itemIndex) => {
     const result = await ExtensionStorage.get(['queue']);
     const queue = [result.queue[itemIndex], ...result.queue.filter((el, index) => index !== itemIndex)];
-    await ExtensionStorage.set({ queue });
-    Queue.render();
+    ExtensionStorage.set({ queue });
   };
 
   const clear = async () => {
-    await ExtensionStorage.set({ queue: [] });
-    Queue.render();
+    ExtensionStorage.set({ queue: [] });
   };
 
   return {
@@ -215,6 +133,12 @@ const Queue = (function () {
         Queue.remove(Number(event.target.dataset.index));
       } else if (event.target.classList.contains('js-move-to-front')) {
         Queue.moveToFront(Number(event.target.dataset.index));
+      }
+    });
+
+    chrome.storage.onChanged.addListener((changes) => {
+      if (changes.queue) {
+        Queue.render();
       }
     });
 
