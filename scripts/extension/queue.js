@@ -14,8 +14,8 @@ const Queue = (function () {
         <td><img src="https://www.clickcritters.com/images/adoptables/${el.id}.gif" /></td>
         <td>${el.target}</td>
         <td>
-          <button class="js-move-to-front" data-index="${index}"><img src="../icons/arrow-top.svg" /></button>
-          <button class="js-remove-adopt" data-index="${index}"><img src="../icons/delete.svg" /></button>
+          <button class="js-move-to-front" data-index="${index}" title="Move to top"><img src="/icons/arrow-top.svg" alt="Arrow pointing to top" /></button>
+          <button class="js-remove-adopt" data-index="${index}" title="Delete"><img src="/icons/delete.svg" alt="Trash can" /></button>
         </td>
       `;
       fragment.appendChild(item);
