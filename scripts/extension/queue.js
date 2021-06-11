@@ -31,7 +31,22 @@ const Queue = (function () {
     const result = await ExtensionStorage.get({ queue: [] });
     const { queue } = result;
 
-    adoptableIds.forEach((id) => {
+    // Remove duplicate IDs from user input
+    const uniqueIds = new Set(adoptableIds);    // TODO: Move this to handleDrop()
+    // Filter out IDs that are already in the queue
+    let newIds = [];
+    let duplicateIds = [];
+    uniqueIds.forEach((id) => {
+      const idIsInQueue = queue.findIndex((item) => item.id === id) > -1;
+      if (idIsInQueue) {
+        duplicateIds.push(id);
+      } else {
+        newIds.push(id);
+      }
+    });
+
+    // Add to queue
+    newIds.forEach((id) => {
       queue.push({
         id,
         target: targetLevel
@@ -39,6 +54,8 @@ const Queue = (function () {
     });
 
     ExtensionStorage.set({ queue });
+
+    // TODO: emit event with newIds and duplicateIds to display UI messages
   };
 
   const remove = async (itemIndex) => {
@@ -100,8 +117,9 @@ const Queue = (function () {
     const dropArea = document.querySelector('#js-image-drop-area');
     const dropData = event.dataTransfer.getData('text/html');
     const parser = new DOMParser();
-    const droppedImageUrls = Array.from(parser.parseFromString(dropData, 'text/html').body
-      .querySelectorAll('img[src*="/images/adoptables/"]')).map((image) => image.src);
+    const droppedImageUrls = Array.from(parser.parseFromString(dropData, 'text/html')
+      .body.querySelectorAll('img[src*="/images/adoptables/"]'))
+      .map((image) => image.src);
     const adoptableIds = droppedImageUrls.map((url) => url.match(/\d+/));
 
     dropArea.classList.remove('image-drop-area--active');
