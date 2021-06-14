@@ -6,19 +6,19 @@ const Queue = (function () {
     // Remove duplicate IDs from user input
     const uniqueIds = new Set(adoptableIds);
     // Filter out IDs that are already in the queue
-    const newIds = [];
+    const ids = [];
     const duplicateIds = [];
     uniqueIds.forEach((id) => {
       const idIsInQueue = queue.findIndex((item) => item.id === id) > -1;
       if (idIsInQueue) {
         duplicateIds.push(id);
       } else {
-        newIds.push(id);
+        ids.push(id);
       }
     });
 
     // Add to queue
-    newIds.forEach((id) => {
+    ids.forEach((id) => {
       queue.push({
         id,
         target: targetLevel
@@ -27,7 +27,7 @@ const Queue = (function () {
 
     ExtensionStorage.set({ queue });
 
-    Events.publish('queue/added-adopts', { newIds, duplicateIds });
+    Events.publish('queue/added-adopts', { ids, duplicateIds });
   }
 
   async function remove(id) {
@@ -56,41 +56,61 @@ const Queue = (function () {
   }
 
   function createQueueItem(id, target) {
+    const item = document.createElement('tr');
+    item.classList.add('queue-item');
+    item.dataset.id = id;
+    item.dataset.target = target;
+    item.innerHTML = `
+      <td class="queue-item__id">${id}</td>
+      <td class="queue-item__img"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></td>
+      <td class="queue-item__target">${target}</td>
+      <td>
+        <button class="js-move-to-front" title="Move to top"><img src="/icons/arrow-top.svg" alt="Arrow pointing to top" /></button>
+        <button class="js-remove-adopt" title="Delete"><img src="/icons/delete.svg" alt="Trash can" /></button>
+      </td>
+    `;
 
+    return item;
   }
 
-  function diff(newData, oldData) {
-    newData.forEach((el, index) => {
+  /**
+   * Diffing algorithm for queue rendering.
+   * @param {Array} newData - New data to display
+   * @param {HTMLElement} parent - Parent node that holds the queue items
+   */
+  function queueDiff(newData, parent) {
+    // Remove extra elements from DOM
+    let extras = parent.children.length - newData.length;
+    while (extras > 0) {
+      parent.removeChild(parent.lastChild);
+      extras--;
+    }
 
+    newData.forEach((newObj, index) => {
+      const node = parent.children[index];
+      const newId = newObj.id;
+      const newTarget = newObj.target;
+
+      // A new item needs to be added
+      if (!node) {
+        parent.appendChild(createQueueItem(newId, newTarget));
+        return;
+      }
+      // Replace the row content if ID doesn't match
+      if (newId !== node.dataset.id) {
+        node.dataset.id = newId;
+        node.dataset.target = newTarget;
+        node.querySelector('.queue-item__id').textContent = newId;
+        node.querySelector('.queue-item__target').textContent = newTarget;
+        node.querySelector('.queue-item__img > img').src = `https://www.clickcritters.com/images/adoptables/${newId}.gif`;
+      }
     });
   }
 
   async function render() {
     const result = await ExtensionStorage.get({ queue: [] });
     const queueTable = document.querySelector('#js-queue tbody');
-
-    // Clear table
-    queueTable.innerHTML = '';
-    // Create rows
-    const fragment = document.createDocumentFragment();
-    result.queue.forEach((el, index) => {
-      const item = document.createElement('tr');
-      item.classList.add('queue-item');
-      item.dataset.id = el.id;
-      item.dataset.target = el.target;
-      item.innerHTML = `
-        <td>${el.id}</td>
-        <td><img src="https://www.clickcritters.com/images/adoptables/${el.id}.gif" /></td>
-        <td>${el.target}</td>
-        <td>
-          <button class="js-move-to-front" title="Move to top"><img src="/icons/arrow-top.svg" alt="Arrow pointing to top" /></button>
-          <button class="js-remove-adopt" title="Delete"><img src="/icons/delete.svg" alt="Trash can" /></button>
-        </td>
-      `;
-      fragment.appendChild(item);
-    });
-    // Append rows
-    queueTable.appendChild(fragment);
+    queueDiff(result.queue, queueTable);
 
     document.querySelector('.js-queue-count').innerHTML
       = `You have <strong>${result.queue.length}</strong> adoptables left to click!`;
