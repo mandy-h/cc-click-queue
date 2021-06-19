@@ -6,46 +6,61 @@
   </head>
 
   <body>
-    <h1>Click Queue</h1>
-    <div class="flex">
-      <div class="column">
-        <form id="js-add-adopts">
-          <label>
-            Drop adoptable images below
-            <input name="adopt-ids" type="text" value="" required="required" class="hidden-input" />
-            <div id="js-image-drop-area" class="image-drop-area"></div>
-          </label>
-          <br />
-          <br />
-          <label>
-            Target level
-            <br />
-            <input name="target-level" required="required" type="number" />
-          </label>
-          <br />
-          <br />
-          <button id="js-add-adopts__submit">Add to Queue</button>
-        </form>
-      </div>
-      <div class="column">
-        <button class="js-clear-queue btn btn--red">Clear Queue</button>
-        <button class="js-start-queue btn btn--green">Start Queue</button>
-        <p class="js-queue-count"></p>
-        <div class="queue-wrapper">
-          <table id="js-queue" class="queue" cellspacing="0">
-            <thead>
-              <th>ID</th>
-              <th>Image</th>
-              <th>Target Level</th>
-            </thead>
-            <tbody></tbody>
-          </table>
+    <section class="u-p20">
+      <h1>Click Queue</h1>
+      <div class="queue-buttons">
+        <div>
+          <button id="js-btn--add-adopts">Add Adoptables</button>
+        </div>
+        <div>
+          <button id="js-btn--clear-queue" class="btn btn--red">Clear Queue</button>
+          <button id="js-btn--start-queue" class="btn btn--green">Start Queue</button>
         </div>
       </div>
+      <p class="js-queue-count"></p>
+      <div class="queue-wrapper">
+        <table id="js-queue" class="queue" cellspacing="0">
+          <thead>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Target Level</th>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div id="js-modal--add-adopts" class="modal modal--top" role="dialog" tabindex="-1">
+      <div class="modal-window">
+        <div class="modal-window__header">
+          <h2 class="u-m0">Add Adoptables</h2><button class="modal-window__close btn--no-bg"><img src="/icons/close.svg" alt="Close"></button>
+        </div>
+        <div class="modal-window__body">
+          <form id="js-add-adopts" class="add-adopts-form">
+            <label>
+              Drop adoptable images anywhere on the page
+              <input name="adopt-ids" type="text" value="" required="required" class="hidden-input" />
+              <div id="js-image-drop-area" class="image-drop-area"></div>
+            </label>
+            <br />
+            <br />
+            <label>
+              Target level
+              <br />
+              <input name="target-level" required="required" type="number" min="1" />
+            </label>
+            <br />
+            <br />
+            <button id="js-add-adopts__submit">Add to Queue</button>
+          </form>
+        </div>
+      </div>
+      <div class="scrim"></div>
     </div>
 
     <script src="/scripts/modules/ExtensionStorage.js"></script>
     <script src="/scripts/modules/Events.js"></script>
+    <script src="/scripts/modules/Modal.js"></script>
     <script src="/scripts/modules/Message.js"></script>
     <script src="/scripts/modules/ImageDrop.js"></script>
     <script src="/scripts/modules/Queue.js"></script>

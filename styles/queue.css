@@ -2,8 +2,20 @@
  * Styles for the queue page.
  */
 
+:root {
+  --mainBg: #f2f2f2;
+  --foregroundBg: #fff;
+}
+
 * {
   box-sizing: border-box;
+}
+
+body {
+  background-color: var(--mainBg);
+  margin: 0;
+  padding: 0;
+  position: relative;
 }
 
 label,
@@ -16,10 +28,12 @@ button {
   border: 1px solid #767676;
   border-radius: 2px;
   padding: 0.25rem 0.5rem;
+  transition: 200ms ease;
   white-space: nowrap;
 }
 
 button:hover,
+button:focus,
 button:active {
   filter: brightness(0.93);
 }
@@ -37,6 +51,17 @@ button > * {
   width: 0;
 }
 
+.btn--no-bg {
+  background-color: transparent;
+  border: none;
+}
+
+.btn--no-bg:hover,
+.btn--no-bg:focus,
+.btn--no-bg:active {
+  background-color: #eee;
+}
+
 .btn--red {
   background-color: lightsalmon;
   border: 1px solid red;
@@ -45,6 +70,37 @@ button > * {
 .btn--green {
   background-color: lightgreen;
   border: 1px solid green;
+}
+
+.item-actions {
+  position: relative;
+  text-align: left;
+}
+
+.item-actions__toggle {
+  background: none;
+  border: none;
+}
+
+.item-actions__toggle:hover,
+.item-actions__toggle:focus,
+.item-actions__toggle:active {
+  background-color: #ddd;
+}
+
+.item-actions__buttons {
+  background-color: #ddd;
+  border-radius: 0 2px 2px 2px;
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+}
+
+.item-actions__buttons > * + * {
+  margin-left: 5px;
 }
 
 .flex {
@@ -59,14 +115,89 @@ button > * {
   border-right: 1px solid gray;
 }
 
+.modal {
+  height: 100vh;
+  left: 0;
+  max-width: 100%;
+  position: fixed;
+  top: 0;
+  transition-property: visibility;
+  visibility: hidden;
+  width: 100vw;
+  z-index: 5;
+}
+
+.modal.is-active {
+  visibility: visible;
+}
+
+.modal-window {
+  background-color: var(--foregroundBg);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.6);
+  max-height: 90vh;
+  max-width: 85vw;
+  min-width: min-content;
+  overflow: auto;
+  position: absolute;
+  transition: 300ms ease-out;
+  width: fit-content;
+  z-index: 15;
+}
+
+.modal-window__header {
+  align-items: center;
+  background-color: inherit;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+}
+
+.modal-window__body {
+  max-width: inherit;
+  padding: 20px;
+  width: inherit;
+}
+
+.modal--top > .modal-window {
+  left: 0;
+  margin: auto;
+  right: 0;
+  top: 0;
+  transform: translateY(-101%);
+}
+
+.modal--top.is-active > .modal-window {
+  transform: translateY(0);
+}
+
+.modal.is-active > .scrim {
+  opacity: 1;
+}
+
+.scrim {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: 300ms linear;
+  width: 100%;
+  z-index: 10;
+}
+
 .image-drop-area {
   background-color: #eee;
   border: 1px solid gray;
-  height: calc(130px * 6);
-  overflow: auto;
   max-height: 60vh;
+  max-width: 100%;
+  min-height: calc(130px * 2);
+  overflow: auto;
   padding: 10px;
-  width: calc(100px * 4);
+  width: calc(100px * 7);
 }
 
 .image-drop-area--active {
@@ -74,9 +205,15 @@ button > * {
 }
 
 .queue-wrapper {
-  height: 90vh;
-  overflow: auto;
+  /* padding: 10px; */
+}
+
+.queue-buttons {
+  background-color: var(--mainBg);
+  display: inline-block;
   padding: 10px;
+  position: sticky;
+  top: 0;
 }
 
 .queue {
@@ -91,4 +228,12 @@ button > * {
 .queue td {
   border-top: 1px solid gray;
   text-align: center;
+}
+
+.u-m0 {
+  margin: 0;
+}
+
+.u-p20 {
+  padding: 20px;
 }

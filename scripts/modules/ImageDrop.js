@@ -1,33 +1,37 @@
 const ImageDrop = (function () {
   function handleDragover(event) {
     event.preventDefault();
-    document.querySelector('#js-image-drop-area').classList.add('image-drop-area--active');
+    if (document.querySelector('#js-modal--add-adopts.is-active')) {
+      document.querySelector('#js-image-drop-area').classList.add('image-drop-area--active');
+    }
   }
 
   function handleDrop(event) {
     event.preventDefault();
-    const dropArea = document.querySelector('#js-image-drop-area');
-    const dropData = event.dataTransfer.getData('text/html');
-    const parser = new DOMParser();
-    const droppedImageUrls = Array.from(parser.parseFromString(dropData, 'text/html')
-      .body.querySelectorAll('img[src*="/images/adoptables/"]'))
-      .map((image) => image.src);
-    const adoptableIds = droppedImageUrls.map((url) => url.match(/\d+/));
+    if (document.querySelector('#js-modal--add-adopts.is-active')) {
+      const dropArea = document.querySelector('#js-image-drop-area');
+      const dropData = event.dataTransfer.getData('text/html');
+      const parser = new DOMParser();
+      const droppedImageUrls = Array.from(parser.parseFromString(dropData, 'text/html')
+        .body.querySelectorAll('img[src*="/images/adoptables/"]'))
+        .map((image) => image.src);
+      const adoptableIds = droppedImageUrls.map((url) => url.match(/\d+/));
 
-    dropArea.classList.remove('image-drop-area--active');
-    const fragment = document.createDocumentFragment();
-    droppedImageUrls.forEach((url) => {
-      const image = document.createElement('img');
-      image.src = url;
-      fragment.appendChild(image);
-    });
-    dropArea.appendChild(fragment);
+      dropArea.classList.remove('image-drop-area--active');
+      const fragment = document.createDocumentFragment();
+      droppedImageUrls.forEach((url) => {
+        const image = document.createElement('img');
+        image.src = url;
+        fragment.appendChild(image);
+      });
+      dropArea.appendChild(fragment);
 
-    const adoptIdsInput = document.querySelector('#js-add-adopts input[name="adopt-ids"]');
-    if (adoptIdsInput.value === '') {
-      adoptIdsInput.value += adoptableIds;
-    } else {
-      adoptIdsInput.value += `,${adoptableIds}`;
+      const adoptIdsInput = document.querySelector('#js-add-adopts input[name="adopt-ids"]');
+      if (adoptIdsInput.value === '') {
+        adoptIdsInput.value += adoptableIds;
+      } else {
+        adoptIdsInput.value += `,${adoptableIds}`;
+      }
     }
   }
 

@@ -36,10 +36,17 @@ const Queue = (function () {
     ExtensionStorage.set({ queue });
   }
 
-  async function moveToFront(id) {
+  async function move(id, position) {
     const result = await ExtensionStorage.get(['queue']);
     const itemToMove = result.queue.find((el) => el.id === id);
-    const queue = [itemToMove, ...result.queue.filter((el) => el.id !== id)];
+    let queue;
+
+    if (position === 'front') {
+      queue = [itemToMove, ...result.queue.filter((el) => el.id !== id)];
+    } else if (position === 'end') {
+      queue = [...result.queue.filter((el) => el.id !== id), itemToMove];
+    }
+
     ExtensionStorage.set({ queue });
   }
 
@@ -55,6 +62,13 @@ const Queue = (function () {
     });
   }
 
+  // function showAddAdoptsForm() {
+  //   const addAdoptsModal = document.querySelector('#js-modal--add-adopts');
+  //   // Modal.create({ id: 'js-modal--add-adopts', toggle: document.querySelector('#js-btn--add-adopts') });
+  //   addAdoptsModal.classList.add('is-active');
+  //   addAdoptsModal.tabIndex = 0;
+  // }
+
   function createQueueItem(id, target) {
     const item = document.createElement('tr');
     item.classList.add('queue-item');
@@ -65,8 +79,19 @@ const Queue = (function () {
       <td class="queue-item__img"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></td>
       <td class="queue-item__target">${target}</td>
       <td>
-        <button class="js-move-to-front" title="Move to top"><img src="/icons/arrow-top.svg" alt="Arrow pointing to top" /></button>
-        <button class="js-remove-adopt" title="Delete"><img src="/icons/delete.svg" alt="Trash can" /></button>
+        <div class="item-actions">
+          <button class="js-item-actions-toggle item-actions__toggle" title="Open Menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
+          <ul class="js-item-actions item-actions__buttons">
+            <li><button class="js-item-action--edit item-actions__button" title="Edit">
+              <img src="/icons/edit.svg" alt="Edit" /></button></li>
+            <li><button class="js-item-action--move-front item-actions__button" title="Move to front">
+              <img src="/icons/arrow-top.svg" alt="Arrow pointing to top" /></button></li>
+            <li><button class="js-item-action--move-end item-actions__button" title="Move to end">
+              <img src="/icons/arrow-bottom.svg" alt="Arrow pointing to bottom" /></button></li>
+            <li><button class="js-item-action--delete item-actions__button" title="Delete">
+              <img src="/icons/delete.svg" alt="Trash can" /></button></li>
+          </ul>
+        </div>
       </td>
     `;
 
@@ -118,16 +143,20 @@ const Queue = (function () {
 
   function init() {
     render();
+    Modal.create({ id: 'js-modal--add-adopts', toggle: document.querySelector('#js-btn--add-adopts') });
 
-    document.querySelector('.js-clear-queue').addEventListener('click', clear);
-    document.querySelector('.js-start-queue').addEventListener('click', startQueue);
+    // document.querySelector('#js-btn--add-adopts').addEventListener('click', showAddAdoptsForm);
+    document.querySelector('#js-btn--clear-queue').addEventListener('click', clear);
+    document.querySelector('#js-btn--start-queue').addEventListener('click', startQueue);
     document.querySelector('#js-queue').addEventListener('click', (event) => {
       const target = event.target;
       const queueItem = event.target.closest('.queue-item');
-      if (target.classList.contains('js-remove-adopt')) {
+      if (target.classList.contains('js-item-action--delete')) {
         remove(queueItem.dataset.id);
-      } else if (target.classList.contains('js-move-to-front')) {
-        moveToFront(queueItem.dataset.id);
+      } else if (target.classList.contains('js-item-action--move-front')) {
+        move(queueItem.dataset.id, 'front');
+      } else if (target.classList.contains('js-item-action--move-end')) {
+        move(queueItem.dataset.id, 'end');
       }
     });
 
