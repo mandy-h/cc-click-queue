@@ -6,7 +6,7 @@ const ExtensionStorage = {
    */
   get(data) {
     return new Promise((resolve) => {
-      chrome.storage.local.get(data || { queue: [], switchWithoutRedirect: true }, (result) => {
+      chrome.storage.local.get(data || ['queue', 'switchWithoutRedirect', 'view'], (result) => {
         resolve(result);
       });
     });

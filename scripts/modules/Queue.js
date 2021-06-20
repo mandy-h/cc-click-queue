@@ -62,37 +62,28 @@ const Queue = (function () {
     });
   }
 
-  // function showAddAdoptsForm() {
-  //   const addAdoptsModal = document.querySelector('#js-modal--add-adopts');
-  //   // Modal.create({ id: 'js-modal--add-adopts', toggle: document.querySelector('#js-btn--add-adopts') });
-  //   addAdoptsModal.classList.add('is-active');
-  //   addAdoptsModal.tabIndex = 0;
-  // }
-
   function createQueueItem(id, target) {
-    const item = document.createElement('tr');
+    const item = document.createElement('div');
     item.classList.add('queue-item');
     item.dataset.id = id;
     item.dataset.target = target;
     item.innerHTML = `
-      <td class="queue-item__id">${id}</td>
-      <td class="queue-item__img"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></td>
-      <td class="queue-item__target">${target}</td>
-      <td>
-        <div class="item-actions">
-          <button class="js-item-actions-toggle item-actions__toggle" title="Open Menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
-          <ul class="js-item-actions item-actions__buttons">
-            <li><button class="js-item-action--edit item-actions__button" title="Edit">
-              <img src="/icons/edit.svg" alt="Edit" /></button></li>
-            <li><button class="js-item-action--move-front item-actions__button" title="Move to front">
-              <img src="/icons/arrow-top.svg" alt="Arrow pointing to top" /></button></li>
-            <li><button class="js-item-action--move-end item-actions__button" title="Move to end">
-              <img src="/icons/arrow-bottom.svg" alt="Arrow pointing to bottom" /></button></li>
-            <li><button class="js-item-action--delete item-actions__button" title="Delete">
-              <img src="/icons/delete.svg" alt="Trash can" /></button></li>
-          </ul>
-        </div>
-      </td>
+      <div class="queue-item__id">${id}</div>
+      <div class="queue-item__img"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></div>
+      <div class="queue-item__target">${target}</div>
+      <div class="item-actions">
+        <button class="js-item-actions-toggle item-actions__toggle" title="Open Menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
+        <!--<ul class="js-item-actions item-actions__buttons">
+          <li><button class="js-item-action--edit item-actions__button" title="Edit">
+            <img src="/icons/edit.svg" alt="Edit" /></button></li>
+          <li><button class="js-item-action--move-front item-actions__button" title="Move to front">
+            <img src="/icons/arrow-top.svg" alt="Arrow pointing to top" /></button></li>
+          <li><button class="js-item-action--move-end item-actions__button" title="Move to end">
+            <img src="/icons/arrow-bottom.svg" alt="Arrow pointing to bottom" /></button></li>
+          <li><button class="js-item-action--delete item-actions__button" title="Delete">
+            <img src="/icons/delete.svg" alt="Trash can" /></button></li>
+        </ul>-->
+      </div>
     `;
 
     return item;
@@ -134,20 +125,46 @@ const Queue = (function () {
 
   async function render() {
     const result = await ExtensionStorage.get({ queue: [] });
-    const queueTable = document.querySelector('#js-queue tbody');
+    const queueTable = document.querySelector('#js-queue .queue__body');
     queueDiff(result.queue, queueTable);
 
     document.querySelector('.js-queue-count').innerHTML
       = `You have <strong>${result.queue.length}</strong> adoptables left to click!`;
   }
 
+  function setView(view) {
+    ExtensionStorage.set({ view });
+  }
+
+  function renderView(view) {
+    const queue = document.querySelector('#js-queue');
+    if (view === 'list') {
+      queue.classList.add('list')
+      queue.classList.remove('grid');
+      document.querySelector('#js-btn--list-view').classList.add('is-active');
+      document.querySelector('#js-btn--grid-view').classList.remove('is-active');
+    } else if (view === 'grid') {
+      queue.classList.add('grid')
+      queue.classList.remove('list');
+      document.querySelector('#js-btn--grid-view').classList.add('is-active');
+      document.querySelector('#js-btn--list-view').classList.remove('is-active');
+    }
+  }
+
   function init() {
+    // Set list/grid view
+    ExtensionStorage.get('view').then((result) => {
+      renderView(result.view);
+    });
+    // Render queue
     render();
+    // Initialize Add Adopts form
     Modal.create({ id: 'js-modal--add-adopts', toggle: document.querySelector('#js-btn--add-adopts') });
 
-    // document.querySelector('#js-btn--add-adopts').addEventListener('click', showAddAdoptsForm);
     document.querySelector('#js-btn--clear-queue').addEventListener('click', clear);
     document.querySelector('#js-btn--start-queue').addEventListener('click', startQueue);
+    document.querySelector('#js-btn--list-view').addEventListener('click', () => setView('list'));
+    document.querySelector('#js-btn--grid-view').addEventListener('click', () => setView('grid'));
     document.querySelector('#js-queue').addEventListener('click', (event) => {
       const target = event.target;
       const queueItem = event.target.closest('.queue-item');
@@ -160,13 +177,18 @@ const Queue = (function () {
       }
     });
 
+    // Add adopts to queue when Add Adopts form is submitted
     Events.subscribe('imageDrop/form-submitted', (data) => {
       add(data.adoptIds, data.targetLevel);
     });
 
+    // Re-render parts of the page when storage has changed
     chrome.storage.onChanged.addListener((changes) => {
       if (changes.queue) {
         render();
+      }
+      if (changes.view) {
+        renderView(changes.view.newValue);
       }
     });
   }

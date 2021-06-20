@@ -16,17 +16,21 @@
           <button id="js-btn--clear-queue" class="btn btn--red">Clear Queue</button>
           <button id="js-btn--start-queue" class="btn btn--green">Start Queue</button>
         </div>
+        <div>
+          <div>Change View</div>
+          <button id="js-btn--list-view">List</button>
+          <button id="js-btn--grid-view">Grid</button>
+        </div>
       </div>
       <p class="js-queue-count"></p>
-      <div class="queue-wrapper">
-        <table id="js-queue" class="queue" cellspacing="0">
-          <thead>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Target Level</th>
-          </thead>
-          <tbody></tbody>
-        </table>
+      <div id="js-queue" class="queue">
+        <div class="queue__header">
+          <span>ID</span>
+          <span>Image</span>
+          <span>Target Level</span>
+          <span></span>
+        </div>
+        <div class="queue__body"></div>
       </div>
     </section>
 

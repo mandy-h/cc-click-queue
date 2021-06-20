@@ -5,6 +5,7 @@
 :root {
   --mainBg: #f2f2f2;
   --foregroundBg: #fff;
+  --activeColor: #47d8e5;
 }
 
 * {
@@ -36,6 +37,11 @@ button:hover,
 button:focus,
 button:active {
   filter: brightness(0.93);
+}
+
+button.is-active {
+  background-color: var(--activeColor);
+  font-weight: bold;
 }
 
 button > * {
@@ -74,7 +80,7 @@ button > * {
 
 .item-actions {
   position: relative;
-  text-align: left;
+  text-align: center;
 }
 
 .item-actions__toggle {
@@ -101,18 +107,6 @@ button > * {
 
 .item-actions__buttons > * + * {
   margin-left: 5px;
-}
-
-.flex {
-  display: flex;
-}
-
-.column {
-  padding: 0 10px;
-}
-
-.column:first-child {
-  border-right: 1px solid gray;
 }
 
 .modal {
@@ -201,11 +195,7 @@ button > * {
 }
 
 .image-drop-area--active {
-  border: 2px solid blue;
-}
-
-.queue-wrapper {
-  /* padding: 10px; */
+  border: 2px solid var(--activeColor);
 }
 
 .queue-buttons {
@@ -214,20 +204,50 @@ button > * {
   padding: 10px;
   position: sticky;
   top: 0;
+  z-index: 1;
 }
 
 .queue {
-  min-width: 320px;
+  display: grid;
+  font-size: 1rem;
   text-align: center;
 }
 
-.queue th {
-  padding: 5px 0;
+.queue__header {
+  font-weight: bold;
 }
 
-.queue td {
+.queue.grid {
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  row-gap: 20px;
+}
+
+.queue.list {
+  display: inline-grid;
+  grid-template-columns: repeat(4, minmax(110px, 1fr));
+  row-gap: 10px;
+}
+
+.queue.grid > .queue__header {
+  display: none;
+}
+
+.queue.grid > .queue__body {
+  display: contents;
+}
+
+.queue.list > .queue__body,
+.queue.list > .queue__header,
+.queue.list .queue-item {
+  display: contents;
+}
+
+.queue.list .queue-item > * {
+  align-items: center;
   border-top: 1px solid gray;
-  text-align: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
 }
 
 .u-m0 {
