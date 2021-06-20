@@ -119,6 +119,7 @@ const Queue = (function () {
         node.querySelector('.queue-item__id').textContent = newId;
         node.querySelector('.queue-item__target').textContent = newTarget;
         node.querySelector('.queue-item__img img').src = `https://www.clickcritters.com/images/adoptables/${newId}.gif`;
+        node.querySelector('.queue-item__img a').href = `https://www.clickcritters.com/youradoptables.php?act=code&id=${newId}`;
       }
     });
   }
