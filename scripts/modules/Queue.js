@@ -69,7 +69,7 @@ const Queue = (function () {
     item.dataset.target = target;
     item.innerHTML = `
       <div class="queue-item__id">${id}</div>
-      <div class="queue-item__img"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></div>
+      <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></a></div>
       <div class="queue-item__target">${target}</div>
       <div class="item-actions">
         <button class="js-item-actions-toggle item-actions__toggle" title="Open Menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
@@ -118,7 +118,7 @@ const Queue = (function () {
         node.dataset.target = newTarget;
         node.querySelector('.queue-item__id').textContent = newId;
         node.querySelector('.queue-item__target').textContent = newTarget;
-        node.querySelector('.queue-item__img > img').src = `https://www.clickcritters.com/images/adoptables/${newId}.gif`;
+        node.querySelector('.queue-item__img img').src = `https://www.clickcritters.com/images/adoptables/${newId}.gif`;
       }
     });
   }
