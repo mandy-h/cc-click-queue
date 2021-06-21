@@ -72,7 +72,7 @@ const Queue = (function () {
       <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></a></div>
       <div class="queue-item__target">${target}</div>
       <div class="item-actions">
-        <button class="js-item-actions-toggle item-actions__toggle" title="Open Menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
+        <button class="js-item-actions-toggle item-actions__toggle btn--no-bg" title="Open Menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
         <!--<ul class="js-item-actions item-actions__buttons">
           <li><button class="js-item-action--edit item-actions__button" title="Edit">
             <img src="/icons/edit.svg" alt="Edit" /></button></li>

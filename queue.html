@@ -2,25 +2,27 @@
 
   <head>
     <title>Click Queue</title>
+    <link rel="stylesheet" href="/styles/button.css">
     <link rel="stylesheet" href="/styles/queue.css">
   </head>
 
   <body>
     <section class="u-p20">
       <h1>Click Queue</h1>
-      <div class="queue-buttons">
-        <div>
+      <div class="button-group sticky">
+        <div style="margin-bottom: 10px;">
           <button id="js-btn--add-adopts">Add Adoptables</button>
+          <button>Sort All</button>
+          <button>Edit All</button>
         </div>
         <div>
           <button id="js-btn--clear-queue" class="btn btn--red">Clear Queue</button>
           <button id="js-btn--start-queue" class="btn btn--green">Start Queue</button>
         </div>
-        <div>
-          <div>Change View</div>
-          <button id="js-btn--list-view">List</button>
-          <button id="js-btn--grid-view">Grid</button>
-        </div>
+      </div>
+      <div class="button-group button-group--no-margin">
+        <button id="js-btn--list-view">List View</button>
+        <button id="js-btn--grid-view">Grid View</button>
       </div>
       <p class="js-queue-count"></p>
       <div id="js-queue" class="queue">

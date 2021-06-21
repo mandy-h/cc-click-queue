@@ -3,9 +3,10 @@
  */
 
 :root {
-  --mainBg: #f2f2f2;
-  --foregroundBg: #fff;
+  --mainBg: hsl(0, 0%, 95%);
+  --modalBg: var(--mainBg);
   --activeColor: #47d8e5;
+  --stickyBg: hsla(0, 0%, 95%, 0.6);
 }
 
 * {
@@ -24,30 +25,6 @@ p {
   font-size: 1rem;
 }
 
-button {
-  background-color: #efefef;
-  border: 1px solid #767676;
-  border-radius: 2px;
-  padding: 0.25rem 0.5rem;
-  transition: 200ms ease;
-  white-space: nowrap;
-}
-
-button:hover,
-button:focus,
-button:active {
-  filter: brightness(0.93);
-}
-
-button.is-active {
-  background-color: var(--activeColor);
-  font-weight: bold;
-}
-
-button > * {
-  pointer-events: none;
-}
-
 .hidden-input {
   float: left;
   height: 0;
@@ -55,27 +32,6 @@ button > * {
   opacity: 0;
   padding: 0;
   width: 0;
-}
-
-.btn--no-bg {
-  background-color: transparent;
-  border: none;
-}
-
-.btn--no-bg:hover,
-.btn--no-bg:focus,
-.btn--no-bg:active {
-  background-color: #eee;
-}
-
-.btn--red {
-  background-color: lightsalmon;
-  border: 1px solid red;
-}
-
-.btn--green {
-  background-color: lightgreen;
-  border: 1px solid green;
 }
 
 .item-actions {
@@ -126,7 +82,7 @@ button > * {
 }
 
 .modal-window {
-  background-color: var(--foregroundBg);
+  background-color: var(--modalBg);
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.6);
   max-height: 90vh;
   max-width: 85vw;
@@ -198,12 +154,11 @@ button > * {
   border: 2px solid var(--activeColor);
 }
 
-.queue-buttons {
-  background-color: var(--mainBg);
-  display: inline-block;
-  padding: 10px;
+.button-group.sticky {
+  background-color: var(--stickyBg);
   position: sticky;
   top: 0;
+  transition: 200ms linear;
   z-index: 1;
 }
 

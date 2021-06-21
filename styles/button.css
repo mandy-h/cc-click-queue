@@ -1,0 +1,94 @@
+:root {
+  --buttonBorderRadius: 2px;
+}
+
+button {
+  background-color: hsl(0, 0%, 97%);
+  border: 1px solid #767676;
+  border-radius: var(--buttonBorderRadius);
+  box-shadow: 0 1.7px 0 0 hsla(0, 0%, 0%, 0.7);
+  padding: 0.25rem 0.5rem;
+  transition: 100ms linear;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+button:hover,
+button:focus,
+button:active {
+  filter: brightness(0.93);
+}
+
+button:active {
+  box-shadow: none;
+  transform: translateY(1.7px);
+}
+
+button + button {
+  margin-left: 5px;
+}
+
+button > * {
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+button > * + * {
+  margin-left: 5px;
+}
+
+button.is-active {
+  background-color: #47d8e5;
+  font-weight: bold;
+}
+
+.btn--red {
+  background-color: lightsalmon;
+  border: 1px solid red;
+}
+
+.btn--green {
+  background-color: lightgreen;
+  border: 1px solid green;
+}
+
+.btn--no-bg {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.btn--no-bg:hover,
+.btn--no-bg:focus,
+.btn--no-bg:active {
+  background-color: #eee;
+  transform: none;
+}
+
+.button-group {
+  display: inline-block;
+  padding: 10px;
+  vertical-align: top;
+}
+
+.button-group--no-margin {
+  display: inline-flex; /* Removes extra space between inline-block elements */
+}
+
+.button-group--no-margin button {
+  margin: 0;
+}
+
+.button-group--no-margin button {
+  border-radius: 0;
+}
+
+.button-group--no-margin :first-child {
+  border-top-left-radius: var(--buttonBorderRadius);
+  border-bottom-left-radius: var(--buttonBorderRadius);
+}
+
+.button-group--no-margin :last-child {
+  border-top-right-radius: var(--buttonBorderRadius);
+  border-bottom-right-radius: var(--buttonBorderRadius);
+}
