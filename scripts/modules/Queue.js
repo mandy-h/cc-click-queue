@@ -121,6 +121,11 @@ const Queue = (function () {
         node.querySelector('.queue-item__img img').src = `https://www.clickcritters.com/images/adoptables/${newId}.gif`;
         node.querySelector('.queue-item__img a').href = `https://www.clickcritters.com/youradoptables.php?act=code&id=${newId}`;
       }
+      // Update target
+      if (newTarget !== node.dataset.target) {
+        node.dataset.target = newTarget;
+        node.querySelector('.queue-item__target').textContent = newTarget;
+      }
     });
   }
 
@@ -131,10 +136,6 @@ const Queue = (function () {
 
     document.querySelector('.js-queue-count').innerHTML
       = `You have <strong>${result.queue.length}</strong> adoptables left to click!`;
-  }
-
-  function setView(view) {
-    ExtensionStorage.set({ view });
   }
 
   function renderView(view) {
@@ -152,6 +153,31 @@ const Queue = (function () {
     }
   }
 
+  function handleSortAllFormSubmit(sortParam, order) {
+    ExtensionStorage.get('queue').then((result) => {
+      const queue = result.queue;
+      if (order === 'ascending') {
+        queue.sort((a, b) => a[sortParam] - b[sortParam]);
+      } else if (order === 'descending') {
+        queue.sort((a, b) => b[sortParam] - a[sortParam]);
+      }
+      return queue;
+    }).then((result) => {
+      ExtensionStorage.set({ queue: result });
+    });
+  }
+
+  function handleEditAllFormSubmit(target) {
+    ExtensionStorage.get('queue').then((result) => {
+      const queue = result.queue.map((el) => {
+        return { id: el.id, target }
+      });
+      return queue;
+    }).then((result) => {
+      ExtensionStorage.set({ queue: result });
+    });
+  }
+
   function init() {
     // Set list/grid view
     ExtensionStorage.get('view').then((result) => {
@@ -159,13 +185,31 @@ const Queue = (function () {
     });
     // Render queue
     render();
-    // Initialize Add Adopts form
+    // Initialize modals
     Modal.create({ id: 'js-modal--add-adopts', toggle: document.querySelector('#js-btn--add-adopts') });
+    Modal.create({ id: 'js-modal--sort-all', toggle: document.querySelector('#js-btn--sort-all') });
+    Modal.create({ id: 'js-modal--edit-all', toggle: document.querySelector('#js-btn--edit-all') });
+    // Form submits
+    document.querySelector('#js-sort-all-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const data = new FormData(this);
+      const param = data.get('param');
+      const order = data.get('order');
+      handleSortAllFormSubmit(param, order);
+    });
+    document.querySelector('#js-edit-all-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const data = new FormData(this);
+      const target = data.get('target');
+      handleEditAllFormSubmit(target);
+      this.reset();
+    });
 
+    // Buttons
     document.querySelector('#js-btn--clear-queue').addEventListener('click', clear);
     document.querySelector('#js-btn--start-queue').addEventListener('click', startQueue);
-    document.querySelector('#js-btn--list-view').addEventListener('click', () => setView('list'));
-    document.querySelector('#js-btn--grid-view').addEventListener('click', () => setView('grid'));
+    document.querySelector('#js-btn--list-view').addEventListener('click', () => ExtensionStorage.set({ view: 'list' }));
+    document.querySelector('#js-btn--grid-view').addEventListener('click', () => ExtensionStorage.set({ view: 'grid' }));
     document.querySelector('#js-queue').addEventListener('click', (event) => {
       const target = event.target;
       const queueItem = event.target.closest('.queue-item');
