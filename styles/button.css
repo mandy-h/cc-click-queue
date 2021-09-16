@@ -1,12 +1,13 @@
 :root {
   --buttonBorderRadius: 2px;
+  --buttonTravel: 1.7px;
 }
 
 button {
   background-color: hsl(0, 0%, 97%);
   border: 1px solid #767676;
   border-radius: var(--buttonBorderRadius);
-  box-shadow: 0 1.7px 0 0 hsla(0, 0%, 0%, 0.7);
+  box-shadow: 0 var(--buttonTravel) 0 0 hsla(0, 0%, 0%, 0.7);
   padding: 0.25rem 0.5rem;
   transition: 100ms linear;
   white-space: nowrap;
@@ -21,7 +22,7 @@ button:active {
 
 button:active {
   box-shadow: none;
-  transform: translateY(1.7px);
+  transform: translateY(var(--buttonTravel));
 }
 
 button + button {
@@ -39,7 +40,9 @@ button > * + * {
 
 button.is-active {
   background-color: #47d8e5;
+  box-shadow: none;
   font-weight: bold;
+  transform: translateY(var(--buttonTravel));
 }
 
 .btn--red {

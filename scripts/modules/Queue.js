@@ -50,6 +50,49 @@ const Queue = (function () {
     ExtensionStorage.set({ queue });
   }
 
+  async function commitEdit(id, newTarget) {
+    const result = await ExtensionStorage.get(['queue']);
+    let itemToEdit = result.queue.find((el) => el.id === id);
+    itemToEdit.id = id;
+    itemToEdit.target = newTarget;
+
+    ExtensionStorage.set({ queue: result.queue });
+  }
+
+  function showEdit(id, target) {
+    const queueItem = document.querySelector(`.queue-item[data-id="${id}"]`);
+    // If that queue item's edit field is already present, don't do anything
+    if (queueItem.querySelector('.js-target-edit')) {
+      return;
+    }
+
+    // Create input element
+    const el = document.createElement('input');
+    el.classList.add('js-target-edit', 'target-edit');
+    el.type = 'number';
+    el.value = target;
+    el.min = '1';
+    el.required = true;
+
+    // Set up event handlers
+    el.addEventListener('blur', (event) => {
+      const editField = event.currentTarget;
+      if (editField.reportValidity()) {
+        commitEdit(editField.closest('.queue-item').dataset.id, editField.value);
+        editField.remove();
+      }
+    });
+    el.addEventListener('keydown', (event) => {
+      if (event.code === 'Enter') {
+        event.currentTarget.blur();
+      }
+    });
+
+    // Append to DOM and focus
+    queueItem.querySelector('.queue-item__target').appendChild(el);
+    el.focus();
+  }
+
   function clear() {
     ExtensionStorage.set({ queue: [] });
   }
@@ -70,12 +113,10 @@ const Queue = (function () {
     item.innerHTML = `
       <div class="queue-item__id">${id}</div>
       <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></a></div>
-      <div class="queue-item__target">${target}</div>
+      <div class="queue-item__target js-item-action--edit" title="Click to edit">${target}</div>
       <div class="item-actions">
-        <button class="js-item-actions-toggle item-actions__toggle btn--no-bg" title="Open Menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
+        <button class="js-item-actions-toggle item-actions__toggle btn--no-bg" title="Open menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
         <!--<ul class="js-item-actions item-actions__buttons">
-          <li><button class="js-item-action--edit item-actions__button" title="Edit">
-            <img src="/icons/edit.svg" alt="Edit" /></button></li>
           <li><button class="js-item-action--move-front item-actions__button" title="Move to front">
             <img src="/icons/arrow-top.svg" alt="Arrow pointing to top" /></button></li>
           <li><button class="js-item-action--move-end item-actions__button" title="Move to end">
@@ -121,7 +162,7 @@ const Queue = (function () {
         node.querySelector('.queue-item__img img').src = `https://www.clickcritters.com/images/adoptables/${newId}.gif`;
         node.querySelector('.queue-item__img a').href = `https://www.clickcritters.com/youradoptables.php?act=code&id=${newId}`;
       }
-      // Update target
+      // Update target level
       if (newTarget !== node.dataset.target) {
         node.dataset.target = newTarget;
         node.querySelector('.queue-item__target').textContent = newTarget;
@@ -213,12 +254,16 @@ const Queue = (function () {
     document.querySelector('#js-queue').addEventListener('click', (event) => {
       const target = event.target;
       const queueItem = event.target.closest('.queue-item');
-      if (target.classList.contains('js-item-action--delete')) {
+      const targetClasses = target.classList;
+
+      if (targetClasses.contains('js-item-action--delete')) {
         remove(queueItem.dataset.id);
-      } else if (target.classList.contains('js-item-action--move-front')) {
+      } else if (targetClasses.contains('js-item-action--move-front')) {
         move(queueItem.dataset.id, 'front');
-      } else if (target.classList.contains('js-item-action--move-end')) {
+      } else if (targetClasses.contains('js-item-action--move-end')) {
         move(queueItem.dataset.id, 'end');
+      } else if (targetClasses.contains('js-item-action--edit')) {
+        showEdit(queueItem.dataset.id, queueItem.dataset.target);
       }
     });
 

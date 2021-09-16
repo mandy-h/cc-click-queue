@@ -2,13 +2,13 @@ const Modal = (function () {
   function open(el) {
     el.classList.add('is-active');
     el.tabIndex = '0';
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
   }
 
   function close(el) {
     el.classList.remove('is-active');
     el.tabIndex = '-1';
-    document.body.style.overflow = 'visible';
+    document.body.classList.remove('modal-open');
   }
 
   function createElement(id, position, header = '', body = '') {
@@ -47,7 +47,7 @@ const Modal = (function () {
       target.addEventListener('click', () => close(el));
     });
     window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
+      if (event.code === 'Escape') {
         close(el);
       }
     });

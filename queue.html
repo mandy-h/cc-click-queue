@@ -46,18 +46,16 @@
         <div class="modal-window__body">
           <form id="js-add-adopts" class="add-adopts-form">
             <label>
-              Drop adoptable images anywhere on the page
+              <span class="u-inline-block u-mb5">Drop adoptable images anywhere on the page</span>
               <input name="adopt-ids" type="text" value="" required="required" class="hidden-input" />
               <div id="js-image-drop-area" class="image-drop-area"></div>
             </label>
             <br />
-            <br />
             <label>
-              Target level
+              <span class="u-inline-block u-mb5">Target level</span>
               <br />
               <input name="target-level" required="required" type="number" min="1" />
             </label>
-            <br />
             <br />
             <button id="js-add-adopts__submit" type="submit">Add to Queue</button>
           </form>
@@ -84,6 +82,7 @@
               <label><input type="radio" name="order" value="ascending" checked="checked">Ascending (lowest first)</label>
               <label><input type="radio" name="order" value="descending">Descending (highest first)</label>
             </fieldset>
+            <br />
             <button id="js-sort-all-form__submit" type="submit">Sort All Adoptables</button>
           </form>
         </div>
@@ -100,10 +99,11 @@
         <div class="modal-window__body">
           <form id="js-edit-all-form">
             <label>
-              Target level
+              <span class="u-inline-block u-mb5">Target level</span>
               <br />
               <input name="target" required="required" type="number" min="1" />
             </label>
+            <br />
             <button id="js-edit-all-form__submit" type="submit">Edit All Adoptables</button>
           </form>
         </div>
