@@ -56,24 +56,27 @@ form label {
   text-align: center;
 }
 
-.item-actions__toggle {
-  background: none;
-  border: none;
+.item-actions__toggle.is-active {
+  background-color: #ddd;
 }
 
-.item-actions__toggle:hover,
-.item-actions__toggle:focus,
-.item-actions__toggle:active {
-  background-color: #ddd;
+.queue.grid .item-actions__toggle.is-active + .item-actions__buttons {
+  display: flex;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.queue.list .item-actions__toggle.is-active + .item-actions__buttons {
+  display: inline-flex;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .item-actions__buttons {
-  background-color: #ddd;
-  border-radius: 2px;
-  display: flex;
+  display: none;
   list-style-type: none;
   margin: 0;
-  padding: 8px;
+  padding: 0;
   position: absolute;
   z-index: 1;
 }
@@ -175,6 +178,8 @@ form label {
 
 .button-group.sticky {
   background-color: var(--stickyBg);
+  margin-bottom: 24px;
+  margin-right: 24px;
   position: sticky;
   top: 0;
   transition: 200ms linear;
@@ -193,10 +198,11 @@ form label {
 
 .queue.grid {
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  row-gap: 20px;
+  row-gap: 30px;
 }
 
 .queue.list {
+  align-items: center;
   display: inline-grid;
   grid-template-columns: repeat(4, minmax(110px, 1fr));
   row-gap: 10px;
@@ -216,20 +222,18 @@ form label {
   display: contents;
 }
 
-.queue.list .queue-item > * {
-  align-items: center;
-  border-top: 1px solid gray;
-  display: flex;
-  height: 100%;
-  justify-content: center;
+.is-editable:hover {
+  background-color: #ddd;
+}
+
+.queue-item__img {
+  padding-bottom: 8px;
+  padding-top: 8px;
 }
 
 .queue-item__target {
+  margin-bottom: 8px;
   position: relative;
-}
-
-.queue-item__target:hover {
-  background-color: #ddd;
 }
 
 .queue-item__target .target-edit {

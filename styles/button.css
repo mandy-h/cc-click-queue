@@ -15,7 +15,6 @@ button {
 }
 
 button:hover,
-button:focus,
 button:active {
   filter: brightness(0.93);
 }
@@ -38,10 +37,9 @@ button > * + * {
   margin-left: 5px;
 }
 
-button.is-active {
+button.is-active:not(.btn--no-bg) {
   background-color: #47d8e5;
   box-shadow: none;
-  font-weight: bold;
   transform: translateY(var(--buttonTravel));
 }
 
@@ -64,13 +62,12 @@ button.is-active {
 .btn--no-bg:hover,
 .btn--no-bg:focus,
 .btn--no-bg:active {
-  background-color: #eee;
+  background-color: var(--mainBg);
   transform: none;
 }
 
 .button-group {
   display: inline-block;
-  padding: 10px;
   vertical-align: top;
 }
 

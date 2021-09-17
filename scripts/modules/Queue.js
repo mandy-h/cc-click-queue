@@ -113,17 +113,20 @@ const Queue = (function () {
     item.innerHTML = `
       <div class="queue-item__id">${id}</div>
       <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></a></div>
-      <div class="queue-item__target js-item-action--edit" title="Click to edit">${target}</div>
+      <div class="js-item-action--edit queue-item__target is-editable" title="Click to edit" tabindex="0">${target}</div>
       <div class="item-actions">
         <button class="js-item-actions-toggle item-actions__toggle btn--no-bg" title="Open menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
-        <!--<ul class="js-item-actions item-actions__buttons">
-          <li><button class="js-item-action--move-front item-actions__button" title="Move to front">
-            <img src="/icons/arrow-top.svg" alt="Arrow pointing to top" /></button></li>
-          <li><button class="js-item-action--move-end item-actions__button" title="Move to end">
-            <img src="/icons/arrow-bottom.svg" alt="Arrow pointing to bottom" /></button></li>
-          <li><button class="js-item-action--delete item-actions__button" title="Delete">
-            <img src="/icons/delete.svg" alt="Trash can" /></button></li>
-        </ul>-->
+        <div class="js-item-actions item-actions__buttons button-group button-group--no-margin">
+          <button class="js-item-action--move-front item-actions__button" title="Move to front">
+            <img src="/icons/arrow-top.svg" alt="Arrow pointing to top" />
+          </button>
+          <button class="js-item-action--move-end item-actions__button" title="Move to end">
+            <img src="/icons/arrow-bottom.svg" alt="Arrow pointing to bottom" />
+          </button>
+          <button class="js-item-action--delete item-actions__button" title="Delete">
+            <img src="/icons/delete.svg" alt="Trash can" />
+          </button>
+        </div>
       </div>
     `;
 
@@ -251,9 +254,13 @@ const Queue = (function () {
     document.querySelector('#js-btn--start-queue').addEventListener('click', startQueue);
     document.querySelector('#js-btn--list-view').addEventListener('click', () => ExtensionStorage.set({ view: 'list' }));
     document.querySelector('#js-btn--grid-view').addEventListener('click', () => ExtensionStorage.set({ view: 'grid' }));
+    // Using event delegation for buttons that are dynamically added to the DOM
     document.querySelector('#js-queue').addEventListener('click', (event) => {
       const target = event.target;
-      const queueItem = event.target.closest('.queue-item');
+      if (!target.matches('button') && !target.matches('.is-editable')) {
+        return;
+      }
+      const queueItem = target.closest('.queue-item');
       const targetClasses = target.classList;
 
       if (targetClasses.contains('js-item-action--delete')) {
@@ -264,6 +271,13 @@ const Queue = (function () {
         move(queueItem.dataset.id, 'end');
       } else if (targetClasses.contains('js-item-action--edit')) {
         showEdit(queueItem.dataset.id, queueItem.dataset.target);
+      } else if (targetClasses.contains('js-item-actions-toggle')) {
+        target.classList.toggle('is-active');
+      }
+
+      // Hide the pop-out menu for a queue item after clicking on a button inside the menu
+      if (target.closest('.item-actions__buttons')) {
+        target.closest('.item-actions').querySelector('.js-item-actions-toggle').classList.remove('is-active');
       }
     });
 
