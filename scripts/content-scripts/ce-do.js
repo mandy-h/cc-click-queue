@@ -7,22 +7,6 @@
     }
   }
 
-  /**
-   * Adds a loading message that covers entire question block.
-   */
-  function addLoadingMessage() {
-    if (!document.querySelector('.js-queue-loading-message')) {
-      // Create message
-      const el = document.createElement('div');
-      el.classList.add('js-queue-loading-message', 'loading-overlay');
-      el.innerText = 'Switching to next adoptable in queue...';
-
-      // Append message
-      const mainContent = document.querySelector('center');
-      mainContent.insertBefore(el, mainContent.firstChild);
-    }
-  }
-
   window.addEventListener('DOMContentLoaded', async () => {
     const result = await ExtensionStorage.get({ queue: [] });
     const { queue } = result;
