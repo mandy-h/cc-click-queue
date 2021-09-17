@@ -24,8 +24,8 @@
   }
 
   window.addEventListener('DOMContentLoaded', async () => {
-    const result = await ExtensionStorage.get({ queue: [], switchWithoutRedirect: true });
-    const { queue, switchWithoutRedirect } = result;
+    const result = await ExtensionStorage.get({ queue: [] });
+    const { queue } = result;
     const currentLevel = getAdoptableLevel();
 
     if (result.queue.length > 0 && currentLevel >= queue[0].target) {
@@ -41,22 +41,14 @@
         httpRequest.onreadystatechange = function () {
           if (this.readyState === 4 && this.status === 200) {
             // Done loading
-            if (switchWithoutRedirect) {
-              document.querySelector('.js-toast-message').remove();
-              const toast = Message.createToast('Switched to next adoptable in queue', 'success');
-              mainContent.insertBefore(toast, mainContent.firstChild);
-            } else {
-              window.location = 'https://www.clickcritters.com/clickexchange.php#next';
-            }
+            document.querySelector('.js-toast-message').remove();
+            const toast = Message.createToast('Switched to next adoptable in queue', 'success');
+            mainContent.insertBefore(toast, mainContent.firstChild);
           } else {
             // Still loading
-            if (switchWithoutRedirect) {
-              if (!document.querySelector('.js-toast-message')) {
-                const toast = Message.createToast('Loading...', 'info');
-                mainContent.insertBefore(toast, mainContent.firstChild);
-              }
-            } else {
-              addLoadingMessage();
+            if (!document.querySelector('.js-toast-message')) {
+              const toast = Message.createToast('Loading...', 'info');
+              mainContent.insertBefore(toast, mainContent.firstChild);
             }
           }
         };

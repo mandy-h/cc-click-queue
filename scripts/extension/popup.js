@@ -25,13 +25,6 @@
   window.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.js-start-queue').addEventListener('click', startQueue);
     document.querySelector('.js-edit-queue').addEventListener('click', openQueuePage);
-    document.querySelector('.js-options').addEventListener('click', () => {
-      if (chrome.runtime.openOptionsPage) {
-        chrome.runtime.openOptionsPage();
-      } else {
-        window.open(chrome.runtime.getURL('/options.html'));
-      }
-    });
 
     chrome.storage.local.get('queue', (result) => {
       if (result.queue) {
