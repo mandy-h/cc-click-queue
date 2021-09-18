@@ -26,8 +26,6 @@ const Queue = (function () {
     });
 
     ExtensionStorage.set({ queue });
-
-    Events.publish('queue/added-adopts', { ids, duplicateIds });
   }
 
   async function remove(id) {
