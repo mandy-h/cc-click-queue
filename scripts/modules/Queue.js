@@ -111,7 +111,9 @@ const Queue = (function () {
     item.innerHTML = `
       <div class="queue-item__id">${id}</div>
       <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></a></div>
-      <div class="js-item-action--edit queue-item__target is-editable" title="Click to edit" tabindex="0">${target}</div>
+      <div class="queue-item__target is-editable">
+        <button type="button" class="js-item-action--edit btn--invisible" aria-label="Edit" title="Click to edit"></button>${target}
+      </div>
       <div class="item-actions">
         <button class="js-item-actions-toggle item-actions__toggle btn--no-bg" title="Open menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
         <div class="js-item-actions item-actions__buttons button-group button-group--no-margin">
@@ -144,10 +146,13 @@ const Queue = (function () {
       extras--;
     }
 
+    let node;
+    let newId;
+    let newTarget;
     newData.forEach((newObj, index) => {
-      const node = parent.children[index];
-      const newId = newObj.id;
-      const newTarget = newObj.target;
+      node = parent.children[index];
+      newId = newObj.id;
+      newTarget = newObj.target;
 
       // A new item needs to be added
       if (!node) {
@@ -255,7 +260,7 @@ const Queue = (function () {
     // Using event delegation for buttons that are dynamically added to the DOM
     document.querySelector('#js-queue').addEventListener('click', (event) => {
       const target = event.target;
-      if (!target.matches('button') && !target.matches('.is-editable')) {
+      if (!target.matches('button')) {
         return;
       }
       const queueItem = target.closest('.queue-item');

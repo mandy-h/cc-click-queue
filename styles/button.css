@@ -66,6 +66,19 @@ button.is-active:not(.btn--no-bg) {
   transform: none;
 }
 
+/* For keyboard accessibility */
+.btn--invisible {
+  appearance: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: block;
+  font-size: 0;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .button-group {
   display: inline-block;
   vertical-align: top;

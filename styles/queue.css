@@ -51,6 +51,22 @@ form label {
   width: 0;
 }
 
+.is-editable {
+  position: relative;
+}
+
+.is-editable:hover {
+  background-color: #ddd;
+}
+
+.is-editable > .btn--invisible {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 .item-actions {
   position: relative;
   text-align: center;
@@ -220,10 +236,6 @@ form label {
 .queue.list > .queue__header,
 .queue.list .queue-item {
   display: contents;
-}
-
-.is-editable:hover {
-  background-color: #ddd;
 }
 
 .queue-item__img {
