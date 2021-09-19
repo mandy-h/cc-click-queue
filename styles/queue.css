@@ -51,15 +51,24 @@ form label {
   width: 0;
 }
 
-.is-editable {
+.editable {
   position: relative;
 }
 
-.is-editable:hover {
+.editable:hover {
   background-color: #ddd;
 }
 
-.is-editable > .btn--invisible {
+.editable__text {
+  pointer-events: none;
+}
+
+.editable__input {
+  text-align: center;
+}
+
+.editable__trigger,
+.editable__input {
   height: 100%;
   left: 0;
   position: absolute;
@@ -213,12 +222,14 @@ form label {
 }
 
 .queue.grid {
+  column-gap: 10px;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   row-gap: 30px;
 }
 
 .queue.list {
   align-items: center;
+  column-gap: 10px;
   display: inline-grid;
   grid-template-columns: repeat(4, minmax(110px, 1fr));
   row-gap: 10px;
@@ -243,18 +254,8 @@ form label {
   padding-top: 8px;
 }
 
-.queue-item__target {
+.queue-item__target-wrapper {
   margin-bottom: 8px;
-  position: relative;
-}
-
-.queue-item__target .target-edit {
-  left: 0;
-  margin: auto;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  width: 100%;
 }
 
 .u-inline-block {

@@ -66,7 +66,7 @@ const Queue = (function () {
 
     // Create input element
     const el = document.createElement('input');
-    el.classList.add('js-target-edit', 'target-edit');
+    el.classList.add('js-target-edit', 'editable__input');
     el.type = 'number';
     el.value = target;
     el.min = '1';
@@ -87,7 +87,7 @@ const Queue = (function () {
     });
 
     // Append to DOM and focus
-    queueItem.querySelector('.queue-item__target').appendChild(el);
+    queueItem.querySelector('.queue-item__target-wrapper').appendChild(el);
     el.focus();
   }
 
@@ -111,8 +111,9 @@ const Queue = (function () {
     item.innerHTML = `
       <div class="queue-item__id">${id}</div>
       <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></a></div>
-      <div class="queue-item__target is-editable">
-        <button type="button" class="js-item-action--edit btn--invisible" aria-label="Edit" title="Click to edit"></button>${target}
+      <div class="queue-item__target-wrapper editable">
+        <button type="button" class="js-item-action--edit editable__trigger btn--invisible" aria-label="Edit" title="Click to edit"></button>
+        <span class="queue-item__target editable__text">${target}</span>
       </div>
       <div class="item-actions">
         <button class="js-item-actions-toggle item-actions__toggle btn--no-bg" title="Open menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
