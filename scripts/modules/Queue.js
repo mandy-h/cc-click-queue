@@ -143,7 +143,7 @@ const Queue = (function () {
     // Remove extra elements from DOM
     let extras = parent.children.length - newData.length;
     while (extras > 0) {
-      parent.removeChild(parent.lastChild);
+      parent.removeChild(parent.firstElementChild);
       extras--;
     }
 
