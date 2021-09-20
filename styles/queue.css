@@ -1,0 +1,273 @@
+/**
+ * Styles for the queue page.
+ */
+
+:root {
+  --mainBg: hsl(0, 0%, 92%);
+  --modalBg: var(--mainBg);
+  --activeColor: #47d8e5;
+  --stickyBg: hsla(0, 0%, 92%, 0.6);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--mainBg);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+body.modal-open {
+  height: 100vh;
+  overflow-y: hidden;
+  padding-right: 16px;
+}
+
+fieldset {
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+legend {
+  font-weight: bold;
+}
+
+form label {
+  display: block;
+}
+
+.hidden-input {
+  float: left;
+  height: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  width: 0;
+}
+
+.editable {
+  position: relative;
+}
+
+.editable:hover {
+  background-color: #ddd;
+}
+
+.editable__text {
+  pointer-events: none;
+}
+
+.editable__input {
+  text-align: center;
+}
+
+.editable__trigger,
+.editable__input {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.item-actions {
+  position: relative;
+  text-align: center;
+}
+
+.item-actions__toggle.is-active {
+  background-color: #ddd;
+}
+
+.queue.grid .item-actions__toggle.is-active + .item-actions__buttons {
+  display: flex;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.queue.list .item-actions__toggle.is-active + .item-actions__buttons {
+  display: inline-flex;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.item-actions__buttons {
+  display: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.modal {
+  height: 100vh;
+  left: 0;
+  max-width: 100%;
+  position: fixed;
+  top: 0;
+  transition-property: visibility;
+  visibility: hidden;
+  width: 100vw;
+  z-index: 9;
+}
+
+.modal.is-active {
+  visibility: visible;
+}
+
+.modal-window {
+  background-color: var(--modalBg);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.6);
+  max-height: 90vh;
+  max-width: 85vw;
+  min-width: min-content;
+  overflow: auto;
+  position: absolute;
+  transition: 300ms ease-out;
+  width: fit-content;
+  z-index: 15;
+}
+
+.modal-window__header {
+  align-items: center;
+  background-color: inherit;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+}
+
+.modal-window__close {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.modal-window__body {
+  max-width: inherit;
+  padding: 20px;
+  width: inherit;
+}
+
+.modal--top > .modal-window {
+  left: 0;
+  margin: auto;
+  right: 0;
+  top: 0;
+  transform: translateY(-101%);
+}
+
+.modal--top.is-active > .modal-window {
+  transform: translateY(0);
+}
+
+.modal.is-active > .scrim {
+  opacity: 1;
+}
+
+.scrim {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: 300ms linear;
+  width: 100%;
+  z-index: 10;
+}
+
+.image-drop-area {
+  background-color: hsl(0, 0%, 97%);
+  border: 1px solid gray;
+  max-height: 60vh;
+  max-width: 100%;
+  min-height: calc(130px * 2);
+  overflow: auto;
+  padding: 10px;
+  width: calc(100px * 7);
+}
+
+.image-drop-area--active {
+  border: 2px solid var(--activeColor);
+}
+
+.button-group.sticky {
+  background-color: var(--stickyBg);
+  margin-bottom: 24px;
+  margin-right: 24px;
+  position: sticky;
+  top: 0;
+  transition: 200ms linear;
+  z-index: 5;
+}
+
+.queue {
+  display: grid;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.queue__header {
+  display: none;
+  font-weight: bold;
+}
+
+.queue.grid {
+  column-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  row-gap: 30px;
+}
+
+.queue.list {
+  align-items: center;
+  column-gap: 10px;
+  display: inline-grid;
+  grid-template-columns: repeat(4, minmax(110px, 1fr));
+  row-gap: 10px;
+}
+
+.queue.grid > .queue__header {
+  display: none;
+}
+
+.queue.grid > .queue__body {
+  display: contents;
+}
+
+.queue.list > .queue__body,
+.queue.list > .queue__header,
+.queue.list .queue-item {
+  display: contents;
+}
+
+.queue-item__img {
+  padding-bottom: 8px;
+  padding-top: 8px;
+}
+
+.queue-item__target-wrapper {
+  margin-bottom: 8px;
+}
+
+.u-inline-block {
+  display: inline-block;
+}
+.u-m0 {
+  margin: 0;
+}
+.u-mb5 {
+  margin-bottom: 5px;
+}
+.u-p20 {
+  padding: 20px;
+}

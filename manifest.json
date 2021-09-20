@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "CC Click Queue",
-  "version": "1.0",
+  "version": "1.1",
   "author": "mandy-h",
   "description": "Chrome extension to simulate a queue for the Click Exchange",
   "permissions": [
@@ -13,21 +13,21 @@
   },
   "background": {
     "scripts": [
-      "scripts/background.js"
+      "/scripts/extension/background.js"
     ],
     "persistent": false
-  },
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": false
   },
   "content_scripts": [
     {
       "matches": [
         "https://www.clickcritters.com/clickexchange.php"
       ],
+      "css": [
+        "/styles/message.css"
+      ],
       "js": [
-        "scripts/ce-home.js"
+        "/scripts/modules/Message.js",
+        "/scripts/content-scripts/ce-home.js"
       ],
       "run_at": "document_start"
     },
@@ -35,8 +35,13 @@
       "matches": [
         "https://www.clickcritters.com/clickexchange.php?act=doCE*"
       ],
+      "css": [
+        "/styles/message.css"
+      ],
       "js": [
-        "scripts/ce-do.js"
+        "/scripts/modules/ExtensionStorage.js",
+        "/scripts/modules/Message.js",
+        "/scripts/content-scripts/ce-do.js"
       ],
       "run_at": "document_start"
     },
@@ -44,8 +49,12 @@
       "matches": [
         "https://www.clickcritters.com/clickexchange.php?act=choose*"
       ],
+      "css": [
+        "/styles/message.css"
+      ],
       "js": [
-        "scripts/ce-choose-adopt.js"
+        "/scripts/modules/Message.js",
+        "/scripts/content-scripts/ce-choose-adopt.js"
       ],
       "run_at": "document_start"
     }

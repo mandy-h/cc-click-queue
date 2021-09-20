@@ -4,7 +4,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // Set default extension settings
-  chrome.storage.local.set({ switchWithoutRedirect: true });
+  chrome.storage.local.set({ view: 'list' });
 });
 
 chrome.storage.onChanged.addListener((changes) => {

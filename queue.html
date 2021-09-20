@@ -1,142 +1,121 @@
+<!DOCTYPE html>
 <html>
-
   <head>
     <title>Click Queue</title>
-
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      label,
-      p {
-        font-size: 1rem;
-      }
-
-      button {
-        background-color: #efefef;
-        border: 1px solid #767676;
-        border-radius: 2px;
-        padding: .25rem .5rem;
-        white-space: nowrap;
-      }
-
-      button:hover,
-      button:active {
-        filter: brightness(.93);
-      }
-
-      button>* {
-        pointer-events: none;
-      }
-
-      .hidden-input {
-        float: left;
-        height: 0;
-        margin: 0;
-        opacity: 0;
-        padding: 0;
-        width: 0;
-      }
-
-      .btn--red {
-        background-color: lightsalmon;
-        border: 1px solid red;
-      }
-
-      .btn--green {
-        background-color: lightgreen;
-        border: 1px solid green;
-      }
-
-      .flex {
-        display: flex;
-      }
-
-      .column {
-        padding: 0 10px;
-      }
-
-      .column:first-child {
-        border-right: 1px solid gray;
-      }
-
-      .image-drop-area {
-        background-color: #eee;
-        border: 1px solid gray;
-        height: calc(130px * 6);
-        overflow: auto;
-        max-height: 60vh;
-        padding: 10px;
-        width: calc(100px * 4);
-      }
-
-      .image-drop-area--active {
-        border: 2px solid blue;
-      }
-
-      .queue-wrapper {
-        height: 90vh;
-        overflow: auto;
-        padding: 10px;
-      }
-
-      .queue {
-        min-width: 320px;
-        text-align: center;
-      }
-
-      .queue th {
-        padding: 5px 0;
-      }
-
-      .queue td {
-        border-top: 1px solid gray;
-        text-align: center;
-      }
-    </style>
+    <link rel="stylesheet" href="/styles/button.css">
+    <link rel="stylesheet" href="/styles/queue.css">
   </head>
 
   <body>
-    <h1>Click Queue</h1>
-    <div class="flex">
-      <div class="column">
-        <form id="js-add-adopts">
-          <label>
-            Drop adoptable images below
-            <input name="adopt-ids" type="text" value="" required="required" class="hidden-input" />
-            <div id="js-image-drop-area" class="image-drop-area"></div>
-          </label>
-          <br />
-          <br />
-          <label>
-            Target level
-            <br />
-            <input name="target-level" required="required" type="number" />
-          </label>
-          <br />
-          <br />
-          <button id="js-add-adopts__submit">Add to Queue</button>
-        </form>
-      </div>
-      <div class="column">
-        <button class="js-clear-queue btn btn--red">Clear Queue</button>
-        <button class="js-start-queue btn btn--green">Start Queue</button>
-        <p class="js-queue-count"></p>
-        <div class="queue-wrapper">
-          <table id="js-queue" class="queue" cellspacing="0">
-            <thead>
-              <th>ID</th>
-              <th>Image</th>
-              <th>Target Level</th>
-            </thead>
-            <tbody></tbody>
-          </table>
+    <!-- Main section -->
+    <section class="u-p20">
+      <h1>Click Queue</h1>
+      <div class="button-group sticky">
+        <div style="margin-bottom: 10px;">
+          <button id="js-btn--add-adopts"><strong>Add Adoptables</strong></button>
+          <button id="js-btn--sort-all">Sort All</button>
+          <button id="js-btn--edit-all">Edit All</button>
+        </div>
+        <div>
+          <button id="js-btn--clear-queue" class="btn btn--red">Clear Queue</button>
+          <button id="js-btn--start-queue" class="btn btn--green">Start Queue</button>
         </div>
       </div>
+      <div class="button-group button-group--no-margin">
+        <button id="js-btn--list-view">List View</button>
+        <button id="js-btn--grid-view">Grid View</button>
+      </div>
+      <p class="js-queue-count"></p>
+      <div id="js-queue" class="queue">
+        <div class="queue__header">
+          <span>ID</span>
+          <span>Image</span>
+          <span>Target Level</span>
+          <span></span>
+        </div>
+        <div class="queue__body"></div>
+      </div>
+    </section>
+
+    <!-- Add Adopts modal-->
+    <div id="js-modal--add-adopts" class="modal modal--top" role="dialog" tabindex="-1">
+      <div class="modal-window">
+        <div class="modal-window__header">
+          <h2 class="u-m0">Add Adoptables</h2><button class="modal-window__close btn--no-bg"><img src="/icons/close.svg" alt="Close"></button>
+        </div>
+        <div class="modal-window__body">
+          <form id="js-add-adopts" class="add-adopts-form">
+            <label>
+              <span class="u-inline-block u-mb5">Drop adoptable images anywhere on the page</span>
+              <input name="adopt-ids" type="text" value="" required="required" class="hidden-input" />
+              <div id="js-image-drop-area" class="image-drop-area"></div>
+            </label>
+            <br />
+            <label>
+              <span class="u-inline-block u-mb5">Target level</span>
+              <br />
+              <input name="target-level" required="required" type="number" min="1" />
+            </label>
+            <br />
+            <button id="js-add-adopts__submit" type="submit">Add to Queue</button>
+          </form>
+        </div>
+      </div>
+      <div class="scrim"></div>
     </div>
 
-    <script src="scripts/queue.js"></script>
-  </body>
+    <!-- Sort All form -->
+    <div id="js-modal--sort-all" class="modal modal--top" role="dialog" tabindex="-1">
+      <div class="modal-window">
+        <div class="modal-window__header">
+          <h2 class="u-m0">Sort All</h2><button class="modal-window__close btn--no-bg"><img src="/icons/close.svg" alt="Close"></button>
+        </div>
+        <div class="modal-window__body">
+          <form id="js-sort-all-form" class="sort-all-form">
+            <fieldset>
+              <legend>Sort by</legend>
+              <label><input type="radio" name="param" value="id" checked="checked">ID</label>
+              <label><input type="radio" name="param" value="target">Target level</label>
+            </fieldset>
+            <fieldset>
+              <legend>Order</legend>
+              <label><input type="radio" name="order" value="ascending" checked="checked">Ascending (lowest first)</label>
+              <label><input type="radio" name="order" value="descending">Descending (highest first)</label>
+            </fieldset>
+            <br />
+            <button id="js-sort-all-form__submit" type="submit">Sort All Adoptables</button>
+          </form>
+        </div>
+      </div>
+      <div class="scrim"></div>
+    </div>
 
+    <!-- Edit All form -->
+    <div id="js-modal--edit-all" class="modal modal--top" role="dialog" tabindex="-1">
+      <div class="modal-window">
+        <div class="modal-window__header">
+          <h2 class="u-m0">Edit All</h2><button class="modal-window__close btn--no-bg"><img src="/icons/close.svg" alt="Close"></button>
+        </div>
+        <div class="modal-window__body">
+          <form id="js-edit-all-form">
+            <label>
+              <span class="u-inline-block u-mb5">Target level</span>
+              <br />
+              <input name="target" required="required" type="number" min="1" />
+            </label>
+            <br />
+            <button id="js-edit-all-form__submit" type="submit">Edit All Adoptables</button>
+          </form>
+        </div>
+      </div>
+      <div class="scrim"></div>
+    </div>
+
+    <script src="/scripts/modules/ExtensionStorage.js"></script>
+    <script src="/scripts/modules/Events.js"></script>
+    <script src="/scripts/modules/Modal.js"></script>
+    <script src="/scripts/modules/ImageDrop.js"></script>
+    <script src="/scripts/modules/Queue.js"></script>
+    <script src="/scripts/extension/app.js"></script>
+  </body>
 </html>
