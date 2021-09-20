@@ -12,10 +12,17 @@ This is a Chrome extension to simulate an adoptable queue for the Click Exchange
 # Usage
 1. Click on the extension icon to open the pop-up menu.
 2. Click on **Edit Queue**.
-3. From a separate window, drag and drop the images of the adoptables you want to add to the queue. Images can be dragged one at a time, or multiple images can be selected at once by highlighting them.
-![Selecting multiple images](./readme-img1.png)
-4. On the queue page, enter the target level for these adoptables, and then click **Add to Queue**.
-5. Click on **Start Queue**.
-6. If you manually change the first adoptable afterwards, either by moving another adoptable to the front of the queue or removing the first adoptable in the queue, you need to click on **Start Queue** again.
+3. Click on **Add Adoptables**.
+4. From a separate window, drag and drop the images of the adoptables you want to add to the queue. Images can be dragged over one at a time, or multiple images can be selected at once by highlighting them.
+![Selecting multiple images](/../screenshots/readme-img1.png?raw=true)
+5. On the queue page, enter the target level for these adoptables, and then click **Add to Queue**.
+6. Click on **Start Queue**.
 
-Note: **This extension will not check that the adoptable you have selected in the Click Exchange is actually in the queue.** Disable this extension if you want to click another adoptable that is not in your queue.
+# Additional Notes
+* If you **manually change the first adoptable** afterwards by doing any of the following,
+   * moving another adoptable to the front of the queue
+   * removing the first adoptable in the queue
+   * using the "Sort All" menu
+
+  then you need to click on **Start Queue** again. Otherwise, you may end up adding clicking the wrong adoptable in the Click Exchange.
+* **This extension will not check that the adoptable you have selected in the Click Exchange is actually in the queue.** Disable this extension if you want to click another adoptable that is not in your queue.
