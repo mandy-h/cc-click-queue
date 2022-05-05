@@ -1,4 +1,8 @@
 (function () {
+  /**
+   * Returns the total level (current level + credits).
+   * @returns {Number}
+   */
   function getAdoptableLevel() {
     const levelText = document.querySelector('center').innerText.match(/Total: \d+/);
     if (levelText) {
@@ -7,12 +11,34 @@
     }
   }
 
+  /**
+   * Renders the level progress section.
+   * @param {Number} currentLevel 
+   * @param {Number} targetLevel 
+   */
+  function renderLevelProgress(currentLevel, targetLevel) {
+    const progress = document.createElement('div');
+    progress.innerHTML = `
+      <p>Level progress: ${currentLevel} / ${targetLevel} (<strong>${Math.max(0, targetLevel - currentLevel)}</strong> more credits to go!)</p>
+      <div class="progress-bar">
+        <div class="progress-bar__foreground" style="width: ${(currentLevel / targetLevel * 100).toFixed(2)}%;"></div>
+      </div>
+    `;
+
+    const changeAdoptLink = document.querySelector('[href*="clickexchange.php?act=choose"]');
+    if (changeAdoptLink) {
+      document.querySelector('center').insertBefore(progress, changeAdoptLink.nextElementSibling);
+    }
+  }
+
   window.addEventListener('DOMContentLoaded', async () => {
     const result = await ExtensionStorage.get({ queue: [] });
     const { queue } = result;
     const currentLevel = getAdoptableLevel();
+    const targetLevel = queue[0].target;
+    renderLevelProgress(currentLevel, targetLevel);
 
-    if (result.queue.length > 0 && currentLevel >= queue[0].target) {
+    if (queue.length > 0 && currentLevel >= targetLevel) {
       // Remove first adopt in queue
       queue.shift();
       // Update storage
