@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.get({ queue: [] }, (result) => {
-    chrome.browserAction.setBadgeText({ text: (result.queue.length).toString() });
+    chrome.action.setBadgeText({ text: (result.queue.length).toString() });
   });
 
   // Set default extension settings
@@ -9,6 +9,6 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.storage.onChanged.addListener((changes) => {
   if (changes.queue) {
-    chrome.browserAction.setBadgeText({ text: (changes.queue.newValue.length).toString() });
+    chrome.action.setBadgeText({ text: (changes.queue.newValue.length).toString() });
   }
 });
