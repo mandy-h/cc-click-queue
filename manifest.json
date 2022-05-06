@@ -1,21 +1,20 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "CC Click Queue",
   "version": "2.1",
   "author": "mandy-h",
   "description": "Chrome extension to simulate a queue for the Click Exchange",
   "permissions": [
-    "storage",
+    "storage"
+  ],
+  "host_permissions": [
     "https://clickcritters.com/clickexchange.php*"
   ],
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": [
-      "/scripts/extension/background.js"
-    ],
-    "persistent": false
+    "service_worker": "/scripts/extension/background.js"
   },
   "content_scripts": [
     {
