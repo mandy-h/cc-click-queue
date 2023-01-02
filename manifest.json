@@ -5,7 +5,10 @@
   "author": "mandy-h",
   "description": "Chrome extension to simulate a queue for the Click Exchange",
   "permissions": [
-    "storage"
+    "storage",
+    "contextMenus",
+    "scripting",
+    "activeTab"
   ],
   "host_permissions": [
     "https://clickcritters.com/clickexchange.php*"
