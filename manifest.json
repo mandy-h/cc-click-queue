@@ -6,6 +6,11 @@
   "description": "Chrome extension to simulate a queue for the Click Exchange",
   "permissions": [
     "storage",
+    "contextMenus",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
     "https://clickcritters.com/clickexchange.php*"
   ],
   "browser_action": {
