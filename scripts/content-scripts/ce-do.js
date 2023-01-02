@@ -34,6 +34,10 @@
   window.addEventListener('DOMContentLoaded', async () => {
     const result = await ExtensionStorage.get({ queue: [] });
     const { queue } = result;
+    if (queue.length === 0) {
+      return;
+    }
+
     const currentLevel = getAdoptableLevel();
     const targetLevel = queue[0].target;
     renderLevelProgress(currentLevel, targetLevel);
