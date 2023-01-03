@@ -1,4 +1,14 @@
 const ImageDrop = (function () {
+  function parseIdsAndImagesFromHtml(htmlString) {
+    const parser = new DOMParser();
+    const imageUrls = Array.from(parser.parseFromString(htmlString, 'text/html')
+      .body.querySelectorAll('img[src*="/images/adoptables/"]'))
+      .map((image) => image.src);
+    const adoptableIds = imageUrls.map((url) => url.match(/\d+/)?.[0]);
+
+    return { adoptableIds, imageUrls };
+  }
+
   function handleDragover(event) {
     event.preventDefault();
     if (document.querySelector('#js-modal--add-adopts.is-active')) {
@@ -11,15 +21,11 @@ const ImageDrop = (function () {
     if (document.querySelector('#js-modal--add-adopts.is-active')) {
       const dropArea = document.querySelector('#js-image-drop-area');
       const dropData = event.dataTransfer.getData('text/html');
-      const parser = new DOMParser();
-      const droppedImageUrls = Array.from(parser.parseFromString(dropData, 'text/html')
-        .body.querySelectorAll('img[src*="/images/adoptables/"]'))
-        .map((image) => image.src);
-      const adoptableIds = droppedImageUrls.map((url) => url.match(/\d+/));
+      const { adoptableIds, imageUrls } = parseIdsAndImagesFromHtml(dropData);
 
       dropArea.classList.remove('image-drop-area--active');
       const fragment = document.createDocumentFragment();
-      droppedImageUrls.forEach((url) => {
+      imageUrls.forEach((url) => {
         const image = document.createElement('img');
         image.src = url;
         fragment.appendChild(image);
