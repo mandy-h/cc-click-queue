@@ -92,7 +92,9 @@ const Queue = (function () {
   }
 
   function clear() {
-    ExtensionStorage.set({ queue: [] });
+    if (window.confirm('Do you really want to clear the queue?')) {
+      ExtensionStorage.set({ queue: [] });
+    }
   }
 
   function startQueue() {
