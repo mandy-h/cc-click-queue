@@ -8,7 +8,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
   chrome.contextMenus.create({
     title: 'Add to queue',
-    contexts: ['image'],
+    contexts: ['image', 'selection'],
     documentUrlPatterns: ['https://clickcritters.com/*', 'https://www.clickcritters.com/*'],
     id: 'addToQueue'
   });
