@@ -18,6 +18,10 @@ This is a Chrome extension to simulate an adoptable queue for the Click Exchange
 5. On the queue page, enter the target level for these adoptables, and then click **Add to Queue**.
 6. Click on **Start Queue**.
 
+To quickly add new adoptables without having to open up the queue page, you can also right-click on an adoptable or highlighted adoptables. There will be a button labeled "Add to queue". In Chrome and Firefox, this button is near the buttom, grouped together with context menus from other browser extensions.
+
+!["Add to queue" context menu](/../screenshots/readme-img2.png?raw=true)
+
 # Additional Notes
 * If you **manually change the first adoptable** afterwards by doing any of the following,
    * moving another adoptable to the front of the queue
