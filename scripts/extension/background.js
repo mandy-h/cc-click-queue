@@ -14,6 +14,12 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+chrome.runtime.onStartup.addListener(() => {
+  chrome.storage.local.get({ queue: [] }, (result) => {
+    chrome.action.setBadgeText({ text: (result.queue.length).toString() });
+  });
+});
+
 chrome.storage.onChanged.addListener((changes) => {
   if (changes.queue) {
     chrome.action.setBadgeText({ text: (changes.queue.newValue.length).toString() });
