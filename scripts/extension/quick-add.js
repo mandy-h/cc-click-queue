@@ -98,7 +98,17 @@ function quickAdd(info) {
   }
 
   (function init() {
-    const targetLevel = window.prompt('Enter target level:');
+    let targetLevel = window.prompt('Target level:');
+    const isInteger = /^(\d)+$/;
+    while (true) {
+      if (isInteger.test(targetLevel) || targetLevel === null) {
+        // A number was entered, or the Cancel button was clicked
+        break;
+      } else {
+        targetLevel = window.prompt('Your input was invalid. Please enter an integer, or click "Cancel". \nTarget level:');
+      }
+    }
+
     const selection = getHtmlOfSelection();
 
     if (selection) {
