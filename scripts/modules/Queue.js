@@ -105,6 +105,11 @@ const Queue = (function () {
     });
   }
 
+  function closeActiveModal() {
+    // Not great, but it works
+    document.querySelector('.modal.is-active .modal-window__close').click();
+  }
+
   function createQueueItem(id, target) {
     const item = document.createElement('div');
     item.classList.add('queue-item');
@@ -282,18 +287,21 @@ const Queue = (function () {
       event.preventDefault();
       const data = new FormData(this);
       handleSortAllFormSubmit(data);
+      closeActiveModal();
     });
     document.querySelector('#js-edit-all-form').addEventListener('submit', function (event) {
       event.preventDefault();
       const data = new FormData(this);
       handleEditAllFormSubmit(data);
       this.reset();
+      closeActiveModal();
     });
     document.querySelector('#js-loop-form').addEventListener('submit', function (event) {
       event.preventDefault();
       const data = new FormData(this);
       handleLoopFormSubmit(data);
       render();
+      closeActiveModal();
     });
 
     // Buttons
