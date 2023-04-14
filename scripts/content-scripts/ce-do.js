@@ -48,7 +48,7 @@
       // Remove first adopt in queue
       const removedAdopt = queue.shift();
       // If looping is enabled, add the adopt back to the end of the queue with the new target level
-      if (loop.enabled && targetLevel < loop.target) {
+      if (loop.enabled && currentLevel < loop.target) {
         removedAdopt.target = Math.min(loop.target, (Number(targetLevel) + Number(loop.increment)));
         queue.push(removedAdopt);
         switchMessage = `Switched to next adoptable in queue and added the previous adopt back to the queue`;
