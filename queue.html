@@ -15,17 +15,19 @@
           <button id="js-btn--add-adopts"><strong>Add Adoptables</strong></button>
           <button id="js-btn--sort-all">Sort All</button>
           <button id="js-btn--edit-all">Edit All</button>
+          <button id="js-btn--loop">Loop Settings</button>
         </div>
         <div>
           <button id="js-btn--clear-queue" class="btn btn--red">Clear Queue</button>
           <button id="js-btn--start-queue" class="btn btn--green">Start Queue</button>
         </div>
       </div>
-      <div class="button-group button-group--no-margin">
+      <div class="button-group button-group--no-margin" style="margin-right: 20px">
         <button id="js-btn--list-view">List View</button>
         <button id="js-btn--grid-view">Grid View</button>
       </div>
       <p class="js-queue-count"></p>
+      <p class="js-loop-setting-values"></p>
       <div id="js-queue" class="queue">
         <div class="queue__header">
           <span>ID</span>
@@ -140,6 +142,26 @@
             <button id="js-edit-all-form__submit" type="submit">
               Edit All Adoptables
             </button>
+          </form>
+        </div>
+      </div>
+      <div class="scrim"></div>
+    </div>
+
+    <div id="js-modal--loop" class="modal modal--top" role="dialog" tabindex="-1">
+      <div class="modal-window">
+        <div class="modal-window__header">
+          <h2 class="u-m0">Loop Settings</h2>
+          <button class="modal-window__close btn--no-bg">
+            <img src="/icons/close.svg" alt="Close" />
+          </button>
+        </div>
+        <div class="modal-window__body">
+          <form id="js-loop-form">
+            <label>Enabled <input name="enabled" type="checkbox" /></label>
+            <label>Target level <input name="target" type="number" min="1" /></label>
+            <label>Increment <input name="increment" type="number" min="10" /></label>
+            <button id="js-loop-form__submit" type="submit">Save Settings</button>
           </form>
         </div>
       </div>

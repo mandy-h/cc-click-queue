@@ -6,7 +6,7 @@ const ExtensionStorage = {
    */
   get(data) {
     return new Promise((resolve) => {
-      chrome.storage.local.get(data || ['queue', 'view'], (result) => {
+      chrome.storage.local.get(data || ['queue', 'view', 'loop'], (result) => {
         resolve(result);
       });
     });

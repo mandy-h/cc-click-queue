@@ -32,8 +32,8 @@
   }
 
   window.addEventListener('DOMContentLoaded', async () => {
-    const result = await ExtensionStorage.get({ queue: [] });
-    const { queue } = result;
+    const result = await ExtensionStorage.get(['queue', 'loop']);
+    const { queue, loop } = result;
     if (queue.length === 0) {
       return;
     }
@@ -43,8 +43,16 @@
     renderLevelProgress(currentLevel, targetLevel);
 
     if (queue.length > 0 && currentLevel >= targetLevel) {
+      let switchMessage = 'Switched to next adoptable in queue';
+
       // Remove first adopt in queue
-      queue.shift();
+      const removedAdopt = queue.shift();
+      // If looping is enabled, add the adopt back to the end of the queue with the new target level
+      if (loop.enabled && targetLevel < loop.target) {
+        removedAdopt.target = Math.min(loop.target, (Number(targetLevel) + Number(loop.increment)));
+        queue.push(removedAdopt);
+        switchMessage = `Switched to next adoptable in queue and added the previous adopt back to the queue`;
+      }
       // Update storage
       await ExtensionStorage.set({ queue });
 
@@ -56,7 +64,7 @@
           if (this.readyState === 4 && this.status === 200) {
             // Done loading
             document.querySelector('.js-toast-message').remove();
-            const toast = Message.createToast('Switched to next adoptable in queue', 'success');
+            const toast = Message.createToast(switchMessage, 'success');
             mainContent.insertBefore(toast, mainContent.firstChild);
           } else {
             // Still loading

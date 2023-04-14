@@ -180,12 +180,21 @@ const Queue = (function () {
   }
 
   async function render() {
-    const result = await ExtensionStorage.get({ queue: [] });
+    const result = await ExtensionStorage.get(['queue', 'loop']);
     const queueTable = document.querySelector('#js-queue .queue__body');
     queueDiff(result.queue, queueTable);
 
     document.querySelector('.js-queue-count').innerHTML
       = `You have <strong>${result.queue.length}</strong> adoptables left to click!`;
+
+    let loopMessage;
+    if (result.loop.enabled) {
+      loopMessage = `<strong>Looping is enabled.</strong> Adoptables with target levels set below ${result.loop.target} will loop with 
+        targets increasing by ${result.loop.increment} until this target is reached.`;
+    } else {
+      loopMessage = 'Looping is disabled.';
+    }
+    document.querySelector('.js-loop-setting-values').innerHTML = loopMessage;
   }
 
   function renderView(view) {
@@ -203,7 +212,10 @@ const Queue = (function () {
     }
   }
 
-  function handleSortAllFormSubmit(sortParam, order) {
+  function handleSortAllFormSubmit(data) {
+    const sortParam = data.get('param');
+    const order = data.get('order');
+
     ExtensionStorage.get('queue').then((result) => {
       const queue = result.queue;
       if (order === 'ascending') {
@@ -217,7 +229,9 @@ const Queue = (function () {
     });
   }
 
-  function handleEditAllFormSubmit(target) {
+  function handleEditAllFormSubmit(data) {
+    const target = data.get('target');
+
     ExtensionStorage.get('queue').then((result) => {
       const queue = result.queue.map((el) => {
         return { id: el.id, target }
@@ -228,31 +242,58 @@ const Queue = (function () {
     });
   }
 
+  function handleLoopFormSubmit(data) {
+    ExtensionStorage.set({
+      loop: {
+        enabled: data.get('enabled'),
+        target: data.get('target'),
+        increment: data.get('increment')
+      }
+    });
+  }
+
   function init() {
     // Set list/grid view
     ExtensionStorage.get('view').then((result) => {
       renderView(result.view);
     });
+
     // Render queue
     render();
+
     // Initialize modals
     Modal.create({ id: 'js-modal--add-adopts', toggle: document.querySelector('#js-btn--add-adopts') });
     Modal.create({ id: 'js-modal--sort-all', toggle: document.querySelector('#js-btn--sort-all') });
     Modal.create({ id: 'js-modal--edit-all', toggle: document.querySelector('#js-btn--edit-all') });
+    Modal.create({ id: 'js-modal--loop', toggle: document.querySelector('#js-btn--loop') });
+
+    // Display stored values on load
+    ExtensionStorage.get('loop').then((result) => {
+      document.querySelector('#js-modal--loop [name="enabled"]').checked =
+        result.loop.enabled;
+      document.querySelector('#js-modal--loop [name="target"]').value =
+        result.loop.target;
+      document.querySelector('#js-modal--loop [name="increment"]').value =
+        result.loop.increment;
+    });
+
     // Form submits
     document.querySelector('#js-sort-all-form').addEventListener('submit', function (event) {
       event.preventDefault();
       const data = new FormData(this);
-      const param = data.get('param');
-      const order = data.get('order');
-      handleSortAllFormSubmit(param, order);
+      handleSortAllFormSubmit(data);
     });
     document.querySelector('#js-edit-all-form').addEventListener('submit', function (event) {
       event.preventDefault();
       const data = new FormData(this);
-      const target = data.get('target');
-      handleEditAllFormSubmit(target);
+      handleEditAllFormSubmit(data);
       this.reset();
+    });
+    document.querySelector('#js-loop-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const data = new FormData(this);
+      handleLoopFormSubmit(data);
+      render();
     });
 
     // Buttons
