@@ -109,18 +109,20 @@ function quickAdd(info) {
       }
     }
 
-    const selection = getHtmlOfSelection();
-
-    if (selection) {
-      // User right-clicked on a highlighted selection
+    if (targetLevel !== null) {
       const selection = getHtmlOfSelection();
-      const { adoptableIds } = parseIdsAndImagesFromHtml(selection);
-      add(adoptableIds, targetLevel);
-    } else {
-      // User right-clicked on an image
-      const adoptableId = info.srcUrl.includes('/images/adoptables/') && info.srcUrl.match(/\d+/);
-      if (typeof adoptableId?.[0] === 'string' && targetLevel) {
-        add(adoptableId, targetLevel);
+
+      if (selection) {
+        // User right-clicked on a highlighted selection
+        const selection = getHtmlOfSelection();
+        const { adoptableIds } = parseIdsAndImagesFromHtml(selection);
+        add(adoptableIds, targetLevel);
+      } else {
+        // User right-clicked on an image
+        const adoptableId = info.srcUrl.includes('/images/adoptables/') && info.srcUrl.match(/\d+/);
+        if (typeof adoptableId?.[0] === 'string' && targetLevel) {
+          add(adoptableId, targetLevel);
+        }
       }
     }
   }());
