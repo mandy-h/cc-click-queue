@@ -24,3 +24,5 @@ const ExtensionStorage = {
     });
   }
 };
+
+export default ExtensionStorage;
