@@ -19,6 +19,16 @@
   "background": {
     "service_worker": "/scripts/extension/background.js"
   },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://www.clickcritters.com/*"
+      ],
+      "resources": [
+        "/scripts/modules/ExtensionStorage.js"
+      ]
+    }
+  ],
   "content_scripts": [
     {
       "matches": [
@@ -42,7 +52,6 @@
         "/styles/progressBar.css"
       ],
       "js": [
-        "/scripts/modules/ExtensionStorage.js",
         "/scripts/modules/Message.js",
         "/scripts/content-scripts/ce-do.js"
       ],

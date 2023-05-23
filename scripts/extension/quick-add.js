@@ -2,34 +2,9 @@
  * Functionality to add adopts to the queue via context menu.
  * @param {Object} info - info object passed from chrome.contextMenus.onClicked
  */
-function quickAdd(info) {
-  // Copied from ExtensionStorage.js
-  const ExtensionStorage = {
-    /**
-     * Retrieves extension data.
-     * @param {Object|String[]|String} [data] - Keys to be retrieved, with optional default values
-     * @returns {Promise} - Promise with the extension data
-     */
-    get(data) {
-      return new Promise((resolve) => {
-        chrome.storage.local.get(data || ['queue', 'view'], (result) => {
-          resolve(result);
-        });
-      });
-    },
-    /**
-     * Sets data in the browser storage.
-     * @param {Object} data - Object with key/value pairs to update storage with
-     * @returns {Promise}
-     */
-    set(data) {
-      return new Promise((resolve) => {
-        chrome.storage.local.set(data, () => {
-          resolve();
-        });
-      });
-    }
-  };
+async function quickAdd(info) {
+  const extensionStorageScript = chrome.runtime.getURL('/scripts/modules/ExtensionStorage.js');
+  const { default: ExtensionStorage } = await import(extensionStorageScript);
 
   // Function to add adopt to queue, copied from Queue.js
   async function add(adoptableIds, targetLevel) {

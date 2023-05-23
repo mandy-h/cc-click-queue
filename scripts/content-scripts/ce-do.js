@@ -1,4 +1,7 @@
-(function () {
+(async function () {
+  const extensionStorageScript = chrome.runtime.getURL('/scripts/modules/ExtensionStorage.js');
+  const { default: ExtensionStorage } = await import(extensionStorageScript);
+
   /**
    * Returns the total level (current level + credits).
    * @returns {Number}
