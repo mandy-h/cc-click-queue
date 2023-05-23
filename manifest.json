@@ -22,19 +22,6 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.clickcritters.com/clickexchange.php"
-      ],
-      "css": [
-        "/styles/message.css"
-      ],
-      "js": [
-        "/scripts/modules/Message.js",
-        "/scripts/content-scripts/ce-home.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
         "https://www.clickcritters.com/clickexchange.php?act=doCE*"
       ],
       "css": [
