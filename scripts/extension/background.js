@@ -1,6 +1,12 @@
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.get({ queue: [] }, (result) => {
-    chrome.action.setBadgeText({ text: (result.queue.length).toString() });
+    if (chrome.action) {
+      // chrome.action is for Manifest v3
+      chrome.action.setBadgeText({ text: (result.queue.length).toString() });
+    } else {
+      // chrome.browserAction is for Manifest v2
+      chrome.browserAction.setBadgeText({ text: (result.queue.length).toString() });
+    }
   });
 
   // Set default extension settings
@@ -16,13 +22,21 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.runtime.onStartup.addListener(() => {
   chrome.storage.local.get({ queue: [] }, (result) => {
-    chrome.action.setBadgeText({ text: (result.queue.length).toString() });
+    if (chrome.action) {
+      chrome.action.setBadgeText({ text: (result.queue.length).toString() });
+    } else {
+      chrome.browserAction.setBadgeText({ text: (result.queue.length).toString() });
+    }
   });
 });
 
 chrome.storage.onChanged.addListener((changes) => {
   if (changes.queue) {
-    chrome.action.setBadgeText({ text: (changes.queue.newValue.length).toString() });
+    if (chrome.action) {
+      chrome.action.setBadgeText({ text: (changes.queue.newValue.length).toString() });
+    } else {
+      chrome.browserAction.setBadgeText({ text: (changes.queue.newValue.length).toString() });
+    }
   }
 });
 
