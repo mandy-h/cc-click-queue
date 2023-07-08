@@ -1,3 +1,5 @@
+import Events from '/scripts/modules/Events.js';
+
 function parseIdsAndImagesFromHtml(htmlString) {
   const parser = new DOMParser();
   const imageUrls = Array.from(parser.parseFromString(htmlString, 'text/html')
