@@ -4,10 +4,12 @@
    * @returns {Number}
    */
   function getAdoptableLevel() {
-    const levelText = document.querySelector('center').innerText.match(/Total: \d+/);
+    const pageText = document.querySelector('center').innerText;
+    const levelText = pageText.match(/Total: \d+/);
     if (levelText) {
-      const level = parseInt(levelText[0].substring(7), 10) + 1; // Adding 1 because the total level displayed is usually off by 1
-      return level;
+      const level = parseInt(levelText[0].substring(7), 10) + 1; // Adding 1 because the total level displayed is off by 1
+      const bonusLevels = (pageText.match(/(bonus credit!)|(instant level!)/g) || []).length;
+      return level + bonusLevels;
     }
   }
 
