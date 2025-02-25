@@ -2,6 +2,7 @@ import ExtensionStorage from './ExtensionStorage.js';
 import Events from './Events.js';
 import createModal from './Modal.js';
 
+
 async function add(adoptableIds, targetLevel) {
   const result = await ExtensionStorage.get({ queue: [] });
   const { queue } = result;
@@ -201,19 +202,24 @@ async function render() {
 function changeView(view) {
   const queue = document.querySelector('#js-queue');
   if (view === 'list') {
-    queue.classList.add('list')
+    queue.classList.add('list');
     queue.classList.remove('grid');
     document.querySelector('#js-btn--list-view').classList.add('is-active');
     document.querySelector('#js-btn--grid-view').classList.remove('is-active');
   } else if (view === 'grid') {
-    queue.classList.add('grid')
+    queue.classList.add('grid');
     queue.classList.remove('list');
     document.querySelector('#js-btn--grid-view').classList.add('is-active');
     document.querySelector('#js-btn--list-view').classList.remove('is-active');
   }
 }
 
-function handleSortAllFormSubmit(sortParam, order) {
+function handleSortAllFormSubmit(event) {
+  event.preventDefault();
+  const data = new FormData(this);
+  const sortParam = data.get('param');
+  const order = data.get('order');
+
   ExtensionStorage.get('queue').then((result) => {
     const queue = result.queue;
     if (order === 'ascending') {
@@ -227,14 +233,93 @@ function handleSortAllFormSubmit(sortParam, order) {
   });
 }
 
-function handleEditAllFormSubmit(target) {
+function handleEditAllFormSubmit(event) {
+  event.preventDefault();
+  const data = new FormData(this);
+  const target = data.get('target');
+
   ExtensionStorage.get('queue').then((result) => {
     const queue = result.queue.map((el) => {
-      return { id: el.id, target }
+      return { id: el.id, target };
     });
     return queue;
   }).then((result) => {
     ExtensionStorage.set({ queue: result });
+  });
+
+  this.reset();
+}
+
+function setListView() {
+  ExtensionStorage.set({ view: 'list' });
+}
+
+function setGridView() {
+  ExtensionStorage.set({ view: 'grid' });
+}
+
+const eventHandlers = [
+  {
+    selector: '#js-sort-all-form',
+    eventName: 'submit',
+    handler: handleSortAllFormSubmit
+  },
+  {
+    selector: '#js-edit-all-form',
+    eventName: 'submit',
+    handler: handleEditAllFormSubmit
+  },
+  {
+    selector: '#js-btn--clear-queue',
+    eventName: 'click',
+    handler: clear
+  },
+  {
+    selector: '#js-btn--start-queue',
+    eventName: 'click',
+    handler: startQueue
+  },
+  {
+    selector: '#js-btn--list-view',
+    eventName: 'click',
+    handler: setListView
+  },
+  {
+    selector: '#js-btn--grid-view',
+    eventName: 'click',
+    handler: setGridView
+  }
+];
+
+const modals = [
+  {
+    id: 'js-modal--add-adopts',
+    toggleSelector: '#js-btn--add-adopts'
+  },
+  {
+    id: 'js-modal--sort-all',
+    toggleSelector: '#js-btn--sort-all'
+  },
+  {
+    id: 'js-modal--edit-all',
+    toggleSelector: '#js-btn--edit-all'
+  }
+];
+
+function initEventHandlers() {
+  // Initialize form and button event handlers
+  eventHandlers.forEach(({ selector, eventName, handler }) => {
+    document.querySelector(selector)?.addEventListener(eventName, handler);
+  });
+}
+
+function initModals() {
+  // Initialize modals
+  modals.forEach(({ id, toggleSelector }) => {
+    createModal({
+      id,
+      toggle: document.querySelector(toggleSelector)
+    });
   });
 }
 
@@ -245,31 +330,10 @@ export function init() {
   });
   // Render queue
   render();
-  // Initialize modals
-  createModal({ id: 'js-modal--add-adopts', toggle: document.querySelector('#js-btn--add-adopts') });
-  createModal({ id: 'js-modal--sort-all', toggle: document.querySelector('#js-btn--sort-all') });
-  createModal({ id: 'js-modal--edit-all', toggle: document.querySelector('#js-btn--edit-all') });
-  // Form submits
-  document.querySelector('#js-sort-all-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const data = new FormData(this);
-    const param = data.get('param');
-    const order = data.get('order');
-    handleSortAllFormSubmit(param, order);
-  });
-  document.querySelector('#js-edit-all-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const data = new FormData(this);
-    const target = data.get('target');
-    handleEditAllFormSubmit(target);
-    this.reset();
-  });
 
-  // Buttons
-  document.querySelector('#js-btn--clear-queue').addEventListener('click', clear);
-  document.querySelector('#js-btn--start-queue').addEventListener('click', startQueue);
-  document.querySelector('#js-btn--list-view').addEventListener('click', () => ExtensionStorage.set({ view: 'list' }));
-  document.querySelector('#js-btn--grid-view').addEventListener('click', () => ExtensionStorage.set({ view: 'grid' }));
+  initModals();
+  initEventHandlers();
+
   // Using event delegation for buttons that are dynamically added to the DOM
   document.querySelector('#js-queue').addEventListener('click', (event) => {
     const target = event.target;
