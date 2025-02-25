@@ -25,7 +25,8 @@
         "https://www.clickcritters.com/*"
       ],
       "resources": [
-        "/scripts/modules/ExtensionStorage.js"
+        "/scripts/modules/ExtensionStorage.js",
+        "/scripts/modules/ce-do-core.js"
       ]
     }
   ],
@@ -55,7 +56,7 @@
         "/scripts/modules/Message.js",
         "/scripts/content-scripts/ce-do.js"
       ],
-      "run_at": "document_start"
+      "run_at": "document_end"
     },
     {
       "matches": [
