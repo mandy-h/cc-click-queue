@@ -1,0 +1,18 @@
+# Node modules
+node_modules/
+
+# Playwright artifacts
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Vitest artifacts
+coverage/
+
+# Debug and log files
+*.log
+*.debug
+
+# Environment files
+.env
+.env.*
