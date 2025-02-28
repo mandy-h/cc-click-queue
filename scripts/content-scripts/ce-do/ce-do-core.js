@@ -1,12 +1,14 @@
 export const getAdoptableLevel = () => {
-  const levelText = document.querySelector('center').innerText.match(/Total: \d+/);
+  const pageText = document.querySelector('center').innerText;
+  const levelText = pageText.match(/Total: \d+/);
   if (levelText) {
-    const level = parseInt(levelText[0].substring(7), 10) + 1;
-    return level;
+    const level = parseInt(levelText[0].substring(7), 10) + 1; // Adding 1 because the total level displayed is off by 1
+    const bonusLevels = (pageText.match(/(bonus credit!)|(instant level!)/g) || []).length;
+    return level + bonusLevels;
   }
-}
+};
 
-export const renderLevelProgress = (currentLevel, targetLevel) =>  {
+export const renderLevelProgress = (currentLevel, targetLevel) => {
   const progress = document.createElement('div');
   progress.innerHTML = `
     <p>Level progress: ${currentLevel} / ${targetLevel} (<strong>${Math.max(0, targetLevel - currentLevel)}</strong> more credits to go!)</p>
@@ -31,7 +33,7 @@ export const switchToNextAdoptable = async (adoptId) => {
       `https://www.clickcritters.com/clickexchange.php?act=choose&adoptID=${adoptId}`,
       { method: 'GET' }
     );
-    
+
     if (!response.ok) {
       throw new Error(`Failed to switch adoptable`);
     }
@@ -76,4 +78,4 @@ export const handleQueueUpdate = async (
       window.location = 'https://www.clickcritters.com/clickexchange.php?act=choose#done';
     }
   }
-}
+};
