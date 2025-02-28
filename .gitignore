@@ -1,12 +1,13 @@
 # Node modules
 node_modules/
 
-# Playwright artifacts
-test-results/
-playwright-report/
-playwright/.cache/
+# Playwright
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/test-results/
 
-# Vitest artifacts
+# Vitest
 coverage/
 
 # Debug and log files
