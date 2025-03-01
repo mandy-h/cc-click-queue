@@ -225,6 +225,111 @@ test.describe('Tests for queue page interactions', () => {
     // Check that the browser navigated to the CE page with the first adoptable active
     await expect(newTab).toHaveURL(/.*\?act=choose&adoptID=15522329/);
   });
+
+  test('Edit target level for a single adoptable', async ({ page, extensionId, backgroundPage }) => {
+    const testData = {
+      queue: [
+        {
+          id: '1',
+          target: 100,
+        },
+      ],
+    };
+
+    // Set up test data
+    await backgroundPage.evaluate(async (data) => {
+      await chrome.storage.local.set(data);
+    }, testData);
+
+    // Load the queue page
+    await page.goto(`chrome-extension://${extensionId}/queue.html`);
+
+    const queueItem = page.locator('.queue-item');
+
+    // Click on the target level and edit it
+    await queueItem.locator('.js-item-action--edit').click();
+    await queueItem.locator('.js-target-edit').fill('150');
+    await page.keyboard.press('Enter');
+
+    // Check that the target level was updated
+    await expect(queueItem.locator('.queue-item__target')).toHaveText('150');
+  });
+
+  test('Move adoptable to the beginning and end of queue', async ({ page, extensionId, backgroundPage }) => {
+    const testData = {
+      queue: [
+        {
+          id: '1',
+          target: 100,
+        },
+        {
+          id: '2',
+          target: 200,
+        },
+        {
+          id: '3',
+          target: 30,
+        },
+      ],
+    };
+
+    // Set up test data
+    await backgroundPage.evaluate(async (data) => {
+      await chrome.storage.local.set(data);
+    }, testData);
+
+    // Load the queue page
+    await page.goto(`chrome-extension://${extensionId}/queue.html`);
+
+    const queueItem = page.locator('.queue-item[data-id="2"]');
+
+    // Move to the beginning of the queue
+    await queueItem.locator('.js-item-actions-toggle').click();
+    await queueItem.locator('.js-item-action--move-front').click();
+
+    // Check that the adoptable is now the first item in the queue
+    expect(page.locator('.queue-item').first()).toHaveAttribute('data-id', '2');
+
+    // Move to the end of the queue
+    await queueItem.locator('.js-item-actions-toggle').click();
+    await queueItem.locator('.js-item-action--move-end').click();
+
+    // Check that the adoptable is now the last item in the queue
+    expect(page.locator('.queue-item').last()).toHaveAttribute('data-id', '2');
+  });
+
+  test('Delete a single adoptable', async ({ page, extensionId, backgroundPage }) => {
+    const testData = {
+      queue: [
+        {
+          id: '1',
+          target: 100,
+        },
+        {
+          id: '2',
+          target: 200,
+        },
+      ],
+    };
+
+    // Set up test data
+    await backgroundPage.evaluate(async (data) => {
+      await chrome.storage.local.set(data);
+    }, testData);
+
+    // Load the queue page
+    await page.goto(`chrome-extension://${extensionId}/queue.html`);
+
+    const queueItem = page.locator('.queue-item[data-id="2"]');
+
+    // Delete the adoptable by clicking the delete button
+    await queueItem.locator('.js-item-actions-toggle').click();
+    await queueItem.locator('.js-item-action--delete').click();
+
+    // Check that the adoptable is no longer in the queue
+    await expect(page.locator('.queue-item')).toHaveCount(1);
+    await expect(page.locator('.queue-item[data-id="2"]')).toHaveCount(0);
+  });
 });
 
 test.describe('Tests for test pages', () => {
