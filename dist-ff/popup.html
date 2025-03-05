@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Queue</title>
+    <style>
+      button {
+        background-color: #efefef;
+        border: 1px solid #767676;
+        border-radius: 2px;
+        padding: .25rem .5rem;
+        white-space: nowrap;
+      }
+
+      button:hover,
+      button:active {
+        filter: brightness(.93);
+      }
+
+      .btn--green {
+        background-color: lightgreen;
+        border: 1px solid green;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body class="text-center" style="font-size: 1rem;">
+    <div>
+      <button class="js-edit-queue" style="margin-bottom: 5px;">Edit Queue</button>
+      <button class="js-start-queue btn--green">Start Clicking</button>
+    </div>
+    <div class="js-currently-clicking" style="margin-bottom: 10px;"></div>
+
+    <script src="/scripts/extension/popup.js"></script>
+  </body>
+</html>
