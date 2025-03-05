@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="./test-utils.js"></script>
+  </head>
+  <body>
+    <center>
+      <h1>Click Exchange</h1>
+      Welcome to the Click Critters Click Exchange!<br /><br /><strong>17,076 credits used today.</strong
+      ><br /><br />Here you can click on other people's adoptables to level them up, and for every adoptable that you
+      level you will earn a credit for one of your adoptables. The more credits you have the more often your adoptable
+      will appear in the Click Exchange when other people are levelling adoptables!<br />
+      <table
+        border="0"
+        width="100%"
+        cellspacing="10"
+      >
+        <tbody>
+          <tr>
+            <td style="border: 1px solid green; padding: 5px; width: 130px; vertical-align: top; text-align: center">
+              <strong>Gaining credits</strong><br /><img
+                id="current-adopt"
+                src="#"
+                alt="Current adoptable"
+                width="100"
+                height="130"
+              /><br /><strong>Credits: </strong>000<br /><strong>Level:</strong> 000<br /><strong>Total:</strong>
+              <span data-testid="total">0</span><br /><br />[ <a href="?act=choose">Change</a> ]
+            </td>
+            <td style="border: 1px solid black; padding: 5px; vertical-align: top; text-align: center">
+              <h1>Answer this question</h1>
+              <div style="width: 400px; height: 160px; position: relative; margin: auto; padding: 0px">
+                <div style="height: 160px; width: 400px">
+                  <button
+                    id="increment-button"
+                    type="button"
+                    style="width: 200px; height: 160px"
+                  >
+                    Increment Level
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td
+              style="
+                background-color: #ddd;
+                border: 1px solid green;
+                padding: 5px;
+                width: 130px;
+                vertical-align: top;
+                text-align: center;
+              "
+            ></td>
+          </tr>
+        </tbody>
+      </table>
+    </center>
+  </body>
+</html>

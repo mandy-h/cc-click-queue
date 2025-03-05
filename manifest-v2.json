@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "CC Click Queue",
   "version": "2.2",
   "author": "mandy-h",
@@ -13,28 +13,18 @@
     "storage",
     "contextMenus",
     "scripting",
-    "activeTab"
-  ],
-  "host_permissions": [
+    "activeTab",
     "https://clickcritters.com/clickexchange.php*"
   ],
-  "action": {
+  "browser_action": {
     "default_popup": "popup.html"
   },
   "background": {
-    "service_worker": "/scripts/extension/background.js"
+    "scripts": [
+      "/scripts/extension/background.js"
+    ],
+    "persistent": false
   },
-  "web_accessible_resources": [
-    {
-      "matches": [
-        "https://www.clickcritters.com/*"
-      ],
-      "resources": [
-        "/scripts/modules/ExtensionStorage.js",
-        "/scripts/content-scripts/ce-do/ce-do-core.js"
-      ]
-    }
-  ],
   "content_scripts": [
     {
       "matches": [
@@ -58,8 +48,9 @@
         "/styles/progressBar.css"
       ],
       "js": [
+        "/scripts/modules/ExtensionStorage.js",
         "/scripts/modules/Message.js",
-        "/scripts/content-scripts/ce-do/ce-do.js"
+        "/scripts/content-scripts/ce-do.js"
       ],
       "run_at": "document_end"
     },

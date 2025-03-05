@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.13.5",
+    "@vitest/browser": "^3.0.7",
+    "glob": "^11.0.1",
+    "jsdom": "^26.0.0",
+    "playwright": "^1.50.1",
+    "vitest": "^3.0.7"
+  },
+  "scripts": {
+    "build": "node ./build.js",
+    "test:unit": "vitest",
+    "test:e2e": "playwright test"
+  }
+}

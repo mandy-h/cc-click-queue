@@ -22,7 +22,9 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "service_worker": "/scripts/extension/background.js"
+    "scripts": [
+      "/scripts/extension/background.js"
+    ]
   },
   "web_accessible_resources": [
     {
@@ -76,5 +78,10 @@
       ],
       "run_at": "document_start"
     }
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "cc-click-queue@mandy-h"
+    }
+  }
 }
