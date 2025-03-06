@@ -1,15 +1,35 @@
-export const getAdoptableLevel = () => {
-  const pageText = document.querySelector('center').innerText;
-  const levelText = pageText.match(/Total: \d+/);
-  if (levelText) {
-    const level = parseInt(levelText[0].substring(7), 10) + 1; // Adding 1 because the total level displayed is off by 1
-    const bonusLevels = (pageText.match(/(bonus credit!)|(instant level!)/g) || []).length;
-    return level + bonusLevels;
-  }
+const SELECTORS = {
+  REGULAR_CE_CONTENT: '#megaContent > center',
+  LIGHT_CE_CONTENT: 'div > center',
+  CHANGE_ADOPTABLE_LINK: '[href*="act=choose"]',
+  TOAST_MESSAGE: '.js-toast-message',
 };
 
+export const getAdoptableLevel = () => {
+  const pageText = document.querySelector(SELECTORS.REGULAR_CE_CONTENT)?.innerText
+    || document.querySelector(SELECTORS.LIGHT_CE_CONTENT)?.innerText;
+  const levelText = pageText.match(/Total: \d+/);
+  if (!levelText) {
+    return -1;
+  }
+
+  let level = parseInt(levelText[0].substring(7), 10);
+  if (window.location.search.indexOf('act=doCE') > -1) {
+    // On the 'doCE' page, the level is off by 1
+    level += 1;
+  }
+  const bonusLevels = (pageText.match(/(bonus credit!)|(instant level!)/g) || []).length;
+  return level + bonusLevels;
+};
+
+/**
+ * Renders the level progress bar.
+ * @param {number} currentLevel - The current level
+ * @param {number} targetLevel - The target level
+ */
 export const renderLevelProgress = (currentLevel, targetLevel) => {
   const progress = document.createElement('div');
+  progress.classList.add('progress-bar-wrapper');
   progress.innerHTML = `
     <p>Level progress: ${currentLevel} / ${targetLevel} (<strong>${Math.max(0, targetLevel - currentLevel)}</strong> more credits to go!)</p>
     <div class="progress-bar">
@@ -17,14 +37,21 @@ export const renderLevelProgress = (currentLevel, targetLevel) => {
     </div>
   `;
 
-  const changeAdoptLink = document.querySelector('[href*="clickexchange.php?act=choose"]');
+  const changeAdoptLink = document.querySelector(SELECTORS.CHANGE_ADOPTABLE_LINK);
   if (changeAdoptLink) {
-    document.querySelector('center').insertBefore(progress, changeAdoptLink.nextElementSibling);
+    if (window.location.search.indexOf('act=doCE') > -1) {
+      // Only the light CE has a change adoptable link on the 'doCE' page
+      document.querySelector(SELECTORS.LIGHT_CE_CONTENT).insertBefore(progress, changeAdoptLink.nextElementSibling);
+    } else {
+      // Both the light CE and regular CE have a change adoptable link on the first CE question page
+      (changeAdoptLink).closest('table').after(progress);
+    }
   }
 };
 
 export const switchToNextAdoptable = async (adoptId) => {
-  const mainContent = document.querySelector('center');
+  const mainContent = document.querySelector(SELECTORS.REGULAR_CE_CONTENT)
+    || document.querySelector(SELECTORS.LIGHT_CE_CONTENT);
   const loadingToast = Message.createToast('Loading...', 'info');
   mainContent.insertBefore(loadingToast, mainContent.firstChild);
 
@@ -38,11 +65,11 @@ export const switchToNextAdoptable = async (adoptId) => {
       throw new Error(`Failed to switch adoptable`);
     }
 
-    document.querySelector('.js-toast-message')?.remove();
+    document.querySelector(SELECTORS.TOAST_MESSAGE)?.remove();
     const successToast = Message.createToast('Switched to next adoptable in queue', 'success');
     mainContent.insertBefore(successToast, mainContent.firstChild);
   } catch (error) {
-    document.querySelector('.js-toast-message')?.remove();
+    document.querySelector(SELECTORS.TOAST_MESSAGE)?.remove();
     const errorToast = Message.createToast(`Error: ${error.message}`, 'error');
     mainContent.insertBefore(errorToast, mainContent.firstChild);
     throw error;

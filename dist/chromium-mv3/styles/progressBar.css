@@ -1,3 +1,7 @@
+.progress-bar-wrapper {
+  margin-bottom: 10px;
+}
+
 .progress-bar {
   background-color: #ddd;
   height: 6px;
