@@ -5,7 +5,10 @@ const { glob } = require('glob');
 async function copyFiles(sourceDir, targetDir, patterns) {
   const fileArrays = await Promise.all(
     patterns.map((pattern) =>
-      glob.glob(pattern, { ignore: ['**/*.test.js', '**/*.spec.js'] })
+      glob.glob(pattern, {
+        ignore: ['**/*.test.js', '**/*.spec.js'],
+        cwd: sourceDir
+      })
     )
   );
   const files = fileArrays.flat();
@@ -158,7 +161,7 @@ function generateManifest(manifestVersion = 3, browser = 'chromium') {
  * @param {('chromium'|'firefox')} browser - The browser to build for
  */
 async function build(manifestVersion, browser) {
-  const distDir = `dist-mv${manifestVersion}-${browser}`;
+  const distDir = path.join('dist', `${browser}-mv${manifestVersion}`);
 
   // Clean dist directory
   await fs.rm(distDir, { recursive: true, force: true });
@@ -176,7 +179,7 @@ async function build(manifestVersion, browser) {
   ];
 
   // Copy files
-  await copyFiles('.', distDir, filePatterns);
+  await copyFiles('src', distDir, filePatterns);
 
   // Generate manifest.json
   await fs.writeFile(
