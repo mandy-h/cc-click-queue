@@ -1,0 +1,22 @@
+/**
+ * Styles for queue messages displayed in the CE.
+ */
+
+.toast-message {
+  font-size: 1rem;
+  margin: auto auto 8px;
+  padding: 5px;
+  width: 80%;
+}
+
+.toast-message.info {
+  background-color: #cce8f4;
+  border: 1px solid #3e7599;
+  color: #3e7599;
+}
+
+.toast-message.success {
+  background-color: #b4dfa4;
+  border: 1px solid #416d30;
+  color: #416d30;
+}

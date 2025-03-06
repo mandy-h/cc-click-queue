@@ -15,28 +15,9 @@
     "scripting",
     "activeTab"
   ],
-  "host_permissions": [
-    "https://clickcritters.com/clickexchange.php*"
-  ],
   "action": {
     "default_popup": "popup.html"
   },
-  "background": {
-    "scripts": [
-      "/scripts/extension/background.js"
-    ]
-  },
-  "web_accessible_resources": [
-    {
-      "matches": [
-        "https://www.clickcritters.com/*"
-      ],
-      "resources": [
-        "/scripts/modules/ExtensionStorage.js",
-        "/scripts/content-scripts/ce-do/ce-do-core.js"
-      ]
-    }
-  ],
   "content_scripts": [
     {
       "matches": [
@@ -77,6 +58,25 @@
         "/scripts/content-scripts/ce-choose-adopt.js"
       ],
       "run_at": "document_start"
+    }
+  ],
+  "host_permissions": [
+    "https://www.clickcritters.com/clickexchange.php*"
+  ],
+  "background": {
+    "scripts": [
+      "/scripts/extension/background.js"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://www.clickcritters.com/*"
+      ],
+      "resources": [
+        "/scripts/modules/ExtensionStorage.js",
+        "/scripts/content-scripts/ce-do/ce-do-core.js"
+      ]
     }
   ],
   "browser_specific_settings": {
