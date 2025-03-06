@@ -4,6 +4,10 @@ import path from 'path';
 export const test = base.extend({
   context: async ({ }, use) => {
     const pathToExtension = path.join(__dirname, '../');
+    /**
+     * Playwright currently only supports extensions in Chrome/Chromium.
+     * See https://playwright.dev/docs/chrome-extensions
+     */
     const context = await chromium.launchPersistentContext('', {
       baseURL: pathToExtension,
       headless: false,
