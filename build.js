@@ -63,20 +63,10 @@ function generateManifest(manifestVersion = 3, browser = 'chromium') {
     "content_scripts": [
       {
         "matches": [
-          baseCeUrl
+          `${baseCeUrl}*`
         ],
-        "css": [
-          "/styles/message.css"
-        ],
-        "js": [
-          "/scripts/modules/Message.js",
-          "/scripts/content-scripts/ce-home.js"
-        ],
-        "run_at": "document_start"
-      },
-      {
-        "matches": [
-          `${baseCeUrl}?act=doCE*`
+        "exclude_matches": [
+          `${baseCeUrl}?act=choose*`
         ],
         "css": [
           "/styles/message.css",
