@@ -101,8 +101,7 @@ function generateManifest(manifestVersion = 3, browser = 'chromium') {
     ]
   };
 
-  const manifestV3 = {
-    ...baseManifest,
+  const manifestV3Properties = {
     "host_permissions": [
       `${baseCeUrl}*`
     ],
@@ -122,8 +121,7 @@ function generateManifest(manifestVersion = 3, browser = 'chromium') {
     ],
   };
 
-  const manifestV2 = {
-    ...baseManifest,
+  const manifestV2Properties = {
     "permissions": [
       ...baseManifest.permissions,
       `${baseCeUrl}*`
@@ -134,22 +132,24 @@ function generateManifest(manifestVersion = 3, browser = 'chromium') {
     },
   };
 
-  const manifest = manifestVersion === 2 ? manifestV2 : manifestV3;
-
-  if (browser === 'firefox') {
+  const firefoxProperties = {
     // Firefox doesn't support background.service_worker in its manfest v3 implementation
-    manifest.background = {
+    background: {
       "scripts": ["/scripts/extension/background.js"],
-      "persistent": false
-    };
-    manifest.browser_specific_settings = {
+      ...(manifestVersion === 2 && { persistent: false })
+    },
+    browser_specific_settings: {
       "gecko": {
         "id": "cc-click-queue@mandy-h"
       }
-    };
-  }
+    }
+  };
 
-  return manifest;
+  return {
+    ...baseManifest,
+    ...(manifestVersion === 2 ? manifestV2Properties : manifestV3Properties),
+    ...(browser === 'firefox' ? firefoxProperties : {})
+  };
 }
 
 /**
