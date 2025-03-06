@@ -60,7 +60,7 @@ export const handleQueueUpdate = async (
   if (extensionStorageDep) {
     ExtensionStorage = extensionStorageDep;
   } else {
-    const { default: importedExtensionStorage } = await import(/* @vite-ignore */ '../../modules/ExtensionStorage.js');
+    const { default: importedExtensionStorage } = await import('../../modules/ExtensionStorage.js');
     ExtensionStorage = importedExtensionStorage;
   }
 
