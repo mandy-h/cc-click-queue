@@ -188,7 +188,9 @@ test.describe('Tests for queue page interactions', () => {
     await page.goto(`chrome-extension://${extensionId}/queue.html`);
 
     // Click on the Clear Queue button and confirm the dialog
-    page.on('dialog', dialog => dialog.accept());
+    page.on('dialog', async (dialog) => {
+      await dialog.accept();
+    });
     await page.locator('#js-btn--clear-queue').click();
 
     // Check that the queue is empty
@@ -288,14 +290,14 @@ test.describe('Tests for queue page interactions', () => {
     await queueItem.locator('.js-item-action--move-front').click();
 
     // Check that the adoptable is now the first item in the queue
-    expect(page.locator('.queue-item').first()).toHaveAttribute('data-id', '2');
+    await expect(page.locator('.queue-item').first()).toHaveAttribute('data-id', '2');
 
     // Move to the end of the queue
     await queueItem.locator('.js-item-actions-toggle').click();
     await queueItem.locator('.js-item-action--move-end').click();
 
     // Check that the adoptable is now the last item in the queue
-    expect(page.locator('.queue-item').last()).toHaveAttribute('data-id', '2');
+    await expect(page.locator('.queue-item').last()).toHaveAttribute('data-id', '2');
   });
 
   test('Delete a single adoptable', async ({ page, extensionId, backgroundPage }) => {
