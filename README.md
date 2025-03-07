@@ -1,32 +1,42 @@
-# cc-click-queue
-This is a Chrome extension to simulate an adoptable queue for the Click Exchange on clickcritters.com. This extension should work most on Chromium-based browsers, but Chrome 55 (released December 2016) is likely the oldest compatible version.
+# Overview
+This is a Chrome extension to add an adoptable queue for the Click Exchange on clickcritters.com.
+# Modifying and building this extension
+1. Run `npm install` in the project folder.
+2. Modify source files inside the `src` folder.
+3. Run `npm run build` in the project folder to build the extension. Builds will be outputted in the `dist` folder, with each folder named in this format `[browser]-mv[manifestVersion]`.
 # Installation
-1. Download all of these files by clicking **Clone or Download**, a green button near the top-right corner of the list of files. Choose **Download ZIP**.
-2. Unzip the folder into a new folder on your computer.
-3. In Chrome, go to the top right and click on the 3-dots menu. Go to **More tools > Extensions**.
-4. Enable **Developer Mode**, which is located in the top right corner.
-5. Click on the **Load unpacked** button.
-6. Select the folder you just created.
-7. Make sure this extension is enabled.
-8. For best experience, it is also recommended that you pin this extension to the browser toolbar.
+1. Download or clone this repostory.
+2. If you downloaded the repository as a ZIP folder, unzip the folder.
+3. In the `dist` folder, identify the distribution that is compatible with your browser. Feel free to copy or move this folder somewhere else. This is the only folder you'll need to load the extension.
+    * For Chrome or any other Chromium-based browser, try using `chromium-mv3` first.
+    * For Firefox, try using `firefox-mv3` first.
+    * If the `mv3` distribution doesn't work or it throws an error when you load the extension in step 4, try `firefox-mv2` instead.
+4. Install the extension manually in developer/debugging mode.
+    * [Instructions for Chrome](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
+    * [Instructions for Firefox](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/)
+    * If you get an error mentioning manifest, like `Manifest file is missing`, then you made a mistake somewhere in the previous steps.
+5. Enable the extension if it's not already enabled.
 # Usage
-1. Click on the extension icon to open the pop-up menu.
-2. Click on **Edit Queue**.
-3. Click on **Add Adoptables**.
-4. From a separate window, drag and drop the images of the adoptables you want to add to the queue. Images can be dragged over one at a time, or multiple images can be selected at once by highlighting them.
-![Selecting multiple images](/../screenshots/readme-img1.png?raw=true)
-5. On the queue page, enter the target level for these adoptables, and then click **Add to Queue**.
-6. Click on **Start Queue**.
+1. Add adoptables to the queue. This can be done in two ways -- drag-and-drop or from the browser context menu.
+    * Drag-and-drop 
+        1. Click on the extension icon to open the pop-up menu.
+        2. Click on **Edit Queue**.
+        3. Click on **Add Adoptables**.
+        4. From a separate window, drag and drop the images of the adoptables you want to add to the queue. Images can be dragged over one at a time, or multiple images can be selected at once by highlighting them.
+        ![Selecting multiple images](/../screenshots/readme-img1.png?raw=true)
+        5. Enter the target level for these adoptables, and then click **Add to Queue**.
+    * Context menu
+        1. Right-click on an adoptable or highlighted adoptables.
+        2. Click on **Add to queue**.
+           
+        !["Add to queue" context menu](/../screenshots/readme-img2.png?raw=true)
+2. Click on **Start Queue**, either from the extension pop-up or from the queue page.
 
-To quickly add new adoptables without having to open up the queue page, you can also right-click on an adoptable or highlighted adoptables. There will be a button labeled "Add to queue". In Chrome and Firefox, this button is near the buttom, grouped together with context menus from other browser extensions.
-
-!["Add to queue" context menu](/../screenshots/readme-img2.png?raw=true)
-
-# Additional Notes
+# Additional notes
 * If you **manually change the first adoptable** afterwards by doing any of the following,
    * moving another adoptable to the front of the queue
    * removing the first adoptable in the queue
    * using the "Sort All" menu
 
   then you need to click on **Start Queue** again. Otherwise, you may end up adding clicking the wrong adoptable in the Click Exchange.
-* **This extension will not check that the adoptable you have selected in the Click Exchange is actually in the queue.** Disable this extension if you want to click another adoptable that is not in your queue.
+* This extension will not check that the adoptable you have active in the Click Exchange is actually in the queue. It only cares about the level currently displayed in the Click Exchange and the target level of the first adoptable in the queue.
