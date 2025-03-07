@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "CC Click Queue",
-  "version": "2.2",
+  "version": "2.3.0",
   "author": "mandy-h",
   "description": "Adoptable queue for Click Critters Click Exchange",
   "icons": {

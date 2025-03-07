@@ -43,7 +43,7 @@ function generateManifest(manifestVersion = 3, browser = 'chromium') {
   const baseManifest = {
     "manifest_version": manifestVersion,
     "name": "CC Click Queue",
-    "version": "2.2",
+    "version": "2.3.0",
     "author": "mandy-h",
     "description": "Adoptable queue for Click Critters Click Exchange",
     "icons": {
