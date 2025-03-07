@@ -8,7 +8,7 @@
   }
 
   function openQueuePage() {
-    chrome.windows.create({ url: '../queue.html' });
+    chrome.tabs.create({ url: '../queue.html' });
   }
 
   function renderCurrentAdopt(queue) {
