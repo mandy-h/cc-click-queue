@@ -180,6 +180,18 @@ function initializeUI() {
       handler: async () => {
         await ExtensionStorage.set({ view: 'grid' });
       }
+    },
+    {
+      selector: '#js-btn--move-to-window',
+      eventName: 'click',
+      handler: () => {
+        // Get the currently active tab (the queue page)
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          const activeTab = tabs[0];
+          // Create a new window with the active tab
+          chrome.windows.create({ tabId: activeTab.id });
+        });
+      }
     }
   ];
 
