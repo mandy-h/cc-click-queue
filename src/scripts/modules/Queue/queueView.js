@@ -101,8 +101,28 @@ function changeView(view) {
   }
 }
 
-function initEventHandlers() {
-  const handlers = [
+function initializeUI() {
+  // Create modals
+  const modals = {
+    addAdopts: createModal({
+      id: 'js-modal--add-adopts',
+      position: 'top',
+      toggle: document.querySelector('#js-btn--add-adopts')
+    }),
+    sortAll: createModal({
+      id: 'js-modal--sort-all',
+      position: 'top',
+      toggle: document.querySelector('#js-btn--sort-all')
+    }),
+    editAll: createModal({
+      id: 'js-modal--edit-all',
+      position: 'top',
+      toggle: document.querySelector('#js-btn--edit-all')
+    })
+  };
+
+  // Set up form handlers that also close their parent modals
+  const formHandlers = [
     {
       selector: '#js-sort-all-form',
       eventName: 'submit',
@@ -110,6 +130,7 @@ function initEventHandlers() {
         event.preventDefault();
         const data = new FormData(event.target);
         await queueService.sort(data.get('param'), data.get('order'));
+        modals.sortAll.close();
       }
     },
     {
@@ -120,8 +141,13 @@ function initEventHandlers() {
         const data = new FormData(event.target);
         await queueService.updateAllTargetLevels(data.get('target'));
         event.target.reset();
+        modals.editAll.close();
       }
-    },
+    }
+  ];
+
+  // Set up other UI handlers
+  const otherHandlers = [
     {
       selector: '#js-btn--clear-queue',
       eventName: 'click',
@@ -157,7 +183,8 @@ function initEventHandlers() {
     }
   ];
 
-  handlers.forEach(({ selector, eventName, handler }) => {
+  // Attach all event handlers
+  [...formHandlers, ...otherHandlers].forEach(({ selector, eventName, handler }) => {
     document.querySelector(selector)?.addEventListener(eventName, handler);
   });
 
@@ -167,30 +194,7 @@ function initEventHandlers() {
   // Add adopts to queue when Add Adopts form is submitted
   Events.subscribe('imageDrop/form-submitted', ({ adoptIds, targetLevel }) => {
     queueService.add(adoptIds, targetLevel);
-  });
-}
-
-function initModals() {
-  const modals = [
-    {
-      id: 'js-modal--add-adopts',
-      toggleSelector: '#js-btn--add-adopts'
-    },
-    {
-      id: 'js-modal--sort-all',
-      toggleSelector: '#js-btn--sort-all'
-    },
-    {
-      id: 'js-modal--edit-all',
-      toggleSelector: '#js-btn--edit-all'
-    }
-  ];
-
-  modals.forEach(({ id, toggleSelector }) => {
-    createModal({
-      id,
-      toggle: document.querySelector(toggleSelector)
-    });
+    modals.addAdopts.close();
   });
 }
 
@@ -271,15 +275,14 @@ async function handleQueueItemAction(event) {
 
 export default async function init() {
   addStorageListener();
-  
+
   // Set list/grid view
   await ExtensionStorage.get('view').then((result) => {
     changeView(result.view);
   });
-  
+
   // Render queue
   render();
 
-  initEventHandlers();
-  initModals();
+  initializeUI();
 }
