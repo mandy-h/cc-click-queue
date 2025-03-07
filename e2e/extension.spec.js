@@ -35,7 +35,7 @@ test.describe('Tests for queue page loading', () => {
 });
 
 test.describe('Tests for queue page interactions', () => {
-  test('Sort All button', async ({ page, extensionId, backgroundPage }) => {
+  test('Sort All button, sort by target level in ascending order', async ({ page, extensionId, backgroundPage }) => {
     const testData = {
       queue: [
         {
@@ -73,8 +73,36 @@ test.describe('Tests for queue page interactions', () => {
 
     // Check that the queue was sorted by target level in ascending order
     await expect(sortedLevels).toEqual(['30', '100', '200']);
+  });
 
-    // Interact with the form again
+  test('Sort All button, sort by ID in descending order', async ({ page, extensionId, backgroundPage }) => {
+    const testData = {
+      queue: [
+        {
+          id: '3',
+          target: 30,
+        },
+        {
+          id: '1',
+          target: 100,
+        },
+        {
+          id: '2',
+          target: 200,
+        },
+      ],
+    };
+
+    // Set up test data
+    await backgroundPage.evaluate(async (data) => {
+      await chrome.storage.local.set(data);
+    }, testData);
+
+    // Load the queue page
+    await page.goto(`chrome-extension://${extensionId}/queue.html`);
+
+    // Open the sort modal and interact with the form
+    await page.locator('#js-btn--sort-all').click();
     await page.locator('#js-sort-all-form input[name="param"][value="id"]').click();
     await page.locator('#js-sort-all-form input[name="order"][value="descending"]').click();
     await page.locator('#js-sort-all-form__submit').click();
