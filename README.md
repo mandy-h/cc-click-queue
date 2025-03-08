@@ -5,17 +5,15 @@ This is a Chrome extension to add an adoptable queue for the Click Exchange on c
 2. Modify source files inside the `src` folder.
 3. Run `npm run build` in the project folder to build the extension. Builds will be outputted in the `dist` folder, with each folder named in this format `[browser]-mv[manifestVersion]`.
 # Installation
-1. Download or clone this repostory.
-2. If you downloaded the repository as a ZIP folder, unzip the folder.
-3. In the `dist` folder, identify the distribution that is compatible with your browser. Feel free to copy or move this folder somewhere else. This is the only folder you'll need to load the extension.
+1. From the latest [release](https://github.com/mandy-h/cc-click-queue/releases/), download the distribution that is compatible with your browser.
     * For Chrome or any other Chromium-based browser, try using `chromium-mv3` first.
     * For Firefox, try using `firefox-mv3` first.
     * If the `mv3` distribution doesn't work or it throws an error when you load the extension in step 4, try `firefox-mv2` instead.
-4. Install the extension manually in developer/debugging mode.
-    * [Instructions for Chrome](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
+2. Install the extension manually in developer/debugging mode.
+    * [Instructions for Chrome](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked) - Make sure to unzip the downloaded folder first.
     * [Instructions for Firefox](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/)
-    * If you get an error mentioning manifest, like `Manifest file is missing`, then you made a mistake somewhere in the previous steps.
-5. Enable the extension if it's not already enabled.
+    * If you get an error mentioning manifest, like `Manifest file is missing`, then you probably made a mistake somewhere in the installation steps.
+3. Enable the extension if it's not already enabled.
 # Usage
 1. Add adoptables to the queue. This can be done in two ways -- drag-and-drop or from the browser context menu.
     * Drag-and-drop 
