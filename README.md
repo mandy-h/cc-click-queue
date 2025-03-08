@@ -1,6 +1,6 @@
 # Overview
 This is a Chrome extension to add an adoptable queue for the Click Exchange on clickcritters.com.
-# Modifying and building this extension
+# Building this extension
 1. Run `npm install` in the project folder.
 2. Modify source files inside the `src` folder.
 3. Run `npm run build` in the project folder to build the extension. Builds will be outputted in the `dist` folder, with each folder named in this format `[browser]-mv[manifestVersion]`.
