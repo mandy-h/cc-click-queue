@@ -8,7 +8,7 @@ This is a Chrome extension to add an adoptable queue for the Click Exchange on c
 1. From the latest [release](https://github.com/mandy-h/cc-click-queue/releases/), download the distribution that is compatible with your browser.
     * For Chrome or any other Chromium-based browser, try using `chromium-mv3` first.
     * For Firefox, try using `firefox-mv3` first.
-    * If the `mv3` distribution doesn't work or it throws an error when you load the extension in step 4, try `firefox-mv2` instead.
+    * If the `mv3` distribution doesn't work or it throws an error when you load the extension, try `firefox-mv2` instead.
 2. Install the extension manually in developer/debugging mode.
     * [Instructions for Chrome](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked) - Make sure to unzip the downloaded folder first.
     * [Instructions for Firefox](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/)
