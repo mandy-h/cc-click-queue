@@ -1,5 +1,7 @@
 # Overview
-This is a Chrome extension to add an adoptable queue for the Click Exchange on clickcritters.com.
+This is a Chrome extension to add an adoptable queue for the Click Exchange on clickcritters.com. With it, you can level up your adoptables in the Click Exchange without having to manually switch them out.
+# Demo
+https://github.com/user-attachments/assets/b8a0f961-56cf-4ab0-91a3-fc1b1fb0eac7
 # Building this extension
 1. Run `npm install` in the project folder.
 2. Modify source files inside the `src` folder.
