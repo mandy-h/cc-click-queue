@@ -133,7 +133,10 @@ function generateManifest(manifestVersion = 3, browser = 'chromium') {
     },
     browser_specific_settings: {
       "gecko": {
-        "id": "cc-click-queue@mandy-h"
+        "id": "cc-click-queue@mandy-h",
+        "data_collection_permissions": {
+          "required": ["none"]
+        }
       }
     }
   };
