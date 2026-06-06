@@ -8,18 +8,17 @@ const SELECTORS = {
 export const getAdoptableLevel = () => {
   const pageText = document.querySelector(SELECTORS.REGULAR_CE_CONTENT)?.innerText
     || document.querySelector(SELECTORS.LIGHT_CE_CONTENT)?.innerText;
-  const levelText = pageText.match(/Level: \d+/);
+  const levelLabel = 'Level: ';
+  const regex = new RegExp(`${levelLabel}\\d+`, 'i');
+  const levelText = pageText.match(regex);
+
   if (!levelText) {
     return -1;
   }
 
-  let level = parseInt(levelText[0].substring(7), 10);
-  if (window.location.search.indexOf('act=doCE') > -1) {
-    // On the 'doCE' page, the level is off by 1
-    level += 1;
-  }
-  const bonusLevels = (pageText.match(/(bonus credit!)|(instant level!)/g) || []).length;
-  return level + bonusLevels;
+  let level = parseInt(levelText[0].substring(levelLabel.length), 10);
+
+  return level;
 };
 
 /**
