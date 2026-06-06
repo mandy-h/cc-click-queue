@@ -60,6 +60,10 @@ function generateManifest(manifestVersion = 3, browser = 'chromium') {
     [manifestVersion === 2 ? "browser_action" : "action"]: {
       "default_popup": "popup.html"
     },
+    "options_ui": {
+      "page": "options.html",
+      "open_in_tab": false
+    },
     "content_scripts": [
       {
         "matches": [

@@ -1,0 +1,56 @@
+:root {
+  color-scheme: light dark; 
+
+  --text: light-dark(#111111, #eeeeee);
+  --background: light-dark(#ffffff, #222222);
+  --background-hover: light-dark(#eeeeee, #333333);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+hr {
+  margin: 0;
+}
+
+fieldset legend {
+  float: left;
+  padding: 0;
+}
+
+.option-row {
+  align-items: center;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+#status {
+  margin: 1rem;
+}
+
+.option-row:hover {
+  background-color: var(--background-hover);
+}
+
+.option-row .options {
+  display: inline-flex;
+  gap: 1rem;
+}
+
+.option-row input[type="radio"] {
+  margin-top: -2px;
+  vertical-align: middle; 
+}

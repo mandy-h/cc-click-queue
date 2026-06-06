@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Click Queue Options</title>
+    <link rel="stylesheet" href="/styles/options.css" />
+  </head>
+  <body>
+    <main class="content-wrapper">
+      <form id="extension-options">
+        <fieldset class="option-row">
+          <legend>Progress bar</legend>
+
+          <div class="options">
+            <label>
+              <input type="radio" id="enable-progress-bar" name="progress-bar" value="enable">
+              Enable
+            </label>
+
+            <label>
+              <input type="radio" id="disable-progress-bar" name="progress-bar" value="disable">
+              Disable
+            </label>
+          </div>
+        </fieldset>
+      </form>
+      <hr />
+      <div class="option-row" role="group" aria-labelledby="extension-data-heading">
+        <span id="extension-data-heading">Extension data</span>
+        <div class="options">
+          <button id="import-data-button" type="button">Import</button>
+          <button id="export-data-button" type="button">Export</button>  
+        </div>
+      </div>
+
+      <div id="status"></div>
+    </main>
+
+    <script src="/scripts/extension/options.js"></script>
+  </body>
+</html>

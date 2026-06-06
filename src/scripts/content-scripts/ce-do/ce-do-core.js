@@ -93,7 +93,13 @@ export const handleQueueUpdate = async (
 
   const { queue } = await ExtensionStorage.get({ queue: [] });
   const targetLevel = queue[0].target;
-  renderLevelProgressDep(currentLevel, targetLevel);
+
+  chrome.storage.local.get(['progressBar'], (items) => {
+    const value = items.progressBar;
+    if (value === 'enable') {
+      renderLevelProgressDep(currentLevel, targetLevel);
+    }
+  });
 
   if (currentLevel >= targetLevel) {
     queue.shift();
