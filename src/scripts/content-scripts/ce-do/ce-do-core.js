@@ -8,7 +8,7 @@ const SELECTORS = {
 export const getAdoptableLevel = () => {
   const pageText = document.querySelector(SELECTORS.REGULAR_CE_CONTENT)?.innerText
     || document.querySelector(SELECTORS.LIGHT_CE_CONTENT)?.innerText;
-  const levelText = pageText.match(/Total: \d+/);
+  const levelText = pageText.match(/Level: \d+/);
   if (!levelText) {
     return -1;
   }
@@ -57,7 +57,7 @@ export const switchToNextAdoptable = async (adoptId) => {
 
   try {
     const response = await fetch(
-      `https://www.clickcritters.com/clickexchange.php?act=choose&adoptID=${adoptId}`,
+      `https://www.clickcritters.com/clickgym.php?act=choose&adoptID=${adoptId}`,
       { method: 'GET' }
     );
 
@@ -102,7 +102,7 @@ export const handleQueueUpdate = async (
     if (queue.length > 0) {
       switchToNextAdoptableDep(queue[0].id);
     } else {
-      window.location = 'https://www.clickcritters.com/clickexchange.php?act=choose#done';
+      window.location = 'https://www.clickcritters.com/clickgym.php?act=choose#done';
     }
   }
 };

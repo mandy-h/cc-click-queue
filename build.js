@@ -38,7 +38,7 @@ function generateManifest(manifestVersion = 3, browser = 'chromium') {
   }
 
   const domain = 'https://www.clickcritters.com';
-  const baseCeUrl = `${domain}/clickexchange.php`;
+  const baseCeUrl = `${domain}/clickgym.php`;
 
   const baseManifest = {
     "manifest_version": manifestVersion,

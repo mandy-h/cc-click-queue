@@ -1,7 +1,7 @@
-import * as queueService from './queueService.js';
-import ExtensionStorage from '../ExtensionStorage.js';
 import Events from '../Events.js';
+import ExtensionStorage from '../ExtensionStorage.js';
 import createModal from '../Modal.js';
+import * as queueService from './queueService.js';
 
 function createQueueItem(id, target) {
   const item = document.createElement('div');
@@ -163,7 +163,7 @@ function initializeUI() {
       handler: async () => {
         const queue = await queueService.getQueue();
         if (queue.length > 0) {
-          window.open(`https://www.clickcritters.com/clickexchange.php?act=choose&adoptID=${queue[0].id}`);
+          window.open(`https://www.clickcritters.com/clickgym.php?act=choose&adoptID=${queue[0].id}`);
         }
       }
     },
