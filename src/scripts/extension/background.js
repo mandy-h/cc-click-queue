@@ -10,7 +10,10 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // Set default extension settings
-  chrome.storage.local.set({ view: 'grid' });
+  chrome.storage.local.set({
+    view: 'grid',
+    progressBar: 'enable'
+  });
 
   chrome.contextMenus.create({
     title: 'Add to queue',
