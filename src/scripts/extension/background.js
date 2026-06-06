@@ -10,7 +10,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // Set default extension settings
-  chrome.storage.local.set({ view: 'list' });
+  chrome.storage.local.set({ view: 'grid' });
 
   chrome.contextMenus.create({
     title: 'Add to queue',
