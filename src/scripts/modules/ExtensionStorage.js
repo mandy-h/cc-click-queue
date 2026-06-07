@@ -4,9 +4,9 @@ const ExtensionStorage = {
    * @param {Object|String[]|String} [data] - Keys to be retrieved, with optional default values
    * @returns {Promise} - Promise with the extension data
    */
-  get(data) {
+  get(data = null) {
     return new Promise((resolve) => {
-      chrome.storage.local.get(data || ['queue', 'view'], (result) => {
+      chrome.storage.local.get(data, (result) => {
         resolve(result);
       });
     });

@@ -289,9 +289,8 @@ export default async function init() {
   addStorageListener();
 
   // Set list/grid view
-  await ExtensionStorage.get('view').then((result) => {
-    changeView(result.view);
-  });
+  const { view } = await ExtensionStorage.get('view');
+  changeView(view);
 
   // Render queue
   render();
