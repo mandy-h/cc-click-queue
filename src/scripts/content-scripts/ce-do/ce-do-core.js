@@ -13,6 +13,8 @@ export const getAdoptableLevel = () => {
   const levelText = pageText.match(regex);
 
   if (!levelText) {
+    // Just logging a warning, since there are some cases (mistake page, no active adoptable) where there really isn't a level to be found
+    console.warn(`Click Queue: Couldn't find level text matching this regex: ${regex}`);
     return -1;
   }
 

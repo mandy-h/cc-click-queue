@@ -12,10 +12,8 @@
     return;
   }
 
-  // window.addEventListener('DOMContentLoaded', async () => {
   const currentLevel = getAdoptableLevel();
   if (currentLevel > -1) {
     await handleQueueUpdate(currentLevel);
   }
-  // });
 }());
