@@ -4,24 +4,15 @@
 }
 
 button {
-  background-color: hsl(0, 0%, 97%);
-  border: 1px solid #767676;
+  background-color: var(--primary); /* Default if neither the primary/secondary class is used */
+  border: none;
   border-radius: var(--buttonBorderRadius);
   box-shadow: 0 var(--buttonTravel) 0 0 hsla(0, 0%, 0%, 0.7);
+  color: var(--primary-bg-text);
   padding: 0.25rem 0.5rem;
   transition: 100ms linear;
   white-space: nowrap;
   vertical-align: middle;
-}
-
-button:hover,
-button:active {
-  filter: brightness(0.93);
-}
-
-button:active {
-  box-shadow: none;
-  transform: translateY(var(--buttonTravel));
 }
 
 button + button {
@@ -37,20 +28,19 @@ button > * + * {
   margin-left: 5px;
 }
 
-button.is-active:not(.btn--no-bg) {
-  background-color: #47d8e5;
-  box-shadow: none;
-  transform: translateY(var(--buttonTravel));
+.btn--primary {
+  background-color: var(--primary);
+  color: var(--primary-bg-text);
 }
 
-.btn--red {
-  background-color: lightsalmon;
-  border: 1px solid red;
+.btn--secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-bg-text);
 }
 
-.btn--green {
-  background-color: lightgreen;
-  border: 1px solid green;
+.btn--accent {
+  background-color: var(--accent);
+  color: var(--accent-bg-text);
 }
 
 .btn--no-bg {
@@ -59,11 +49,48 @@ button.is-active:not(.btn--no-bg) {
   box-shadow: none;
 }
 
+button:active {
+  box-shadow: none;
+  transform: translateY(var(--buttonTravel));
+}
+
 .btn--no-bg:hover,
 .btn--no-bg:focus,
 .btn--no-bg:active {
-  background-color: var(--mainBg);
   transform: none;
+}
+
+button.is-active {
+  background-color: var(--accent);
+  box-shadow: none;
+  color: var(--accent-bg-text);
+}
+
+button.is-active:not(.btn--no-bg) {
+  transform: translateY(var(--buttonTravel));
+}
+
+@media(prefers-color-scheme: light) {
+  button:hover,
+  button:active {
+    filter: brightness(90%);
+  }
+
+  .btn--primary > .icon {
+    filter: invert(100%);
+  }
+}
+
+@media(prefers-color-scheme: dark) {
+  button:hover,
+  button:active {
+    filter: brightness(110%);
+  }
+
+  .btn--no-bg > .icon,
+  .btn--secondary > .icon {
+    filter: invert(100%);
+  }
 }
 
 /* For keyboard accessibility */

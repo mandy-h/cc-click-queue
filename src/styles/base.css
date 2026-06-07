@@ -1,0 +1,67 @@
+/* Custom properties
+============================================================================ */
+:root {
+  color-scheme: light dark;
+
+  --text: light-dark(hsl(240, 73%, 3%), hsl(240, 73%, 97%));
+  --background: light-dark(hsl(0, 0%, 92%), hsl(0, 0%, 14%));
+  --background-surface: light-dark(hsl(0, 0%, 87%), hsl(0, 0%, 19%));
+  --primary: light-dark(hsl(205, 96%, 28%), hsl(205, 96%, 72%));
+  --secondary: light-dark(hsl(204, 69%, 77%), hsl(204, 69%, 23%));
+  --accent: light-dark(hsl(185, 75%, 59%), hsl(185, 75%, 41%));
+
+  --primary-bg-text: light-dark(hsl(240, 73%, 97%), hsl(240, 73%, 3%));
+  --secondary-bg-text: light-dark(hsl(240, 73%, 3%), hsl(240, 73%, 97%));
+  --accent-bg-text: hsl(240, 73%, 3%);
+}
+
+/* Resets
+============================================================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Typography
+============================================================================ */
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-weight: 700;
+}
+
+html {font-size: 100%;} /* 16px */
+
+h1 {font-size: 4.210rem; /* 67.36px */}
+
+h2 {font-size: 3.158rem; /* 50.56px */}
+
+h3 {font-size: 2.369rem; /* 37.92px */}
+
+h4 {font-size: 1.777rem; /* 28.48px */}
+
+h5 {font-size: 1.333rem; /* 21.28px */}
+
+small {font-size: 0.750rem; /* 12px */}
+
+/* ============================================================================ */
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+@media (prefers-color-scheme: dark) {
+  img[src^="https://www.clickcritters.com/images/adoptables/"] {
+    background-color: var(--background);
+    color-scheme: light;
+  }
+}

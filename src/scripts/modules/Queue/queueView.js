@@ -12,20 +12,20 @@ function createQueueItem(id, target) {
       <div class="queue-item__id">${id}</div>
       <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></a></div>
       <div class="queue-item__target-wrapper editable">
-        <button type="button" class="js-item-action--edit editable__trigger btn--invisible" aria-label="Edit" title="Click to edit"></button>
+        <button type="button" class="btn--invisible js-item-action--edit editable__trigger" aria-label="Edit" title="Click to edit"></button>
         <span class="queue-item__target editable__text">${target}</span>
       </div>
       <div class="item-actions">
-        <button class="js-item-actions-toggle item-actions__toggle btn--no-bg" title="Open menu"><img src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
+        <button class="js-item-actions-toggle item-actions__toggle btn--no-bg" title="Open menu"><img class="icon" src="/icons/more-horiz.svg" alt="Three horizontal dots" /></button>
         <div class="js-item-actions item-actions__buttons button-group button-group--no-margin">
-          <button class="js-item-action--move-front item-actions__button" title="Move to front">
-            <img src="/icons/arrow-top.svg" alt="Arrow pointing to top" />
+          <button class="js-item-action--move-front item-actions__button btn--primary" title="Move to front">
+            <img class="icon" src="/icons/arrow-top.svg" alt="Arrow pointing to top" />
           </button>
-          <button class="js-item-action--move-end item-actions__button" title="Move to end">
-            <img src="/icons/arrow-bottom.svg" alt="Arrow pointing to bottom" />
+          <button class="js-item-action--move-end item-actions__button btn--primary" title="Move to end">
+            <img class="icon" src="/icons/arrow-bottom.svg" alt="Arrow pointing to bottom" />
           </button>
-          <button class="js-item-action--delete item-actions__button" title="Delete">
-            <img src="/icons/delete.svg" alt="Trash can" />
+          <button class="js-item-action--delete item-actions__button btn--primary" title="Delete">
+            <img class="icon" src="/icons/delete.svg" alt="Trash can" />
           </button>
         </div>
       </div>

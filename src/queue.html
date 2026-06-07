@@ -2,31 +2,31 @@
 <html>
   <head>
     <title>Click Queue</title>
+    <link rel="stylesheet" href="/styles/base.css" />
     <link rel="stylesheet" href="/styles/button.css" />
     <link rel="stylesheet" href="/styles/queue.css" />
   </head>
 
   <body>
-    <!-- Main section -->
-    <section class="u-p20">
-      <button id="js-btn--move-to-window" style="position: absolute; right: 0; top: 0;">
+    <main class="u-p20">
+      <button id="js-btn--move-to-window" class="btn--secondary" style="position: absolute; right: 0; top: 0;">
         Move to New Window
       </button>
       <h1>Click Queue</h1>
       <div class="button-group sticky">
         <div style="margin-bottom: 10px">
-          <button id="js-btn--add-adopts"><strong>Add Adoptables</strong></button>
-          <button id="js-btn--sort-all">Sort All</button>
-          <button id="js-btn--edit-all">Edit All</button>
+          <button id="js-btn--add-adopts" class="btn--secondary"><strong>Add Adoptables</strong></button>
+          <button id="js-btn--sort-all" class="btn--secondary">Sort All</button>
+          <button id="js-btn--edit-all" class="btn--secondary">Edit All</button>
         </div>
         <div>
-          <button id="js-btn--clear-queue">Clear Queue</button>
-          <button id="js-btn--start-queue" class="btn btn--green">Start Queue</button>
+          <button id="js-btn--clear-queue" class="btn--secondary">Clear Queue</button>
+          <button id="js-btn--start-queue" class="btn--primary">Start Queue</button>
         </div>
       </div>
       <div class="button-group button-group--no-margin">
-        <button id="js-btn--list-view">List View</button>
-        <button id="js-btn--grid-view">Grid View</button>
+        <button id="js-btn--list-view" class="btn--secondary">List View</button>
+        <button id="js-btn--grid-view" class="btn--secondary">Grid View</button>
       </div>
       <p class="js-queue-count"></p>
       <div id="js-queue" class="queue">
@@ -38,7 +38,7 @@
         </div>
         <div class="queue__body"></div>
       </div>
-    </section>
+    </main>
 
     <!-- Add Adopts modal-->
     <div id="js-modal--add-adopts" class="modal modal--top" role="dialog" tabindex="-1">
@@ -46,7 +46,7 @@
         <div class="modal-window__header">
           <h2 class="u-m0">Add Adoptables</h2>
           <button class="modal-window__close btn--no-bg">
-            <img src="/icons/close.svg" alt="Close" />
+            <img class="icon" src="/icons/close.svg" alt="Close" />
           </button>
         </div>
         <div class="modal-window__body">
@@ -71,7 +71,7 @@
               <input name="target-level" required="required" type="number" min="1" />
             </label>
             <br />
-            <button id="js-add-adopts__submit" type="submit">Add to Queue</button>
+            <button id="js-add-adopts__submit" class="btn--primary" type="submit">Add to Queue</button>
           </form>
         </div>
       </div>
@@ -84,7 +84,7 @@
         <div class="modal-window__header">
           <h2 class="u-m0">Sort All</h2>
           <button class="modal-window__close btn--no-bg">
-            <img src="/icons/close.svg" alt="Close" />
+            <img class="icon" src="/icons/close.svg" alt="Close" />
           </button>
         </div>
         <div class="modal-window__body">
@@ -114,7 +114,7 @@
               >
             </fieldset>
             <br />
-            <button id="js-sort-all-form__submit" type="submit">
+            <button id="js-sort-all-form__submit" class="btn--primary" type="submit">
               Sort All Adoptables
             </button>
           </form>
@@ -129,7 +129,7 @@
         <div class="modal-window__header">
           <h2 class="u-m0">Edit All</h2>
           <button class="modal-window__close btn--no-bg">
-            <img src="/icons/close.svg" alt="Close" />
+            <img class="icon" src="/icons/close.svg" alt="Close" />
           </button>
         </div>
         <div class="modal-window__body">
@@ -140,7 +140,7 @@
               <input name="target" required="required" type="number" min="1" />
             </label>
             <br />
-            <button id="js-edit-all-form__submit" type="submit">
+            <button id="js-edit-all-form__submit" class="btn--primary" type="submit">
               Edit All Adoptables
             </button>
           </form>
