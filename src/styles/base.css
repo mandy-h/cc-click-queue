@@ -4,8 +4,8 @@
   color-scheme: light dark;
 
   --text: light-dark(hsl(240, 73%, 3%), hsl(240, 73%, 97%));
-  --background: light-dark(hsl(0, 0%, 92%), hsl(0, 0%, 14%));
-  --background-surface: light-dark(hsl(0, 0%, 87%), hsl(0, 0%, 19%));
+  --background: light-dark(hsl(0, 0%, 92%), hsl(240, 4%, 18%));
+  --background-surface: light-dark(hsl(0, 0%, 87%), hsl(240, 4%, 23%));
   --primary: light-dark(hsl(205, 96%, 28%), hsl(205, 96%, 72%));
   --secondary: light-dark(hsl(204, 69%, 77%), hsl(204, 69%, 23%));
   --accent: light-dark(hsl(185, 75%, 59%), hsl(185, 75%, 41%));
@@ -61,7 +61,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
   img[src^="https://www.clickcritters.com/images/adoptables/"] {
-    background-color: var(--background);
+    background-image: linear-gradient(to bottom, hsla(0, 0%, 0%, 0) 0%, var(--background) 100%);
     color-scheme: light;
   }
 }
