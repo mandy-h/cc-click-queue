@@ -2,24 +2,25 @@
  * Styles for the queue page.
  */
 
-:root {
-  --mainBg: hsl(0, 0%, 92%);
-  --modalBg: var(--mainBg);
-  --activeColor: #47d8e5;
-  --stickyBg: hsla(0, 0%, 92%, 0.6);
+.editable {
+  background-color: var(--background);
 }
 
-* {
-  box-sizing: border-box;
+@media(prefers-color-scheme: light) {
+  button:hover,
+  button:active:not(.is-active) {
+    filter: brightness(90%);
+  }
+
+  .editable:hover {
+    filter: brightness(70%);
+  }
 }
 
-body {
-  background-color: var(--mainBg);
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  font-size: 1rem;
-  margin: 0;
-  padding: 0;
-  position: relative;
+@media(prefers-color-scheme: dark) {
+  .editable:hover {
+    filter: invert(100%) brightness(50%);
+  }
 }
 
 body.modal-open {
@@ -55,10 +56,6 @@ form label {
   position: relative;
 }
 
-.editable:hover {
-  background-color: #ddd;
-}
-
 .editable__text {
   pointer-events: none;
 }
@@ -79,10 +76,6 @@ form label {
 .item-actions {
   position: relative;
   text-align: center;
-}
-
-.item-actions__toggle.is-active {
-  background-color: #ddd;
 }
 
 .queue.grid .item-actions__toggle.is-active + .item-actions__buttons {
@@ -123,7 +116,7 @@ form label {
 }
 
 .modal-window {
-  background-color: var(--modalBg);
+  background-color: var(--background-surface);
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.6);
   max-height: 90vh;
   max-width: 85vw;
@@ -138,7 +131,6 @@ form label {
 .modal-window__header {
   align-items: center;
   background-color: inherit;
-  border-bottom: 1px solid #ddd;
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
@@ -187,7 +179,7 @@ form label {
 }
 
 .image-drop-area {
-  background-color: hsl(0, 0%, 97%);
+  background-color: var(--background);
   border: 1px solid gray;
   max-height: 60vh;
   max-width: 100%;
@@ -198,11 +190,10 @@ form label {
 }
 
 .image-drop-area--active {
-  border: 2px solid var(--activeColor);
+  border: 2px solid var(--accent);
 }
 
 .button-group.sticky {
-  background-color: var(--stickyBg);
   margin-bottom: 24px;
   margin-right: 24px;
   position: sticky;

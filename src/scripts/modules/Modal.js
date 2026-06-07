@@ -11,7 +11,7 @@ function createModalElement(id, position, header = '', body = '') {
   template.innerHTML = `
     <div id="${id}" class="modal modal--${position}" role="dialog" tabindex="-1">
       <div class="modal-window">
-        <div class="modal-window__header">${header}<button class="modal-window__close btn--no-bg"><img src="/icons/close.svg" alt="Close"></button></div>
+        <div class="modal-window__header">${header}<button class="modal-window__close btn--no-bg"><img class="icon" src="/icons/close.svg" alt="Close"></button></div>
         <div class="modal-window__body">${body}</div>
       </div>
       <div class="scrim"></div>
