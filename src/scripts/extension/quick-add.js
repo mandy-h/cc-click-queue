@@ -72,7 +72,7 @@ async function quickAdd(info) {
     }
   }
 
-  (function init() {
+  function promptForTargetLevel() {
     let targetLevel = window.prompt('Target level:');
     const isInteger = /^(\d)+$/;
     while (true) {
@@ -80,9 +80,15 @@ async function quickAdd(info) {
         // A number was entered, or the Cancel button was clicked
         break;
       } else {
-        targetLevel = window.prompt('Your input was invalid. Please enter an integer, or click "Cancel". \nTarget level:');
+        targetLevel = window.prompt('Your input was invalid. Please enter an integer. \nTarget level:');
       }
     }
+
+    return targetLevel;
+  }
+
+  (function init() {
+    const targetLevel = promptForTargetLevel();
 
     if (targetLevel !== null) {
       const selection = getHtmlOfSelection();

@@ -12,31 +12,44 @@
       <button id="js-btn--move-to-window" class="btn--secondary" style="position: absolute; right: 0; top: 0;">
         Move to New Window
       </button>
+
       <h1>Click Queue</h1>
-      <div class="button-group sticky">
-        <div style="margin-bottom: 10px">
-          <button id="js-btn--add-adopts" class="btn--secondary"><strong>Add Adoptables</strong></button>
-          <button id="js-btn--sort-all" class="btn--secondary">Sort All</button>
-          <button id="js-btn--edit-all" class="btn--secondary">Edit All</button>
-        </div>
+
+      <div class="page-layout">
         <div>
-          <button id="js-btn--clear-queue" class="btn--secondary">Clear Queue</button>
-          <button id="js-btn--start-queue" class="btn--primary">Start Queue</button>
+          <div class="button-group sticky">
+            <div style="margin-bottom: 10px">
+              <button id="js-btn--add-adopts" class="btn--secondary"><strong>Add Adoptables</strong></button>
+              <button id="js-btn--sort-all" class="btn--secondary">Sort All</button>
+              <button id="js-btn--edit-all" class="btn--secondary">Edit All</button>
+            </div>
+            <div>
+              <button id="js-btn--clear-queue" class="btn--secondary">Clear Queue</button>
+              <button id="js-btn--start-queue" class="btn--primary">Start Queue</button>
+            </div>
+          </div>
+          <div class="button-group button-group--no-margin">
+            <button id="js-btn--list-view" class="btn--secondary">List View</button>
+            <button id="js-btn--grid-view" class="btn--secondary">Grid View</button>
+          </div>
+
+          <p class="js-queue-count"></p>
+
+          <div id="js-queue" class="queue">
+            <div class="queue__header">
+              <span>ID</span>
+              <span>Image</span>
+              <span>Target Level</span>
+              <span></span>
+            </div>
+            <div class="queue__body"></div>
+          </div>
         </div>
-      </div>
-      <div class="button-group button-group--no-margin">
-        <button id="js-btn--list-view" class="btn--secondary">List View</button>
-        <button id="js-btn--grid-view" class="btn--secondary">Grid View</button>
-      </div>
-      <p class="js-queue-count"></p>
-      <div id="js-queue" class="queue">
-        <div class="queue__header">
-          <span>ID</span>
-          <span>Image</span>
-          <span>Target Level</span>
-          <span></span>
-        </div>
-        <div class="queue__body"></div>
+  
+        <aside class="queue-history">
+          <h3 class="queue-history__header">Last 10 Clicked</h3>
+          <div id="js-queue-history" class="queue-history__body"></div>
+        </aside>
       </div>
     </main>
 

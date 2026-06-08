@@ -94,8 +94,9 @@ export const handleQueueUpdate = async (
 
   const {
     queue,
+    queueHistory,
     progressBar: progressBarSetting
-  } = await ExtensionStorage.get(['queue', 'progressBar']);
+  } = await ExtensionStorage.get(['queue', 'queueHistory', 'progressBar']);
 
   const targetLevel = queue[0].target;
 
@@ -104,8 +105,21 @@ export const handleQueueUpdate = async (
   }
 
   if (currentLevel >= targetLevel) {
-    queue.shift();
-    await ExtensionStorage.set({ queue });
+    const removed = queue.shift();
+
+    const newHistory = queueHistory.filter((item) => {
+      return item.id !== removed.id;
+    });
+    newHistory.unshift(removed);
+
+    if (newHistory.length > 10) {
+      newHistory.pop();
+    }
+
+    await ExtensionStorage.set({
+      queue,
+      queueHistory: newHistory
+    });
 
     if (queue.length > 0) {
       switchToNextAdoptableDep(queue[0].id);
