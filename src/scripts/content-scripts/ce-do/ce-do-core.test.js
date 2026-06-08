@@ -1,5 +1,5 @@
-import { handleQueueUpdate } from './ce-do-core.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { handleQueueUpdate } from './ce-do-core.js';
 
 // Mock functions for dependency injection
 const mockExtensionStorage = {
@@ -23,8 +23,9 @@ describe('Tests for functions in ce-do-core.js content script', () => {
         { id: 2, target: 30 },
         { id: 3, target: 30 },
       ];
+      const queueHistory = [];
       const currentLevel = 30;
-      mockExtensionStorage.get.mockReturnValue({ queue });
+      mockExtensionStorage.get.mockReturnValue({ queue, queueHistory });
 
       // Call the function with mock data and dependencies
       await handleQueueUpdate(currentLevel, mockExtensionStorage, mockRenderLevelProgress, mockSwitchToNextAdoptable);
@@ -35,6 +36,9 @@ describe('Tests for functions in ce-do-core.js content script', () => {
           queue: [
             { id: 2, target: 30 },
             { id: 3, target: 30 },
+          ],
+          queueHistory: [
+            { id: 1, target: 30 },
           ]
         }
       );
@@ -47,8 +51,9 @@ describe('Tests for functions in ce-do-core.js content script', () => {
       const queue = [
         { id: 1, target: 30 },
       ];
+      const queueHistory = [];
       const currentLevel = 10;
-      mockExtensionStorage.get.mockReturnValue({ queue });
+      mockExtensionStorage.get.mockReturnValue({ queue, queueHistory });
 
       // Call the function with mock data and dependencies
       await handleQueueUpdate(currentLevel, mockExtensionStorage, mockRenderLevelProgress, mockSwitchToNextAdoptable);
@@ -62,14 +67,20 @@ describe('Tests for functions in ce-do-core.js content script', () => {
       const queue = [
         { id: 1, target: 30 },
       ];
+      const queueHistory = [];
       const currentLevel = 30;
-      mockExtensionStorage.get.mockReturnValue({ queue });
+      mockExtensionStorage.get.mockReturnValue({ queue, queueHistory });
 
       // Call the function with mock data and dependencies
       await handleQueueUpdate(currentLevel, mockExtensionStorage, mockRenderLevelProgress, mockSwitchToNextAdoptable);
 
       // Check that the queue is empty
-      expect(mockExtensionStorage.set).toHaveBeenCalledWith({ queue: [] });
+      expect(mockExtensionStorage.set).toHaveBeenCalledWith({
+        queue: [],
+        queueHistory: [
+          { id: 1, target: 30 },
+        ]
+      });
       // Check that the window location was set to the "done" page
       expect(window.location).toContain('?act=choose#done');
     });
