@@ -79,6 +79,10 @@ form label {
   text-align: center;
 }
 
+.item-actions__toggle {
+  transition: none;
+}
+
 .queue.grid .item-actions__toggle.is-active + .item-actions__buttons {
   display: flex;
   padding-bottom: 5px;
