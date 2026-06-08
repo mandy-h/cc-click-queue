@@ -251,10 +251,14 @@ form label {
   margin-bottom: 8px;
 }
 
-.queue.grid .queue-item {
+.queue.grid .queue-item,
+.queue-history-item {
   background-color: var(--background-surface);
-  padding-bottom: 8px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
   padding-top: 20px;
+  text-align: center;
 }
 
 /* Highlight first item in queue; unfortunately doesn't seem to work for list view because of 'display: contents' */
@@ -268,11 +272,41 @@ form label {
   color: var(--accent-bg-text);
   content: 'current';
   font-size: .875rem;
+  font-weight: bold;
   left: 0;
   padding: 2px 8px;
   position: absolute;
   top: 0;
   transform: translate(-8px, -8px);
+}
+
+.queue-history__header {
+  font-size: 1.333rem;
+  font-weight: bold;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: underline 4px solid var(--accent);
+  text-decoration-skip-ink: none;
+  text-underline-offset: 4px;
+}
+
+.queue-history__body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.page-layout {
+  display: grid;
+  grid-template-columns: 1fr fit-content(20%);
+  grid-column-gap: 16px;
+}
+
+.page-layout > * + * {
+  border-left: 1px solid;
+  padding-left: 16px;
 }
 
 .u-inline-block {

@@ -10,7 +10,7 @@ function createQueueItem(id, target) {
   item.dataset.target = target;
   item.innerHTML = `
       <div class="queue-item__id">${id}</div>
-      <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" /></a></div>
+      <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" alt="Adoptable" /></a></div>
       <div class="queue-item__target-wrapper editable">
         <button type="button" class="btn--invisible js-item-action--edit editable__trigger" aria-label="Edit" title="Click to edit"></button>
         <span class="queue-item__target editable__text">${target}</span>
@@ -77,9 +77,10 @@ function queueDiff(newData, parent) {
   });
 }
 
-async function render() {
+async function renderQueue() {
   const queue = await queueService.getQueue();
   const queueTable = document.querySelector('#js-queue .queue__body');
+
   queueDiff(queue, queueTable);
 
   document.querySelector('.js-queue-count').innerHTML
@@ -213,9 +214,10 @@ function initializeUI() {
 // Re-render parts of the page when storage has changed
 function addStorageListener() {
   chrome.storage.onChanged.addListener((changes) => {
-    if (changes.queue || changes.loop) {
-      render();
+    if (changes.queue) {
+      renderQueue();
     }
+
     if (changes.view) {
       changeView(changes.view.newValue);
     }
@@ -292,8 +294,7 @@ export default async function init() {
   const { view } = await ExtensionStorage.get('view');
   changeView(view);
 
-  // Render queue
-  render();
+  renderQueue();
 
   initializeUI();
 }
