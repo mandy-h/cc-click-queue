@@ -40,6 +40,8 @@ h1, h2, h3, h4, h5 {
 
 html {font-size: 100%;} /* 16px */
 
+body {font-size: 1rem;} /* 16px */
+
 h1 {font-size: 4.210rem; /* 67.36px */}
 
 h2 {font-size: 3.158rem; /* 50.56px */}
