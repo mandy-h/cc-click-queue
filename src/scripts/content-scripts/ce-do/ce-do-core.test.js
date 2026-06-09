@@ -8,6 +8,7 @@ const mockExtensionStorage = {
 };
 const mockRenderLevelProgress = vi.fn();
 const mockSwitchToNextAdoptable = vi.fn();
+const mockDisplayToast = vi.fn();
 
 
 describe('Tests for functions in ce-do-core.js content script', () => {
@@ -28,7 +29,13 @@ describe('Tests for functions in ce-do-core.js content script', () => {
       mockExtensionStorage.get.mockReturnValue({ queue, queueHistory });
 
       // Call the function with mock data and dependencies
-      await handleQueueUpdate(currentLevel, mockExtensionStorage, mockRenderLevelProgress, mockSwitchToNextAdoptable);
+      await handleQueueUpdate(
+        currentLevel,
+        mockExtensionStorage,
+        mockRenderLevelProgress,
+        mockSwitchToNextAdoptable,
+        mockDisplayToast
+      );
 
       // Check that the first adoptable in the queue was removed
       expect(mockExtensionStorage.set).toHaveBeenCalledWith(
@@ -56,7 +63,13 @@ describe('Tests for functions in ce-do-core.js content script', () => {
       mockExtensionStorage.get.mockReturnValue({ queue, queueHistory });
 
       // Call the function with mock data and dependencies
-      await handleQueueUpdate(currentLevel, mockExtensionStorage, mockRenderLevelProgress, mockSwitchToNextAdoptable);
+      await handleQueueUpdate(
+        currentLevel,
+        mockExtensionStorage,
+        mockRenderLevelProgress,
+        mockSwitchToNextAdoptable,
+        mockDisplayToast
+      );
 
       // Check that the queue was not updated
       expect(mockExtensionStorage.set).not.toHaveBeenCalled();
@@ -72,7 +85,13 @@ describe('Tests for functions in ce-do-core.js content script', () => {
       mockExtensionStorage.get.mockReturnValue({ queue, queueHistory });
 
       // Call the function with mock data and dependencies
-      await handleQueueUpdate(currentLevel, mockExtensionStorage, mockRenderLevelProgress, mockSwitchToNextAdoptable);
+      await handleQueueUpdate(
+        currentLevel,
+        mockExtensionStorage,
+        mockRenderLevelProgress,
+        mockSwitchToNextAdoptable,
+        mockDisplayToast
+      );
 
       // Check that the queue is empty
       expect(mockExtensionStorage.set).toHaveBeenCalledWith({

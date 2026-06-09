@@ -50,12 +50,16 @@ export const renderLevelProgress = (currentLevel, targetLevel) => {
   }
 };
 
-export const switchToNextAdoptable = async (adoptId) => {
+export const displayToast = (text = 'message', type = 'info') => {
   const mainContent = document.querySelector(SELECTORS.REGULAR_CE_CONTENT)
     || document.querySelector(SELECTORS.LIGHT_CE_CONTENT);
-  const loadingToast = Message.createToast('Loading...', 'info');
-  mainContent.insertBefore(loadingToast, mainContent.firstChild);
 
+  document.querySelector(SELECTORS.TOAST_MESSAGE)?.remove();
+  const toast = Message.createToast(text, type);
+  mainContent.insertBefore(toast, mainContent.firstChild);
+};
+
+export const switchToNextAdoptable = async (adoptId) => {
   try {
     const response = await fetch(
       `https://www.clickcritters.com/clickgym.php?act=choose&adoptID=${adoptId}`,
@@ -63,17 +67,14 @@ export const switchToNextAdoptable = async (adoptId) => {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to switch adoptable`);
+      console.error(`Click Queue: Failed to switch adoptable`);
+      return false;
     }
 
-    document.querySelector(SELECTORS.TOAST_MESSAGE)?.remove();
-    const successToast = Message.createToast('Switched to next adoptable in queue', 'success');
-    mainContent.insertBefore(successToast, mainContent.firstChild);
+    return true;
   } catch (error) {
-    document.querySelector(SELECTORS.TOAST_MESSAGE)?.remove();
-    const errorToast = Message.createToast(`Error: ${error.message}`, 'error');
-    mainContent.insertBefore(errorToast, mainContent.firstChild);
-    throw error;
+    console.error('Click Queue: ' + error);
+    return false;
   }
 };
 
@@ -81,7 +82,8 @@ export const handleQueueUpdate = async (
   currentLevel,
   extensionStorageDep,
   renderLevelProgressDep = renderLevelProgress,
-  switchToNextAdoptableDep = switchToNextAdoptable
+  switchToNextAdoptableDep = switchToNextAdoptable,
+  displayToastDep = displayToast
 ) => {
   // Use extensionStorageDep if provided, otherwise import the ExtensionStorage module
   let ExtensionStorage;
@@ -122,7 +124,13 @@ export const handleQueueUpdate = async (
     });
 
     if (queue.length > 0) {
-      switchToNextAdoptableDep(queue[0].id);
+      displayToastDep('Loading...', 'info');
+      const successfullyLoaded = await switchToNextAdoptableDep(queue[0].id);
+      if (successfullyLoaded) {
+        displayToastDep('Switched to next adoptable in queue', 'success');
+      } else {
+        displayToastDep('Failed to switch adoptable', 'error');
+      }
     } else {
       window.location = 'https://www.clickcritters.com/clickgym.php?act=choose#done';
     }
