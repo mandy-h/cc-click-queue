@@ -3,20 +3,27 @@
  */
 
 .toast-message {
-  font-size: 1rem;
+  border-radius: 4px;
+  color: #111111;
+  font-size: .875rem;
+  line-height: 1;
   margin: auto auto 8px;
-  padding: 5px;
-  width: 80%;
+  min-width: 12rem;
+  padding: .5rem;
+  width: fit-content;
 }
 
 .toast-message.info {
-  background-color: #cce8f4;
-  border: 1px solid #3e7599;
-  color: #3e7599;
+  background-color: #BFE7F7;
+  border: 1px solid #009FDF;
 }
 
 .toast-message.success {
-  background-color: #b4dfa4;
-  border: 1px solid #416d30;
-  color: #416d30;
+  background-color: #D8EED1;
+  border: 1px solid #62BB46;
+}
+
+.toast-message.error {
+  background-color: #FBCFDA;
+  border: 1px solid #EF3F6B;
 }
