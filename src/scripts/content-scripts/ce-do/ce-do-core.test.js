@@ -7,7 +7,7 @@ const mockExtensionStorage = {
   set: vi.fn()
 };
 const mockRenderLevelProgress = vi.fn();
-const mockSwitchToNextAdoptable = vi.fn();
+const mockSwitchAdoptable = vi.fn();
 const mockDisplayToast = vi.fn();
 
 
@@ -33,7 +33,7 @@ describe('Tests for functions in ce-do-core.js content script', () => {
         currentLevel,
         mockExtensionStorage,
         mockRenderLevelProgress,
-        mockSwitchToNextAdoptable,
+        mockSwitchAdoptable,
         mockDisplayToast
       );
 
@@ -49,8 +49,8 @@ describe('Tests for functions in ce-do-core.js content script', () => {
           ]
         }
       );
-      // Check that switchToNextAdoptable was called with the next adoptable ID in the queue
-      expect(mockSwitchToNextAdoptable).toHaveBeenCalledWith(2);
+      // Check that switchAdoptable was called with the next adoptable ID in the queue
+      expect(mockSwitchAdoptable).toHaveBeenCalledWith(2);
     });
 
     it('should not update the queue if the current level is less than the target level', async () => {
@@ -67,7 +67,7 @@ describe('Tests for functions in ce-do-core.js content script', () => {
         currentLevel,
         mockExtensionStorage,
         mockRenderLevelProgress,
-        mockSwitchToNextAdoptable,
+        mockSwitchAdoptable,
         mockDisplayToast
       );
 
@@ -89,7 +89,7 @@ describe('Tests for functions in ce-do-core.js content script', () => {
         currentLevel,
         mockExtensionStorage,
         mockRenderLevelProgress,
-        mockSwitchToNextAdoptable,
+        mockSwitchAdoptable,
         mockDisplayToast
       );
 

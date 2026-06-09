@@ -59,7 +59,7 @@ export const displayToast = (text = 'message', type = 'info') => {
   mainContent.insertBefore(toast, mainContent.firstChild);
 };
 
-export const switchToNextAdoptable = async (adoptId) => {
+export const switchAdoptable = async (adoptId) => {
   try {
     const response = await fetch(
       `https://www.clickcritters.com/clickgym.php?act=choose&adoptID=${adoptId}`,
@@ -82,7 +82,7 @@ export const handleQueueUpdate = async (
   currentLevel,
   extensionStorageDep,
   renderLevelProgressDep = renderLevelProgress,
-  switchToNextAdoptableDep = switchToNextAdoptable,
+  switchAdoptableDep = switchAdoptable,
   displayToastDep = displayToast
 ) => {
   // Use extensionStorageDep if provided, otherwise import the ExtensionStorage module
@@ -125,7 +125,7 @@ export const handleQueueUpdate = async (
 
     if (queue.length > 0) {
       displayToastDep('Loading...', 'info');
-      const successfullyLoaded = await switchToNextAdoptableDep(queue[0].id);
+      const successfullyLoaded = await switchAdoptableDep(queue[0].id);
       if (successfullyLoaded) {
         displayToastDep('Switched to next adoptable in queue', 'success');
       } else {

@@ -4,7 +4,7 @@
 
   const [
     { default: ExtensionStorage },
-    { getAdoptableLevel, handleQueueUpdate, displayToast, switchToNextAdoptable }
+    { getAdoptableLevel, handleQueueUpdate, displayToast, switchAdoptable }
   ] = await Promise.all([
     import(extensionStorageScript),
     import(coreModuleScript)
@@ -23,7 +23,7 @@
   if (isMainCePage && !isQueueAdoptActive) {
     displayToast('Loading...', 'info');
 
-    const successfullyLoaded = await switchToNextAdoptable(queue[0].id);
+    const successfullyLoaded = await switchAdoptable(queue[0].id);
 
     if (successfullyLoaded) {
       displayToast('Queue is active, but the first adoptable was not found. Switched to first adoptable in queue.', 'info');
