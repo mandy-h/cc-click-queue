@@ -7,7 +7,7 @@ function createQueueHistoryItem(id) {
   item.dataset.id = id;
   item.innerHTML = `
     <div class="queue-item__id">${id}</div>
-    <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" alt="Adoptable" /></a></div>
+    <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" alt="Adoptable" width="100" height="130" /></a></div>
     <div class="item-actions">
       <button type="button" class="js-item-action--quick-add btn--secondary">Re-click</button>
     </div>
