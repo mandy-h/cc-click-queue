@@ -10,7 +10,7 @@ function createQueueItem(id, target) {
   item.dataset.target = target;
   item.innerHTML = `
       <div class="queue-item__id">${id}</div>
-      <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" alt="Adoptable" /></a></div>
+      <div class="queue-item__img"><a href="https://www.clickcritters.com/youradoptables.php?act=code&id=${id}"><img src="https://www.clickcritters.com/images/adoptables/${id}.gif" alt="Adoptable" width="100" height="130" /></a></div>
       <div class="queue-item__target-wrapper editable">
         <button type="button" class="btn--invisible js-item-action--edit editable__trigger" aria-label="Edit" title="Click to edit"></button>
         <span class="queue-item__target editable__text">${target}</span>
