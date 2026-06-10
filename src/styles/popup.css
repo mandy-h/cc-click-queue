@@ -2,3 +2,8 @@ main {
   padding: 1rem;
   text-align: center;
 }
+
+h2 {
+  font-size: 1rem;
+  white-space: nowrap;
+}
