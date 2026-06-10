@@ -300,6 +300,7 @@ form label {
   font-size: 1.333rem;
   font-weight: bold;
   line-height: 1.4;
+  margin-top: 0;
   text-align: center;
   text-decoration: underline 4px solid var(--accent);
   text-decoration-skip-ink: none;
