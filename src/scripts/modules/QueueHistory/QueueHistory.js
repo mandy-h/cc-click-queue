@@ -49,7 +49,7 @@ function promptForTargetLevel() {
 export function init() {
   document.querySelector('#js-queue-history').addEventListener('click', (event) => {
     const target = event.target;
-    if (!target.matches('button') && target.classList.contains('js-item-action--quick-add')) {
+    if (!target.matches('button') && !target.classList.contains('js-item-action--quick-add')) {
       return;
     }
 
