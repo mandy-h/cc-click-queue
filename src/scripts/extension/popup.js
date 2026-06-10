@@ -13,7 +13,7 @@
 
   function renderCurrentAdopt(queue) {
     const currentAdoptHtml = queue.length > 0 ?
-      `<h2 style="font-size: 1rem; white-space: nowrap;">Currently Clicking</h2> 
+      `<h2>Currently Clicking</h2>
       <img src="https://www.clickcritters.com/images/adoptables/${queue[0].id}.gif" alt="Adoptable" width="100" height="130" />
       <p>Target level: ${queue[0].target}</p>
       `
@@ -22,19 +22,38 @@
     document.querySelector('.js-currently-clicking').innerHTML = currentAdoptHtml;
   }
 
+  function renderLastClicked(queueHistory) {
+    const lastClickedHtml = queueHistory.length > 0 ?
+      `<hr />
+      <h2>Last Clicked</h2>
+      <img src="https://www.clickcritters.com/images/adoptables/${queueHistory[0].id}.gif" alt="Adoptable" width="100" height="130" />
+      `
+      : '';
+
+    document.querySelector('.js-last-clicked').innerHTML = lastClickedHtml;
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.js-start-queue').addEventListener('click', startQueue);
     document.querySelector('.js-edit-queue').addEventListener('click', openQueuePage);
 
-    chrome.storage.local.get('queue', (result) => {
+    chrome.storage.local.get(['queue', 'queueHistory'], (result) => {
       if (result.queue) {
         renderCurrentAdopt(result.queue);
+      }
+
+      if (result.queueHistory) {
+        renderLastClicked(result.queueHistory);
       }
     });
 
     chrome.storage.onChanged.addListener((changes) => {
       if (changes.queue) {
         renderCurrentAdopt(changes.queue);
+      }
+
+      if (changes.queueHistory) {
+        renderLastClicked(changes.queueHistory);
       }
     });
   });
