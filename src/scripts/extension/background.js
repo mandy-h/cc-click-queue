@@ -32,6 +32,10 @@ chrome.runtime.onStartup.addListener(() => {
       chrome.browserAction.setBadgeText({ text: (result.queue.length).toString() });
     }
   });
+
+  chrome.storage.local.set({
+    queueHistory: []
+  });
 });
 
 chrome.storage.onChanged.addListener((changes) => {
