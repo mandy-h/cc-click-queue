@@ -3,6 +3,7 @@ This is a Chrome extension to add an adoptable queue for the Click Exchange on c
 # Demo
 https://github.com/user-attachments/assets/b8a0f961-56cf-4ab0-91a3-fc1b1fb0eac7
 # Building this extension
+* If you're not a developer or extension reviewer, skip this section.
 1. Run `npm install` in the project folder.
 2. Modify source files inside the `src` folder.
 3. Run `npm run build` in the project folder to build the extension. Builds will be outputted in the `dist` folder, with each folder named in this format `[browser]-mv[manifestVersion]`.
